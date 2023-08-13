@@ -5,6 +5,19 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+        body: Column(
+      children: [
+        IconButton(
+          onPressed: () => {},
+          icon: const Icon(Icons.menu),
+        ),
+        const Spacer(),
+        const CircleAvatar(
+          radius: 20,
+          backgroundImage: AssetImage('assets/a.png'),
+        )
+      ],
+    ));
   }
 }
