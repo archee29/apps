@@ -18,10 +18,10 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           Container(
             width: w,
-            height: h,
+            height: h * 0.3,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage("assets/images/icon-kucing.png"),
+                    image: AssetImage("assets/images/icon apps.png"),
                     fit: BoxFit.cover)),
           ),
           Container(
@@ -130,6 +130,52 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ],
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 70,
+          ),
+          Container(
+            width: w * 0.5,
+            height: h * 0.08,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30),
+              image: DecorationImage(
+                image: AssetImage("assets/images/button_login.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Center(
+              child: Text(
+                "Sign In",
+                style: TextStyle(
+                  fontSize: 35,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: w * 0.08,
+          ),
+          RichText(
+            text: TextSpan(
+              text: "Done\'n have an Account ?",
+              style: TextStyle(
+                color: Colors.grey[500],
+                fontSize: 20,
+              ),
+              children: [
+                TextSpan(
+                  text: "Create",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
