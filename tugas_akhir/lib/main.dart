@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_akhir/login.dart';
+import 'package:tugas_akhir/signup_page.dart';
+import 'package:tugas_akhir/home.dart';
 
 void main() {
   runApp(const CatApp());

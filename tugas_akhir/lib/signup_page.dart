@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SignUpPage extends StatelessWidget {
+  const SignUpPage({super.key});
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
@@ -64,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   child: TextField(
                     decoration: InputDecoration(
-                      hintText: "Username",
+                      labelText: "Username",
                       prefixIcon: Icon(
                         Icons.people,
                         color: Colors.pinkAccent,
@@ -129,22 +124,6 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 20,
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(),
-                    ),
-                    Text(
-                      "Lupa Kata Sandi? ",
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        decorationColor: Colors.pinkAccent,
-                        fontSize: 18,
-                        color: Colors.grey[500],
-                      ),
-                    ),
-                  ],
-                ),
               ],
             ),
           ),
@@ -163,35 +142,13 @@ class _LoginPageState extends State<LoginPage> {
             ),
             child: Center(
               child: Text(
-                "Masuk",
+                "Daftar",
                 style: TextStyle(
                   fontSize: 35,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
               ),
-            ),
-          ),
-          SizedBox(
-            height: w * 0.08,
-          ),
-          RichText(
-            text: TextSpan(
-              text: "Done\'n have an Account? ",
-              style: TextStyle(
-                color: Colors.grey[500],
-                fontSize: 20,
-              ),
-              children: [
-                TextSpan(
-                  text: "Create",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
             ),
           ),
         ],
