@@ -21,7 +21,7 @@ class SignUpPage extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 20,
+            height: 5,
           ),
           Container(
             width: w,
@@ -33,7 +33,7 @@ class SignUpPage extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 20,
+            height: 10,
           ),
           Container(
             margin: const EdgeInsets.only(left: 20, right: 20),
