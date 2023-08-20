@@ -26,13 +26,14 @@ class AuthController extends GetxController {
       print("Halaman Login Page");
       Get.offAll(() => LoginPage());
     } else {
-      Get.offAll(() => HomePage());
+      Get.offAll(() => HomePage(email: user.email!));
     }
   }
 
-  void register(String email, password) {
+  void register(String email, password) async {
     try {
-      auth.createUserWithEmailAndPassword(email: email, password: password);
+      await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
     } catch (e) {
       Get.snackbar(
         "About User",
@@ -51,5 +52,32 @@ class AuthController extends GetxController {
         ),
       );
     }
+  }
+
+  void login(String email, password) async {
+    try {
+      await auth.signInWithEmailAndPassword(email: email, password: password);
+    } catch (e) {
+      Get.snackbar(
+        "About Login",
+        "Login Message",
+        backgroundColor: Colors.redAccent,
+        snackPosition: SnackPosition.BOTTOM,
+        titleText: Text(
+          "Login Gagal",
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        messageText: Text(
+          e.toString(),
+          style: TextStyle(color: Colors.white),
+        ),
+      );
+    }
+  }
+
+  void logOut() async {
+    await auth.signOut();
   }
 }
