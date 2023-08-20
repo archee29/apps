@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tugas_akhir/auth_controller.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  String email;
+  HomePage({Key? key, required this.email}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Admin",
+                  email,
                   style: TextStyle(
                     fontSize: 18,
                     color: Colors.grey[500],
@@ -58,27 +60,35 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            width: w * 0.5,
-            height: h * 0.08,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30),
-              image: DecorationImage(
-                image: AssetImage("assets/images/button_login.png"),
-                fit: BoxFit.cover,
+          SizedBox(
+            height: 20,
+          ),
+          GestureDetector(
+            onTap: () {
+              AuthController.instance.logOut();
+            },
+            child: Container(
+              width: w * 0.5,
+              height: h * 0.08,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                image: DecorationImage(
+                  image: AssetImage("assets/images/button_login.png"),
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            child: Center(
-              child: Text(
-                "Keluar",
-                style: TextStyle(
-                  fontSize: 35,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+              child: Center(
+                child: Text(
+                  "Keluar",
+                  style: TextStyle(
+                    fontSize: 35,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
-          ),
+          )
         ],
       ),
     );

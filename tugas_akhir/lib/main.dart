@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tugas_akhir/auth_controller.dart';
 import 'package:tugas_akhir/login.dart';
-import 'package:tugas_akhir/home.dart';
-// import 'package:firebase_app/signup_page.dart';
+import 'package:tugas_akhir/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp().then((value)=> Get.put(AuthController()));
+  await Firebase.initializeApp().then((value) => Get.put(AuthController()));
   runApp(const CatApp());
 }
 
@@ -23,7 +22,7 @@ class CatApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(),
+      home: SplashScreen(),
     );
   }
 }
