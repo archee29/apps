@@ -247,10 +247,10 @@ class _SigninState extends State<Signin> {
           Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            color: AppColors.blue,
+            color: Color.fromARGB(255, 239, 62, 255).withOpacity(0.7),
           ),
           CustomHeader(
-            text: 'Log In.',
+            text: 'Halaman Log In',
             onTap: () {
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => const SignUp()));
@@ -274,14 +274,15 @@ class _SigninState extends State<Signin> {
                     width: MediaQuery.of(context).size.width * 0.8,
                     margin: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width * 0.09),
-                    child: Image.asset("assets/images/login.png"),
+                    child: Image.asset("assets/images/icon-kucing.png"),
                   ),
                   const SizedBox(
                     height: 24,
                   ),
                   CustomFormField(
                     headingText: "Email",
-                    hintText: "Email",
+                    hintText: "Masukkan Email",
+                    icon: const Icon(Icons.email),
                     obsecureText: false,
                     suffixIcon: const SizedBox(),
                     controller: _emailController,
@@ -297,7 +298,8 @@ class _SigninState extends State<Signin> {
                     maxLines: 1,
                     textInputAction: TextInputAction.done,
                     textInputType: TextInputType.text,
-                    hintText: "At least 8 Character",
+                    icon: const Icon(Icons.password),
+                    hintText: "Masukkan Password Dengan 8 Karakter",
                     obsecureText: true,
                     suffixIcon: IconButton(
                         icon: const Icon(Icons.visibility), onPressed: () {}),
@@ -312,9 +314,10 @@ class _SigninState extends State<Signin> {
                         child: InkWell(
                           onTap: () {},
                           child: Text(
-                            "Forgot Password?",
+                            "Lupa Password?",
                             style: TextStyle(
-                                color: AppColors.blue.withOpacity(0.7),
+                                color: Color.fromARGB(255, 239, 62, 255)
+                                    .withOpacity(0.7),
                                 fontWeight: FontWeight.w500),
                           ),
                         ),
@@ -323,11 +326,11 @@ class _SigninState extends State<Signin> {
                   ),
                   AuthButton(
                     onTap: () {},
-                    text: 'Sign In',
+                    text: 'Log In',
                   ),
                   CustomRichText(
-                    discription: "Don't already Have an account? ",
-                    text: "Sign Up",
+                    discription: "Belum Punya Akun? ",
+                    text: "Daftar Disini",
                     onTap: () {
                       Navigator.pushReplacement(
                           context,

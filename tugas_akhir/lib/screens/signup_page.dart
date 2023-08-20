@@ -229,10 +229,10 @@ class _SignUpState extends State<SignUp> {
           Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
-            color: AppColors.blue,
+            color: Color.fromARGB(255, 239, 62, 255).withOpacity(0.7),
           ),
           CustomHeader(
-              text: 'Sign Up.',
+              text: 'Form Daftar',
               onTap: () {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => const Signin()));
@@ -255,14 +255,15 @@ class _SignUpState extends State<SignUp> {
                     width: MediaQuery.of(context).size.width * 0.8,
                     margin: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width * 0.09),
-                    child: Image.asset("assets/images/login.png"),
+                    child: Image.asset("assets/images/icon-kucing.png"),
                   ),
                   const SizedBox(
                     height: 16,
                   ),
                   CustomFormField(
-                    headingText: "UserName",
-                    hintText: "username",
+                    headingText: "Username",
+                    icon: const Icon(Icons.people),
+                    hintText: "Masukkan username",
                     obsecureText: false,
                     suffixIcon: const SizedBox(),
                     maxLines: 1,
@@ -276,6 +277,7 @@ class _SignUpState extends State<SignUp> {
                   CustomFormField(
                     headingText: "Email",
                     hintText: "Email",
+                    icon: const Icon(Icons.email),
                     obsecureText: false,
                     suffixIcon: const SizedBox(),
                     maxLines: 1,
@@ -292,7 +294,8 @@ class _SignUpState extends State<SignUp> {
                     textInputType: TextInputType.text,
                     controller: _passwordController,
                     headingText: "Password",
-                    hintText: "At least 8 Character",
+                    icon: const Icon(Icons.password),
+                    hintText: "Masukkan Password Dengan 8 Karakter",
                     obsecureText: true,
                     suffixIcon: IconButton(
                         icon: const Icon(Icons.visibility), onPressed: () {}),
@@ -302,11 +305,11 @@ class _SignUpState extends State<SignUp> {
                   ),
                   AuthButton(
                     onTap: () {},
-                    text: 'Sign Up',
+                    text: 'Daftar',
                   ),
                   CustomRichText(
-                    discription: 'Already Have an account? ',
-                    text: 'Log In here',
+                    discription: 'Sudah Punya Akun? ',
+                    text: 'Log In Disini',
                     onTap: () {
                       Navigator.pushReplacement(
                           context,
