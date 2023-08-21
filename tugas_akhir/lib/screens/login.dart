@@ -160,33 +160,33 @@
 //           SizedBox(
 //             height: 70,
 //           ),
-//           GestureDetector(
-//             onTap: () {
-//               AuthController.instance.login(
-//                   emailController.text.trim(), passwordController.text.trim());
-//             },
-//             child: Container(
-//               width: w * 0.5,
-//               height: h * 0.08,
-//               decoration: BoxDecoration(
-//                 borderRadius: BorderRadius.circular(30),
-//                 image: DecorationImage(
-//                   image: AssetImage("assets/images/button_login.png"),
-//                   fit: BoxFit.cover,
-//                 ),
-//               ),
-//               child: Center(
-//                 child: Text(
-//                   "Masuk",
-//                   style: TextStyle(
-//                     fontSize: 35,
-//                     fontWeight: FontWeight.bold,
-//                     color: Colors.white,
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ),
+// GestureDetector(
+//   onTap: () {
+//     AuthController.instance.login(
+//         emailController.text.trim(), passwordController.text.trim());
+//   },
+//   child: Container(
+//     width: w * 0.5,
+//     height: h * 0.08,
+//     decoration: BoxDecoration(
+//       borderRadius: BorderRadius.circular(30),
+//       image: DecorationImage(
+//         image: AssetImage("assets/images/button_login.png"),
+//         fit: BoxFit.cover,
+//       ),
+//     ),
+//     child: Center(
+//       child: Text(
+//         "Masuk",
+//         style: TextStyle(
+//           fontSize: 35,
+//           fontWeight: FontWeight.bold,
+//           color: Colors.white,
+//         ),
+//       ),
+//     ),
+//   ),
+// ),
 //           SizedBox(
 //             height: w * 0.08,
 //           ),
@@ -217,6 +217,7 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:tugas_akhir/controllers/auth_controller.dart';
 import 'package:tugas_akhir/styles/app_colors.dart';
 import 'package:tugas_akhir/screens/signup_page.dart';
 import 'package:tugas_akhir/widgets/custom_button.dart';
@@ -224,19 +225,16 @@ import 'package:tugas_akhir/widgets/custom_formfield.dart';
 import 'package:tugas_akhir/widgets/custom_header.dart';
 import 'package:tugas_akhir/widgets/custom_richtext.dart';
 
-class Signin extends StatefulWidget {
-  const Signin({Key? key}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<Signin> createState() => _SigninState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _SigninState extends State<Signin> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  String get email => _emailController.text.trim();
-  String get password => _passwordController.text.trim();
+class _LoginPageState extends State<LoginPage> {
+  var emailController = TextEditingController();
+  var passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -285,7 +283,7 @@ class _SigninState extends State<Signin> {
                     icon: const Icon(Icons.email),
                     obsecureText: false,
                     suffixIcon: const SizedBox(),
-                    controller: _emailController,
+                    controller: emailController,
                     maxLines: 1,
                     textInputAction: TextInputAction.done,
                     textInputType: TextInputType.emailAddress,
@@ -303,7 +301,7 @@ class _SigninState extends State<Signin> {
                     obsecureText: true,
                     suffixIcon: IconButton(
                         icon: const Icon(Icons.visibility), onPressed: () {}),
-                    controller: _passwordController,
+                    controller: passwordController,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -324,9 +322,15 @@ class _SigninState extends State<Signin> {
                       ),
                     ],
                   ),
-                  AuthButton(
-                    onTap: () {},
-                    text: 'Log In',
+                  GestureDetector(
+                    child: AuthButton(
+                      onTap: () {
+                        AuthController.instance.login(
+                            emailController.text.trim(),
+                            passwordController.text.trim());
+                      },
+                      text: 'Log In',
+                    ),
                   ),
                   CustomRichText(
                     discription: "Belum Punya Akun? ",

@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tugas_akhir/screens/home.dart';
-import 'package:tugas_akhir/screens/signup_page.dart';
+import 'package:tugas_akhir/screens/login.dart';
 
 class AuthController extends GetxController {
   //Authcontroller.intance..
@@ -24,7 +24,7 @@ class AuthController extends GetxController {
   _initialScreen(User? user) {
     if (user == null) {
       print("Halaman Login Page");
-      Get.offAll(() => SignUp());
+      Get.offAll(() => LoginPage());
     } else {
       Get.offAll(() => HomeScreen(email: user.email!));
     }

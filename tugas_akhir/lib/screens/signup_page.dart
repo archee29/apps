@@ -197,6 +197,7 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:tugas_akhir/controllers/auth_controller.dart';
 import 'package:tugas_akhir/styles/app_colors.dart';
 import 'package:tugas_akhir/screens/login.dart';
 import 'package:tugas_akhir/widgets/custom_button.dart';
@@ -204,24 +205,13 @@ import 'package:tugas_akhir/widgets/custom_formfield.dart';
 import 'package:tugas_akhir/widgets/custom_header.dart';
 import 'package:tugas_akhir/widgets/custom_richtext.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
-
-  @override
-  State<SignUp> createState() => _SignUpState();
-}
-
-class _SignUpState extends State<SignUp> {
-  final _userName = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  String get userName => _userName.text.trim();
-  String get email => _emailController.text.trim();
-  String get password => _passwordController.text.trim();
+class SignUp extends StatelessWidget {
+  const SignUp({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var emailController = TextEditingController();
+    var passwordController = TextEditingController();
     return Scaffold(
       body: SafeArea(
           child: Stack(
@@ -235,7 +225,7 @@ class _SignUpState extends State<SignUp> {
               text: 'Form Daftar',
               onTap: () {
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => const Signin()));
+                    MaterialPageRoute(builder: (context) => const LoginPage()));
               }),
           Positioned(
             top: MediaQuery.of(context).size.height * 0.08,
@@ -260,17 +250,19 @@ class _SignUpState extends State<SignUp> {
                   const SizedBox(
                     height: 16,
                   ),
-                  CustomFormField(
-                    headingText: "Username",
-                    icon: const Icon(Icons.people),
-                    hintText: "Masukkan username",
-                    obsecureText: false,
-                    suffixIcon: const SizedBox(),
-                    maxLines: 1,
-                    textInputAction: TextInputAction.done,
-                    textInputType: TextInputType.text,
-                    controller: _userName,
-                  ),
+
+                  // CustomFormField(
+                  //   headingText: "Username",
+                  //   icon: const Icon(Icons.people),
+                  //   hintText: "Masukkan username",
+                  //   obsecureText: false,
+                  //   suffixIcon: const SizedBox(),
+                  //   maxLines: 1,
+                  //   textInputAction: TextInputAction.done,
+                  //   textInputType: TextInputType.text,
+                  //   controller: _userName,
+                  // ),
+
                   const SizedBox(
                     height: 16,
                   ),
@@ -283,7 +275,7 @@ class _SignUpState extends State<SignUp> {
                     maxLines: 1,
                     textInputAction: TextInputAction.done,
                     textInputType: TextInputType.emailAddress,
-                    controller: _emailController,
+                    controller: emailController,
                   ),
                   const SizedBox(
                     height: 16,
@@ -292,7 +284,7 @@ class _SignUpState extends State<SignUp> {
                     maxLines: 1,
                     textInputAction: TextInputAction.done,
                     textInputType: TextInputType.text,
-                    controller: _passwordController,
+                    controller: passwordController,
                     headingText: "Password",
                     icon: const Icon(Icons.password),
                     hintText: "Masukkan Password Dengan 8 Karakter",
@@ -303,9 +295,15 @@ class _SignUpState extends State<SignUp> {
                   const SizedBox(
                     height: 16,
                   ),
-                  AuthButton(
-                    onTap: () {},
-                    text: 'Daftar',
+                  GestureDetector(
+                    child: AuthButton(
+                      onTap: () {
+                        AuthController.instance.register(
+                            emailController.text.trim(),
+                            passwordController.text.trim());
+                      },
+                      text: 'Daftar',
+                    ),
                   ),
                   CustomRichText(
                     discription: 'Sudah Punya Akun? ',
@@ -314,7 +312,7 @@ class _SignUpState extends State<SignUp> {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Signin()));
+                              builder: (context) => const LoginPage()));
                     },
                   )
                 ],
