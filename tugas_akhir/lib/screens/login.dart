@@ -17,6 +17,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
+  bool _isVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +31,10 @@ class _LoginPageState extends State<LoginPage> {
             color: Color.fromARGB(255, 239, 62, 255).withOpacity(0.7),
           ),
           CustomHeader(
-            text: 'Halaman Log In',
+            text: '',
             onTap: () {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const SignUp()));
+              // Navigator.pushReplacement(context,
+              //     MaterialPageRoute(builder: (context) => const SignUp()));
             },
           ),
           Positioned(
@@ -80,9 +81,18 @@ class _LoginPageState extends State<LoginPage> {
                     textInputType: TextInputType.text,
                     icon: const Icon(Icons.password),
                     hintText: "Masukkan Password Dengan 8 Karakter",
-                    obsecureText: true,
+                    obsecureText: !_isVisible,
                     suffixIcon: IconButton(
-                        icon: const Icon(Icons.visibility), onPressed: () {}),
+                        icon: Icon(_isVisible
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                        onPressed: () {
+                          setState(
+                            () {
+                              _isVisible = !_isVisible;
+                            },
+                          );
+                        }),
                     controller: passwordController,
                   ),
                   Row(
@@ -111,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                             emailController.text.trim(),
                             passwordController.text.trim());
                       },
-                      text: 'Log In',
+                      text: 'Masuk',
                     ),
                   ),
                   CustomRichText(

@@ -1,95 +1,186 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_akhir/controllers/auth_controller.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:tugas_akhir/utils/utils.dart';
+import 'package:tugas_akhir/widgets/smart_devices_box.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   String email;
   HomeScreen({Key? key, required this.email}) : super(key: key);
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     double h = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            width: w,
-            height: h * 0.3,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/apps name text.png"),
+      backgroundColor: Colors.grey[300],
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Padding untuk header menu
+            Padding(
+              padding: const EdgeInsets.only(
+                left: AppConstant.horizontalPadding,
+                right: AppConstant.horizontalPadding,
+                top: AppConstant.verticalPadding,
               ),
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            width: w,
-            height: h * 0.3,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/icon apps.png"),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 40,
-          ),
-          Container(
-            width: w,
-            margin: const EdgeInsets.only(left: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Welcome",
-                  style: TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black54,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Image.asset(
+                    'assets/images/menu.png',
+                    height: 30,
+                    color: Colors.grey[800],
                   ),
-                ),
-                Text(
-                  email,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.grey[500],
+                  Icon(
+                    Icons.home,
+                    size: 30,
+                    color: Colors.grey[800],
                   ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          GestureDetector(
-            onTap: () {
-              AuthController.instance.logOut();
-            },
-            child: Container(
-              width: w * 0.5,
-              height: h * 0.08,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                image: DecorationImage(
-                  image: AssetImage("assets/images/button_login.png"),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: Center(
-                child: Text(
-                  "Keluar",
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                  Icon(
+                    Icons.person,
+                    size: 30,
+                    color: Colors.grey[800],
                   ),
-                ),
+                ],
               ),
             ),
-          )
-        ],
+            // jarak antar padding
+            const SizedBox(height: 20),
+            // padding untuk welcome text
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppConstant.horizontalPadding,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Welcome Home,',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[700],
+                    ),
+                  ),
+                  Text(
+                    widget.email,
+                    style: GoogleFonts.bebasNeue(
+                      fontSize: 40,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 5),
+            // padding untuk line antar menu
+            const Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: AppConstant.horizontalPadding,
+              ),
+              child: Divider(
+                color: Colors.grey,
+                thickness: 1,
+              ),
+            ),
+            const SizedBox(height: 5),
+            // padding menu smart Button
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppConstant.horizontalPadding,
+              ),
+              child: Text(
+                'Smart Button',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[800],
+                ),
+              ),
+            ),
+            // Kotak menu smart button
+            Expanded(
+              child: GridView.builder(
+                itemCount: AppData.smartDevices.length,
+                physics: const NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(
+                  left: 15,
+                  right: 15,
+                ),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 1 / 1.2,
+                ),
+                itemBuilder: (context, index) {
+                  return SmartDeviceBoxWidget(
+                    smartDeviceName: AppData.smartDevices[index][0],
+                    iconPath: AppData.smartDevices[index][1],
+                    isPowerOn: AppData.smartDevices[index][2],
+                    onChanged: (bool newValue) {
+                      setState(() {
+                        AppData.smartDevices[index][2] = newValue;
+                      });
+                    },
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 5),
+            // line padding
+            const Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: AppConstant.horizontalPadding,
+              ),
+              child: Divider(
+                color: Colors.grey,
+                thickness: 1,
+              ),
+            ),
+            const SizedBox(height: 5),
+            // padding button logout
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppConstant.horizontalPadding,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      AuthController.instance.logOut();
+                    },
+                    child: Container(
+                      width: w * 0.5,
+                      height: h * 0.08,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/button_login.png"),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Keluar",
+                          style: TextStyle(
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

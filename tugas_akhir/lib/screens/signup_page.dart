@@ -7,13 +7,19 @@ import 'package:tugas_akhir/widgets/custom_formfield.dart';
 import 'package:tugas_akhir/widgets/custom_header.dart';
 import 'package:tugas_akhir/widgets/custom_richtext.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   const SignUp({super.key});
 
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
+    bool _isVisible = false;
     return Scaffold(
       body: SafeArea(
           child: Stack(
@@ -24,7 +30,7 @@ class SignUp extends StatelessWidget {
             color: Color.fromARGB(255, 239, 62, 255).withOpacity(0.7),
           ),
           CustomHeader(
-              text: 'Form Daftar',
+              text: '',
               onTap: () {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => const LoginPage()));
@@ -35,7 +41,7 @@ class SignUp extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.9,
               width: MediaQuery.of(context).size.width,
               decoration: const BoxDecoration(
-                  color: AppColors.whiteshade,
+                  color: Color.fromRGBO(248, 249, 250, 1),
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(32),
                       topRight: Radius.circular(32))),
@@ -65,9 +71,9 @@ class SignUp extends StatelessWidget {
                   //   controller: _userName,
                   // ),
 
-                  const SizedBox(
-                    height: 16,
-                  ),
+                  // const SizedBox(
+                  //   height: 5,
+                  // ),
                   CustomFormField(
                     headingText: "Email",
                     hintText: "Email",
@@ -83,16 +89,25 @@ class SignUp extends StatelessWidget {
                     height: 16,
                   ),
                   CustomFormField(
+                    headingText: "Password",
                     maxLines: 1,
                     textInputAction: TextInputAction.done,
                     textInputType: TextInputType.text,
-                    controller: passwordController,
-                    headingText: "Password",
                     icon: const Icon(Icons.password),
                     hintText: "Masukkan Password Dengan 8 Karakter",
-                    obsecureText: true,
+                    obsecureText: !_isVisible,
                     suffixIcon: IconButton(
-                        icon: const Icon(Icons.visibility), onPressed: () {}),
+                        icon: Icon(_isVisible
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                        onPressed: () {
+                          setState(
+                            () {
+                              _isVisible = !_isVisible;
+                            },
+                          );
+                        }),
+                    controller: passwordController,
                   ),
                   const SizedBox(
                     height: 16,
