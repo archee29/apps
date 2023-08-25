@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
             color: Color.fromARGB(255, 239, 62, 255).withOpacity(0.7),
           ),
           CustomHeader(
-            text: '',
+            text: 'Automatic Cat Feeder',
             onTap: () {
               // Navigator.pushReplacement(context,
               //     MaterialPageRoute(builder: (context) => const SignUp()));

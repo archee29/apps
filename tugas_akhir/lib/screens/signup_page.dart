@@ -19,7 +19,7 @@ class _SignUpState extends State<SignUp> {
   Widget build(BuildContext context) {
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
-    bool _isVisible = false;
+    bool isVisible = false;
     return Scaffold(
       body: SafeArea(
           child: Stack(
@@ -30,7 +30,7 @@ class _SignUpState extends State<SignUp> {
             color: Color.fromARGB(255, 239, 62, 255).withOpacity(0.7),
           ),
           CustomHeader(
-              text: '',
+              text: 'Automatic Cat Feeder',
               onTap: () {
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => const LoginPage()));
@@ -95,15 +95,15 @@ class _SignUpState extends State<SignUp> {
                     textInputType: TextInputType.text,
                     icon: const Icon(Icons.password),
                     hintText: "Masukkan Password Dengan 8 Karakter",
-                    obsecureText: !_isVisible,
+                    obsecureText: !isVisible,
                     suffixIcon: IconButton(
-                        icon: Icon(_isVisible
+                        icon: Icon(isVisible
                             ? Icons.visibility_off
                             : Icons.visibility),
                         onPressed: () {
                           setState(
                             () {
-                              _isVisible = !_isVisible;
+                              isVisible = !isVisible;
                             },
                           );
                         }),

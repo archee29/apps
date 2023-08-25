@@ -16,21 +16,16 @@ class CustomHeader extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // InkWell(
-          //   onTap: onTap,
-          //   child: const Icon(
-          //     Icons.arrow_back_ios_new_rounded,
-          //     color: AppColors.whiteshade,
-          //     size: 24,
-          //   ),
-          // ),
-          // const SizedBox(
-          //   width: 16,
-          // ),
-
-          Image.asset(
-            'assets/images/Automatic Cat Feeder.png',
-            height: 40,
+          InkWell(
+            onTap: onTap,
+            child: const Icon(
+              Icons.arrow_back_ios_new_rounded,
+              color: AppColors.whiteshade,
+              size: 24,
+            ),
+          ),
+          const SizedBox(
+            width: 16,
           ),
           Text(
             text,
