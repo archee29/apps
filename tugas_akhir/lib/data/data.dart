@@ -24,6 +24,7 @@ final List<Info> info = [
 //       color: kDarkBlue,
 //     ),
 //   ),
+// ];
 //   Planing(
 //     heading: "Listening - Intermediate Topic 1",
 //     subHeading: "03:00 PM - 04:00 PM",
