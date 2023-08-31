@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:tugas_akhir/app/controllers/auth_controller.dart';
-import 'package:tugas_akhir/widgets/custom_side_menu.dart';
+import 'package:tugas_akhir/app/widgets/custom_side_menu.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -56,7 +56,7 @@ class HomeView extends GetView<HomeController> {
                       const TextStyle(color: Colors.pinkAccent, fontSize: 20),
                   children: [
                     TextSpan(
-                      text: email,
+                      text: "email tampilkan disini",
                       style: const TextStyle(
                           color: Colors.pink, fontWeight: FontWeight.bold),
                     ),

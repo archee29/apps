@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:tugas_akhir/app/controllers/auth_controller.dart';
-import 'package:tugas_akhir/styles/app_colors.dart';
-import 'package:tugas_akhir/widgets/custom_button.dart';
-import 'package:tugas_akhir/widgets/custom_formfield.dart';
-import 'package:tugas_akhir/widgets/custom_header.dart';
-import 'package:tugas_akhir/widgets/custom_richtext.dart';
+import 'package:tugas_akhir/app/styles/app_colors.dart';
+import 'package:tugas_akhir/app/widgets/custom_button.dart';
+import 'package:tugas_akhir/app/widgets/custom_formfield.dart';
+import 'package:tugas_akhir/app/widgets/custom_header.dart';
+import 'package:tugas_akhir/app/widgets/custom_richtext.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 
 import '../controllers/signup_controller.dart';
