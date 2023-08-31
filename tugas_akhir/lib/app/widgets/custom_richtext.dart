@@ -1,7 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:tugas_akhir/screens/signup_page.dart';
-import 'package:tugas_akhir/styles/app_colors.dart';
 
 class CustomRichText extends StatelessWidget {
   final String discription;

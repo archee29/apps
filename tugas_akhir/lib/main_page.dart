@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tugas_akhir/utils/utils.dart';
-import 'package:tugas_akhir/widgets/smart_devices_box.dart';
+import 'package:tugas_akhir/app/utils/utils.dart';
+import 'package:tugas_akhir/app/widgets/smart_devices_box.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key, required String email}) : super(key: key);

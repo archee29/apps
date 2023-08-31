@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:tugas_akhir/auth_controller.dart';
 import 'package:tugas_akhir/app/controllers/auth_controller.dart';
-import 'package:tugas_akhir/screens/home.dart';
-import 'package:tugas_akhir/screens/main_page.dart';
-import 'package:tugas_akhir/screens/home.dart';
 
 class SideMenu extends StatelessWidget {
   // const SideMenu({super.key});

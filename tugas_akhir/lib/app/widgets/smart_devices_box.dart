@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tugas_akhir/utils/utils.dart';
+import 'package:tugas_akhir/app/utils/utils.dart';
 
 class SmartDeviceBoxWidget extends StatelessWidget {
   final String smartDeviceName;
