@@ -68,7 +68,7 @@ class SideMenu extends StatelessWidget {
             margin: const EdgeInsets.all(24),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-                color: Colors.pinkAccent,
+                color: Color.fromARGB(255, 255, 136, 186),
                 borderRadius: BorderRadius.circular(15)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -89,12 +89,13 @@ class SideMenu extends StatelessWidget {
                         width: 30,
                         decoration: BoxDecoration(
                           border: Border.all(
-                              color: Color.fromARGB(255, 247, 56, 120)),
+                            color: Color.fromARGB(255, 255, 0, 85),
+                          ),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: const Icon(
                           Icons.keyboard_double_arrow_right_rounded,
-                          color: Color.fromARGB(255, 255, 105, 155),
+                          color: Color.fromARGB(255, 255, 0, 85),
                         ),
                       ),
                     )

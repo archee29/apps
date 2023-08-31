@@ -50,17 +50,16 @@ class HomeView extends GetView<HomeController> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               RichText(
-                text: TextSpan(
+                text: const TextSpan(
                   text: "Hello ",
-                  style:
-                      const TextStyle(color: Colors.pinkAccent, fontSize: 20),
+                  style: TextStyle(color: Colors.pinkAccent, fontSize: 20),
                   children: [
                     TextSpan(
                       text: "email tampilkan disini",
-                      style: const TextStyle(
+                      style: TextStyle(
                           color: Colors.pink, fontWeight: FontWeight.bold),
                     ),
-                    const TextSpan(
+                    TextSpan(
                       text: ", welcome back!",
                     ),
                   ],

@@ -28,8 +28,8 @@ class CatApp extends StatelessWidget {
     return StreamBuilder<User?>(
       stream: authC.streamAuthStatus,
       builder: (context, snapshot) {
-        print(snapshot.data);
         if (snapshot.connectionState == ConnectionState.active) {
+          print(snapshot.data);
           return GetMaterialApp(
             title: 'Automatic Cat Feeder',
             debugShowCheckedModeBanner: false,
@@ -37,8 +37,12 @@ class CatApp extends StatelessWidget {
               primarySwatch: Colors.blue,
             ),
             // initialRoute: snapshot.data != null ? Routes.HOME : Routes.LOGIN,
+            initialRoute:
+                snapshot.data != null && snapshot.data!.emailVerified == true
+                    ? Routes.HOME
+                    : Routes.LOGIN,
             getPages: AppPages.routes,
-            home: snapshot.data != null ? HomeView() : LoginView(),
+            // home: snapshot.data != null ? HomeView() : LoginView(),
           );
         }
         return LoadingView();

@@ -116,11 +116,33 @@ class SignupView extends GetView<SignupController> {
                         text: 'Daftar',
                       ),
                     ),
-                    CustomRichText(
-                      discription: 'Sudah Punya Akun? ',
-                      text: 'Log In Disini',
-                      onTap: () => Get.back(),
-                    )
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    RichText(
+                      text: const TextSpan(
+                        text: "Dengan Melanjutkan, Kamu Menerima",
+                        style: TextStyle(color: Colors.black87, fontSize: 16),
+                        children: [
+                          TextSpan(
+                            text: " Syarat Penggunaan",
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 239, 62, 255),
+                            ),
+                          ),
+                          TextSpan(
+                            text: " dan",
+                          ),
+                          TextSpan(
+                            text: " Kebijakan Privasi Kami",
+                            style: TextStyle(
+                              color: Color.fromARGB(255, 239, 62, 255),
+                            ),
+                          ),
+                        ],
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ],
                 ),
               ),

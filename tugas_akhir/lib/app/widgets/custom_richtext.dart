@@ -16,19 +16,23 @@ class CustomRichText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-          left: MediaQuery.of(context).size.width * 0.149,
-          top: MediaQuery.of(context).size.height * 0.08),
+          left: MediaQuery.of(context).size.width * 0.175,
+          top: MediaQuery.of(context).size.height * 0.05),
       child: Text.rich(
         TextSpan(
-            text: discription,
-            style: const TextStyle(color: Colors.black87, fontSize: 16),
-            children: [
-              TextSpan(
-                  text: text,
-                  style: const TextStyle(
-                      color: Color.fromARGB(255, 239, 62, 255), fontSize: 16),
-                  recognizer: TapGestureRecognizer()..onTap = onTap),
-            ]),
+          text: discription,
+          style: const TextStyle(color: Colors.black87, fontSize: 16),
+          children: [
+            TextSpan(
+                text: text,
+                style: const TextStyle(
+                  color: Color.fromARGB(255, 239, 62, 255),
+                  fontSize: 16,
+                ),
+                recognizer: TapGestureRecognizer()..onTap = onTap),
+          ],
+        ),
+        textAlign: TextAlign.center,
       ),
     );
   }
