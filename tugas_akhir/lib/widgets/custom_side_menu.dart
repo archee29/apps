@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_akhir/controllers/auth_controller.dart';
+import 'package:get/get.dart';
+// import 'package:tugas_akhir/auth_controller.dart';
+import 'package:tugas_akhir/app/controllers/auth_controller.dart';
+import 'package:tugas_akhir/screens/home.dart';
+import 'package:tugas_akhir/screens/main_page.dart';
+import 'package:tugas_akhir/screens/home.dart';
 
 class SideMenu extends StatelessWidget {
-  const SideMenu({super.key});
+  // const SideMenu({super.key});
+  final authC = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +32,14 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             icon: Icons.menu,
             title: "Main Menu",
-            onTap: () {},
+            onTap: () {
+              // Navigator.pushReplacement(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) => HomeScreen(
+              //               email: '',
+              //             )));
+            },
           ),
           DrawerListTile(
             icon: Icons.wifi,
@@ -41,9 +54,7 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             icon: Icons.logout,
             title: "Keluar",
-            onTap: () {
-              AuthController.instance.logOut();
-            },
+            onTap: () => authC.logout(),
           ),
           const SizedBox(
             height: 10,

@@ -1,4 +1,4 @@
-// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 // class SplashScreen extends StatelessWidget {
 //   const SplashScreen({super.key});
@@ -21,3 +21,12 @@
 //     );
 //   }
 // }
+
+class StatsPage extends StatelessWidget {
+  const StatsPage({super.key, required String email});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}

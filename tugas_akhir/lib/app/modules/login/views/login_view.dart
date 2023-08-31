@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_akhir/auth_controller.dart';
+
+import 'package:get/get.dart';
+import 'package:tugas_akhir/app/controllers/auth_controller.dart';
 import 'package:tugas_akhir/styles/app_colors.dart';
-import 'package:tugas_akhir/screens/signup_page.dart';
 import 'package:tugas_akhir/widgets/custom_button.dart';
 import 'package:tugas_akhir/widgets/custom_formfield.dart';
 import 'package:tugas_akhir/widgets/custom_header.dart';
 import 'package:tugas_akhir/widgets/custom_richtext.dart';
+import 'package:tugas_akhir/app/routes/app_pages.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+import '../controllers/login_controller.dart';
 
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
+class LoginView extends GetView<LoginController> {
+  // const LoginView({Key? key}) : super(key: key);
 
-class _LoginPageState extends State<LoginPage> {
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
   bool _isVisible = false;
+
+  final authC = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                       icon: const Icon(Icons.email),
                       obsecureText: false,
                       suffixIcon: const SizedBox(),
-                      controller: emailController,
+                      controller: controller.emailController,
                       maxLines: 1,
                       textInputAction: TextInputAction.done,
                       textInputType: TextInputType.emailAddress,
@@ -87,13 +86,13 @@ class _LoginPageState extends State<LoginPage> {
                               ? Icons.visibility_off
                               : Icons.visibility),
                           onPressed: () {
-                            setState(
-                              () {
-                                _isVisible = !_isVisible;
-                              },
-                            );
+                            // setState(
+                            //   () {
+                            //     _isVisible = !_isVisible;
+                            //   },
+                            // );
                           }),
-                      controller: passwordController,
+                      controller: controller.passwordController,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -116,23 +115,16 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     GestureDetector(
                       child: AuthButton(
-                        onTap: () {
-                          AuthController.instance.login(
-                              emailController.text.trim(),
-                              passwordController.text.trim());
-                        },
+                        onTap: () => authC.login(
+                            controller.emailController.text,
+                            controller.passwordController.text),
                         text: 'Masuk',
                       ),
                     ),
                     CustomRichText(
                       discription: "Belum Punya Akun? ",
                       text: "Daftar Disini",
-                      onTap: () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SignUp()));
-                      },
+                      onTap: () => Get.toNamed(Routes.SIGNUP),
                     ),
                   ],
                 ),

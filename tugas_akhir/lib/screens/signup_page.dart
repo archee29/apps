@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_akhir/controllers/auth_controller.dart';
+import 'package:tugas_akhir/auth_controller.dart';
 import 'package:tugas_akhir/styles/app_colors.dart';
 import 'package:tugas_akhir/screens/login.dart';
 import 'package:tugas_akhir/widgets/custom_button.dart';

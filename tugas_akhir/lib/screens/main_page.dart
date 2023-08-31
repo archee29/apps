@@ -4,7 +4,7 @@ import 'package:tugas_akhir/utils/utils.dart';
 import 'package:tugas_akhir/widgets/smart_devices_box.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+  const MainPage({Key? key, required String email}) : super(key: key);
 
   @override
   State<MainPage> createState() => _HomeScreenState();

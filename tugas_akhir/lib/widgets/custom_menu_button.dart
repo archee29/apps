@@ -41,18 +41,37 @@ class _MenuButtonState extends State<MenuButton> {
                     children: [
                       IconButton(
                         icon: Icon(
-                          Icons.home,
-                          color: isHome ? Colors.pinkAccent : Colors.grey,
+                          Icons.insert_chart_outlined,
+                          color: isStatistics ? Colors.pinkAccent : Colors.grey,
                         ),
                         onPressed: () {
                           setState(() {
-                            isHome = true;
+                            isStatistics = true;
+                            isIot = false;
                             isSetting = false;
+                            isLogOut = false;
                           });
                         },
                       ),
                       const SizedBox(
-                        width: 20,
+                        width: 10,
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.wifi,
+                          color: isIot ? Colors.pinkAccent : Colors.grey,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isStatistics = false;
+                            isIot = true;
+                            isSetting = false;
+                            isLogOut = false;
+                          });
+                        },
+                      ),
+                      const SizedBox(
+                        width: 10,
                       ),
                       IconButton(
                         icon: Icon(
@@ -61,8 +80,27 @@ class _MenuButtonState extends State<MenuButton> {
                         ),
                         onPressed: () {
                           setState(() {
+                            isStatistics = false;
+                            isIot = false;
                             isSetting = true;
-                            isHome = false;
+                            isLogOut = false;
+                          });
+                        },
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.login_outlined,
+                          color: isLogOut ? Colors.pinkAccent : Colors.grey,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isStatistics = false;
+                            isIot = false;
+                            isSetting = false;
+                            isLogOut = true;
                           });
                         },
                       ),

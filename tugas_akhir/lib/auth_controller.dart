@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tugas_akhir/screens/home.dart';
 import 'package:tugas_akhir/screens/login.dart';
+import 'package:tugas_akhir/screens/main_page.dart';
+import 'package:tugas_akhir/screens/settings_page.dart';
+import 'package:tugas_akhir/screens/stats_page.dart';
 
 class AuthController extends GetxController {
   //Authcontroller.intance..
@@ -24,9 +27,12 @@ class AuthController extends GetxController {
   _initialScreen(User? user) {
     if (user == null) {
       print("Halaman Login Page");
-      Get.offAll(() => LoginPage());
+      Get.offAll(() => const LoginPage());
     } else {
       Get.offAll(() => HomeScreen(email: user.email!));
+      // Get.offAll(() => MainPage(email: user.email!));
+      // Get.offAll(() => StatsPage(email: user.email!));
+      // Get.offAll(() => SettingPage(email: user.email!));
     }
   }
 
@@ -40,7 +46,7 @@ class AuthController extends GetxController {
         "User Message",
         backgroundColor: Colors.redAccent,
         snackPosition: SnackPosition.BOTTOM,
-        titleText: Text(
+        titleText: const Text(
           "Akun Gagal Dibuat",
           style: TextStyle(
             color: Colors.white,
@@ -48,7 +54,7 @@ class AuthController extends GetxController {
         ),
         messageText: Text(
           e.toString(),
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
       );
     }
@@ -63,7 +69,7 @@ class AuthController extends GetxController {
         "Login Message",
         backgroundColor: Colors.redAccent,
         snackPosition: SnackPosition.BOTTOM,
-        titleText: Text(
+        titleText: const Text(
           "Login Gagal",
           style: TextStyle(
             color: Colors.white,
@@ -71,7 +77,7 @@ class AuthController extends GetxController {
         ),
         messageText: Text(
           e.toString(),
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
       );
     }
