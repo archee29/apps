@@ -9,15 +9,10 @@ import 'package:tugas_akhir/app/widgets/custom_header.dart';
 import 'package:tugas_akhir/app/widgets/custom_richtext.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 
-import '../controllers/login_controller.dart';
+import '../controllers/reset_controller.dart';
 
-class LoginView extends GetView<LoginController> {
-  // const LoginView({Key? key}) : super(key: key);
-
-  bool _isVisible = false;
-
+class ResetView extends GetView<ResetController> {
   final authC = Get.find<AuthController>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,58 +68,17 @@ class LoginView extends GetView<LoginController> {
                     const SizedBox(
                       height: 16,
                     ),
-                    CustomFormField(
-                      headingText: "Password",
-                      maxLines: 1,
-                      textInputAction: TextInputAction.done,
-                      textInputType: TextInputType.text,
-                      icon: const Icon(Icons.password),
-                      hintText: "Masukkan Password Dengan 8 Karakter",
-                      obsecureText: !_isVisible,
-                      suffixIcon: IconButton(
-                          icon: Icon(_isVisible
-                              ? Icons.visibility_off
-                              : Icons.visibility),
-                          onPressed: () {
-                            // setState(
-                            //   () {
-                            //     _isVisible = !_isVisible;
-                            //   },
-                            // );
-                          }),
-                      controller: controller.passwordController,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 16, horizontal: 24),
-                          child: InkWell(
-                            onTap: () => Get.toNamed(Routes.RESET),
-                            child: Text(
-                              "Lupa Password?",
-                              style: TextStyle(
-                                  color: const Color.fromARGB(255, 239, 62, 255)
-                                      .withOpacity(0.7),
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
                     GestureDetector(
                       child: AuthButton(
-                        onTap: () => authC.login(
-                            controller.emailController.text,
-                            controller.passwordController.text),
-                        text: 'Masuk',
+                        onTap: () => authC
+                            .resetPassword(controller.emailController.text),
+                        text: 'Reset Password',
                       ),
                     ),
                     CustomRichText(
-                      discription: "Belum Punya Akun? ",
-                      text: "Daftar Disini",
-                      onTap: () => Get.toNamed(Routes.SIGNUP),
+                      discription: "Sudah Punya Akun? ",
+                      text: "Login Disini",
+                      onTap: () => Get.toNamed(Routes.LOGIN),
                     ),
                   ],
                 ),

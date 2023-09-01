@@ -6,6 +6,9 @@ abstract class Routes {
   static const HOME = _Paths.HOME;
   static const LOGIN = _Paths.LOGIN;
   static const SIGNUP = _Paths.SIGNUP;
+  static const IOT = _Paths.IOT;
+  static const SETTING = _Paths.SETTING;
+  static const RESET = _Paths.RESET;
 }
 
 abstract class _Paths {
@@ -13,4 +16,7 @@ abstract class _Paths {
   static const HOME = '/home';
   static const LOGIN = '/login';
   static const SIGNUP = '/signup';
+  static const IOT = '/iot';
+  static const SETTING = '/setting';
+  static const RESET = '/reset';
 }
