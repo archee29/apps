@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
+
+import 'package:get/get.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tugas_akhir/app/utils/utils.dart';
 import 'package:tugas_akhir/app/widgets/smart_devices_box.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({Key? key, required String email}) : super(key: key);
+import '../controllers/main_controller.dart';
 
-  @override
-  State<MainPage> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<MainPage> {
+class MainView extends GetView<MainController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,9 +105,9 @@ class _HomeScreenState extends State<MainPage> {
                     iconPath: AppData.smartDevices[index][1],
                     isPowerOn: AppData.smartDevices[index][2],
                     onChanged: (bool newValue) {
-                      setState(() {
-                        AppData.smartDevices[index][2] = newValue;
-                      });
+                      // setState(() {
+                      //   AppData.smartDevices[index][2] = newValue;
+                      // });
                     },
                   );
                 },

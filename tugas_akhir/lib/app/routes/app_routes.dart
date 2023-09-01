@@ -9,6 +9,9 @@ abstract class Routes {
   static const IOT = _Paths.IOT;
   static const SETTING = _Paths.SETTING;
   static const RESET = _Paths.RESET;
+  static const MAIN = _Paths.MAIN;
+  static const TAMBAH_JADWAL = _Paths.TAMBAH_JADWAL;
+  static const EDIT_JADWAL = _Paths.EDIT_JADWAL;
 }
 
 abstract class _Paths {
@@ -19,4 +22,7 @@ abstract class _Paths {
   static const IOT = '/iot';
   static const SETTING = '/setting';
   static const RESET = '/reset';
+  static const MAIN = '/main';
+  static const TAMBAH_JADWAL = '/tambah-jadwal';
+  static const EDIT_JADWAL = '/edit-jadwal';
 }

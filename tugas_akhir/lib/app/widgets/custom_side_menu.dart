@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:tugas_akhir/auth_controller.dart';
 import 'package:tugas_akhir/app/controllers/auth_controller.dart';
+import 'package:tugas_akhir/app/routes/app_pages.dart';
 
 class SideMenu extends StatelessWidget {
   // const SideMenu({super.key});
@@ -24,29 +25,22 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             icon: Icons.home,
             title: "Home",
-            onTap: () {},
+            onTap: () => Get.toNamed(Routes.HOME),
           ),
           DrawerListTile(
             icon: Icons.menu,
             title: "Main Menu",
-            onTap: () {
-              // Navigator.pushReplacement(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) => HomeScreen(
-              //               email: '',
-              //             )));
-            },
+            onTap: () => Get.toNamed(Routes.MAIN),
           ),
           DrawerListTile(
             icon: Icons.wifi,
             title: "IoT",
-            onTap: () {},
+            onTap: () => Get.toNamed(Routes.IOT),
           ),
           DrawerListTile(
             icon: Icons.settings,
             title: "Settings",
-            onTap: () {},
+            onTap: () => Get.toNamed(Routes.SETTING),
           ),
           DrawerListTile(
             icon: Icons.logout,

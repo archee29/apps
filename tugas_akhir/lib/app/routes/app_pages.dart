@@ -1,17 +1,23 @@
 import 'package:get/get.dart';
 
+import '../modules/edit_jadwal/bindings/edit_jadwal_binding.dart';
+import '../modules/edit_jadwal/views/edit_jadwal_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/iot/bindings/iot_binding.dart';
 import '../modules/iot/views/iot_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/main/bindings/main_binding.dart';
+import '../modules/main/views/main_view.dart';
 import '../modules/reset/bindings/reset_binding.dart';
 import '../modules/reset/views/reset_view.dart';
 import '../modules/setting/bindings/setting_binding.dart';
 import '../modules/setting/views/setting_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
+import '../modules/tambah_jadwal/bindings/tambah_jadwal_binding.dart';
+import '../modules/tambah_jadwal/views/tambah_jadwal_view.dart';
 
 part 'app_routes.dart';
 
@@ -38,18 +44,33 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.IOT,
-      page: () => const IotView(),
+      page: () => IotView(),
       binding: IotBinding(),
     ),
     GetPage(
       name: _Paths.SETTING,
-      page: () => const SettingView(),
+      page: () => SettingView(),
       binding: SettingBinding(),
     ),
     GetPage(
       name: _Paths.RESET,
-      page: () => const ResetView(),
+      page: () => ResetView(),
       binding: ResetBinding(),
+    ),
+    GetPage(
+      name: _Paths.MAIN,
+      page: () => MainView(),
+      binding: MainBinding(),
+    ),
+    GetPage(
+      name: _Paths.TAMBAH_JADWAL,
+      page: () => TambahJadwalView(),
+      binding: TambahJadwalBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT_JADWAL,
+      page: () => EditJadwalView(),
+      binding: EditJadwalBinding(),
     ),
   ];
 }
