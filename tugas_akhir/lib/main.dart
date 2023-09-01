@@ -2,13 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-// import 'package:tugas_akhir/auth_controller.dart';
-// import 'package:tugas_akhir/screens/login.dart';
-
 import 'package:tugas_akhir/app/controllers/auth_controller.dart';
-import 'package:tugas_akhir/app/modules/home/views/home_view.dart';
-import 'package:tugas_akhir/app/modules/login/views/login_view.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/utils/loading.dart';
 
@@ -34,7 +28,7 @@ class CatApp extends StatelessWidget {
             title: 'Automatic Cat Feeder',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
-              primarySwatch: Colors.blue,
+              primarySwatch: Colors.pink,
             ),
             // initialRoute: snapshot.data != null ? Routes.HOME : Routes.LOGIN,
             initialRoute:
