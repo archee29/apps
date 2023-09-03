@@ -4,10 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class IotController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  // Future<QuerySnapshot<Object?>> getData() async {
-  //   CollectionReference jadwal = firestore.collection("jadwal");
-  //   return jadwal.get();
-  // }
+  Future<QuerySnapshot<Object?>> getData() async {
+    CollectionReference jadwal = firestore.collection("jadwal");
+    return jadwal.get();
+  }
 
   Stream<QuerySnapshot<Object?>> streamData() {
     CollectionReference jadwal = firestore.collection("jadwal");

@@ -55,7 +55,7 @@ class HomeView extends GetView<HomeController> {
                   style: TextStyle(color: Colors.pinkAccent, fontSize: 20),
                   children: [
                     TextSpan(
-                      text: "email",
+                      text: "a",
                       style: TextStyle(
                           color: Colors.pink, fontWeight: FontWeight.bold),
                     ),

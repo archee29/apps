@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../models/info_model.dart';
+import 'models/info_model.dart';
 // import '../model/planing_model.dart';
 // import '../model/statistics_model.dart';
 

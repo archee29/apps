@@ -14,7 +14,7 @@ class TambahJadwalController extends GetxController {
       String dateNow = DateTime.now().toIso8601String();
       await jadwal.add(
         {
-          "makanan": makanan,
+          "makanan": int.parse(makanan),
           "minuman": int.parse(minuman),
           "time": dateNow,
         },

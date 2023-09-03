@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:tugas_akhir/data/data.dart';
+import 'package:tugas_akhir/app/data/data.dart';
 
 class InfoFeeder extends StatelessWidget {
   const InfoFeeder({super.key});

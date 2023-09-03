@@ -8,7 +8,6 @@ import 'package:tugas_akhir/app/utils/loading.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp().then((value) => Get.put(AuthController()));
   await Firebase.initializeApp();
   runApp(CatApp());
 }

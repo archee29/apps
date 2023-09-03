@@ -18,7 +18,7 @@ class EditJadwalController extends GetxController {
     try {
       await editJadwal.update(
         {
-          "makanan": makanan,
+          "makanan": int.parse(makanan),
           "minuman": int.parse(minuman),
         },
       );
