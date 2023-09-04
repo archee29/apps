@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../styles/color_theme.dart';
+import 'package:tugas_akhir/app/styles/color_theme.dart';
 
 class AnimasiSwitch extends StatelessWidget {
   final List<bool> isToggled;

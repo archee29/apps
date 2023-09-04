@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:tugas_akhir/app/controllers/auth_controller.dart';
-import 'package:tugas_akhir/app/widgets/custom_side_menu.dart';
+import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_side_menu.dart';
 
 import '../controllers/home_controller.dart';
 

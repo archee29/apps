@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../styles/text_theme.dart';
+import 'package:tugas_akhir/app/styles/text_theme.dart';
 import 'package:flutter_svg/svg.dart';
 
 class MenuSelector extends StatelessWidget {

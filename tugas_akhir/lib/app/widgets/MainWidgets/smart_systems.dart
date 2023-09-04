@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../widgets/animasi_switch.dart';
-import '../modules/main/controllers/main_controller.dart';
+import 'package:tugas_akhir/app/widgets/MainWidgets/animasi_switch.dart';
+import 'package:tugas_akhir/app/modules/main/controllers/main_controller.dart';
 import 'package:tugas_akhir/app/styles/text_theme.dart';
-import '../styles/color_theme.dart';
+import 'package:tugas_akhir/app/styles/color_theme.dart';
 
 class SmartSystem extends StatelessWidget {
   final controller = Get.put(MainController());

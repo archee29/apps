@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:tugas_akhir/app/data/models/feeder_get.dart';
-import 'package:tugas_akhir/app/widgets/menu_selector.dart';
-import 'package:tugas_akhir/app/widgets/smart_systems.dart';
-import 'package:tugas_akhir/app/widgets/user_avatar.dart';
+import 'package:tugas_akhir/app/widgets/MainWidgets/menu_selector.dart';
+import 'package:tugas_akhir/app/widgets/MainWidgets/smart_systems.dart';
+import 'package:tugas_akhir/app/widgets/MainWidgets/user_avatar.dart';
 import 'package:tugas_akhir/app/modules/main/controllers/main_controller.dart';
 import 'package:tugas_akhir/app/modules/main/views/rgb_view.dart';
 import 'package:tugas_akhir/app/styles/color_theme.dart';
