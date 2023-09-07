@@ -9,9 +9,9 @@ class HomeController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  RxInt _currenIndex = 0.obs;
+  RxInt _currentIndex = 0.obs;
 
-  get currentIndex => this._currenIndex.value;
+  get currentIndex => this._currentIndex.value;
 
   final List<Widget> mainViews = [
     HomeView(),
@@ -53,6 +53,16 @@ class HomeController extends GetxController {
       isToggled[index] ? "#fffff" : "#00000";
     }
     update([2, true]);
+  }
+
+  setCurrentIndex(int index) {
+    _currentIndex.value = index;
+    if (index == 1 || index == 5) {
+      Get.back();
+      Get.back();
+    } else if (index == 0) {
+      // streamInit();
+    }
   }
 
   @override
