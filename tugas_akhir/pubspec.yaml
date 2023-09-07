@@ -60,7 +60,7 @@ dependencies:
   # UI PUBSPEC REQUIRE
   percent_indicator: ^4.2.3
   fl_chart: ^0.63.0
-  
+
   # google_fonts: ^5.1.0
   font_awesome_flutter: ^10.5.0
   flutter_circle_color_picker: ^0.3.0
@@ -96,6 +96,7 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/icons/
     - .env
 
   # To add assets to your application, add an assets section, like this:

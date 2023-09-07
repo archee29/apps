@@ -10,9 +10,11 @@ import 'package:tugas_akhir/app/modules/main/views/rgb_view.dart';
 import 'package:tugas_akhir/app/styles/color_theme.dart';
 import 'package:tugas_akhir/app/styles/text_theme.dart';
 
-import '../controllers/main_controller.dart';
+// import '../controllers/main_controller.dart';
 
 class DashboardView extends GetView<MainController> {
+  const DashboardView({super.key});
+
   @override
   Widget build(BuildContext context) {
     Size size = Get.size;
@@ -116,12 +118,12 @@ class DashboardView extends GetView<MainController> {
                                   img: 'assets/icons/temperature.png',
                                   title: 'Makanan',
                                   horizontalPadding: Get.width * 0.046,
-                                  child: SizedBox(
+                                  child: const SizedBox(
+                                    height: 15,
+                                    width: 15,
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
                                     ),
-                                    height: 15,
-                                    width: 15,
                                   ),
                                 );
                               } else {
@@ -159,12 +161,12 @@ class DashboardView extends GetView<MainController> {
                                     img: 'assets/icons/humidity.png',
                                     title: 'Minuman',
                                     horizontalPadding: Get.width * 0.044,
-                                    child: SizedBox(
+                                    child: const SizedBox(
+                                      height: 15,
+                                      width: 15,
                                       child: CircularProgressIndicator(
                                         strokeWidth: 2,
                                       ),
-                                      height: 15,
-                                      width: 15,
                                     ),
                                   );
                                 } else {
@@ -263,6 +265,7 @@ class DashboardView extends GetView<MainController> {
 }
 
 class FeederBanner extends GetView<MainController> {
+  @override
   final MainController controller = Get.put(MainController());
   final double? horizontalPadding;
   final String? img;
@@ -270,6 +273,7 @@ class FeederBanner extends GetView<MainController> {
   final Widget? child;
 
   FeederBanner({
+    super.key,
     required this.img,
     required this.title,
     required this.horizontalPadding,
@@ -304,9 +308,9 @@ class FeederBanner extends GetView<MainController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Spacer(flex: 4),
+              const Spacer(flex: 4),
               child!,
-              Spacer(flex: 2),
+              const Spacer(flex: 2),
               Text(
                 title!,
                 style: MainFeTextTheme.kSub2HeadTextStyle.copyWith(
@@ -314,7 +318,7 @@ class FeederBanner extends GetView<MainController> {
                   fontSize: 12,
                 ),
               ),
-              Spacer(flex: 4),
+              const Spacer(flex: 4),
             ],
           ),
         ],

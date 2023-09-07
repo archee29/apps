@@ -2,20 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:tugas_akhir/app/controllers/auth_controller.dart';
-import 'package:tugas_akhir/app/styles/app_colors.dart';
+// import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_button.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_formfield.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_header.dart';
-import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_richtext.dart';
-import 'package:tugas_akhir/app/routes/app_pages.dart';
+// import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_richtext.dart';
+// import 'package:tugas_akhir/app/routes/app_pages.dart';
 
 import '../controllers/signup_controller.dart';
 
 class SignupView extends GetView<SignupController> {
   // const SignupView({Key? key}) : super(key: key);
 
-  bool _isVisible = false;
+  final bool _isVisible = false;
   final authC = Get.find<AuthController>();
+
+  SignupView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +27,7 @@ class SignupView extends GetView<SignupController> {
             Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              color: Color.fromARGB(255, 239, 62, 255).withOpacity(0.7),
+              color: const Color.fromARGB(255, 239, 62, 255).withOpacity(0.7),
             ),
             CustomHeader(
               text: 'Automatic Cat Feeder',

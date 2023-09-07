@@ -11,7 +11,7 @@ class FeederAPI {
   static String pumpFeed = 'minuman';
   static String led1Feed = 'led-1';
   static String rgbFeed = 'color';
-  static String mainURL = '';
+  static String mainURL = 'https://io.adafruit.com/api/v2/';
 
   static Future<FeederGET> getMakananData() async {
     http.Response response = await http.get(

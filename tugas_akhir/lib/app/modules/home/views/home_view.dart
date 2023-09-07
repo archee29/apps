@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tugas_akhir/app/controllers/auth_controller.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_side_menu.dart';
+import 'package:tugas_akhir/app/modules/home/views/history_feeder.dart';
+import 'package:tugas_akhir/app/modules/home/views/info_feeder.dart';
+import 'package:tugas_akhir/app/modules/home/views/menu.dart';
+import 'package:tugas_akhir/app/modules/home/views/menu_button.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -72,7 +76,7 @@ class HomeView extends GetView<HomeController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "My Courses",
+                    "Home Screens",
                     style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
                   ),
                   Text(
@@ -81,35 +85,22 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ],
               ),
-              // const SizedBox(
-              //   height: 10,
-              // ),
-              // const InfoFeeder(),
-              // const SizedBox(
-              //   height: 20,
-              // ),
-              // const PlaningHeader(),
-              // const SizedBox(
-              //   height: 15,
-              // ),
-              // const PlaningGrid(),
-              // const SizedBox(
-              //   height: 15,
-              // ),
-              // const Text(
-              //   "Statistics",
-              //   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              // ),
-              // const SizedBox(
-              //   height: 15,
-              // ),
-              // const StatisticsGrid(),
-              // const SizedBox(
-              //   height: 15,
-              // ),
-              // const ActivityHeader(),
-              // const ChartContainer(chart: BarChartContent())
-              // const MenuButton(),
+              const SizedBox(
+                height: 10,
+              ),
+              const HistoryFeeder(),
+              const SizedBox(
+                height: 20,
+              ),
+              const InfoFeeder(),
+              const SizedBox(
+                height: 15,
+              ),
+              const MenuView(),
+              const SizedBox(
+                height: 15,
+              ),
+              const MenuButton(),
             ],
           ),
         ),
