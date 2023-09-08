@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tugas_akhir/app/controllers/auth_controller.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/utils/loading.dart';
+import 'package:get_storage/get_storage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,9 +27,7 @@ class CatApp extends StatelessWidget {
           return GetMaterialApp(
             title: 'Automatic Cat Feeder',
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              primarySwatch: Colors.pink,
-            ),
+
             // initialRoute: snapshot.data != null ? Routes.HOME : Routes.LOGIN,
             initialRoute:
                 snapshot.data != null && snapshot.data!.emailVerified == true

@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:tugas_akhir/app/controllers/auth_controller.dart';
+import 'package:tugas_akhir/app/modules/iot/views/iot_view.dart';
+import 'package:tugas_akhir/app/modules/main/views/main_view.dart';
+import 'package:tugas_akhir/app/modules/setting/views/setting_view.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_side_menu.dart';
 import 'package:tugas_akhir/app/modules/home/views/history_feeder.dart';
 import 'package:tugas_akhir/app/modules/home/views/info_feeder.dart';
 import 'package:tugas_akhir/app/modules/home/views/menu.dart';
-import 'package:tugas_akhir/app/modules/home/views/menu_button.dart';
+// import 'package:tugas_akhir/app/modules/home/views/menu_button.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -100,10 +103,84 @@ class HomeView extends GetView<HomeController> {
               const SizedBox(
                 height: 15,
               ),
-              const MenuButton(),
+              // MenuButton(),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class MenuButton extends StatefulWidget {
+  const MenuButton({super.key});
+
+  @override
+  State<MenuButton> createState() => _MenuButtonState();
+}
+
+class _MenuButtonState extends State<MenuButton> {
+  int selectedView = 0;
+  final List<Widget> mainViews = [
+    HomeView(),
+    MainView(),
+    IotView(),
+    SettingView(),
+  ];
+
+  void onViewPressed(int index) {
+    setState(() {
+      selectedView = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext build) {
+    return Scaffold(
+      body: IndexedStack(
+        index: selectedView,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        elevation: 0,
+        selectedFontSize: 10,
+        unselectedFontSize: 10,
+        type: BottomNavigationBarType.fixed,
+        unselectedItemColor: Colors.black,
+        selectedItemColor: Colors.pink,
+        onTap: onViewPressed,
+        currentIndex: selectedView,
+        items: [
+          BottomNavigationBarItem(
+            icon: selectedView == 0
+                ? const ImageIcon(AssetImage('assets/icons/hut2.png'))
+                : const ImageIcon(AssetImage("assets/icons/hut.png")),
+            label: "Main Views",
+          ),
+          BottomNavigationBarItem(
+            icon: selectedView == 1
+                ? const ImageIcon(AssetImage('assets/icons/hut2.png'))
+                : const ImageIcon(AssetImage("assets/icons/hut.png")),
+            label: "IoT",
+          ),
+          BottomNavigationBarItem(
+            icon: selectedView == 2
+                ? const ImageIcon(AssetImage('assets/icons/hut2.png'))
+                : const ImageIcon(AssetImage("assets/icons/hut.png")),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: selectedView == 3
+                ? const ImageIcon(AssetImage('assets/icons/hut2.png'))
+                : const ImageIcon(AssetImage("assets/icons/hut.png")),
+            label: "Settings",
+          ),
+          BottomNavigationBarItem(
+            icon: selectedView == 4
+                ? const ImageIcon(AssetImage('assets/icons/hut2.png'))
+                : const ImageIcon(AssetImage("assets/icons/hut.png")),
+            label: "Keluar",
+          ),
+        ],
       ),
     );
   }

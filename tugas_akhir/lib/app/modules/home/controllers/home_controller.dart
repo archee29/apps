@@ -23,11 +23,11 @@ class HomeController extends GetxController {
   List<bool> selectedViews = [true, false, false, false, false];
 
   List<Views> view = [
-    Views(viewsName: 'Main', viewsImgUrl: 'assets/icons/menu.svg'),
-    Views(viewsName: 'Iot', viewsImgUrl: 'assets/icons/menu.svg'),
-    Views(viewsName: 'Home', viewsImgUrl: 'assets/icons/menu.svg'),
-    Views(viewsName: 'Settings', viewsImgUrl: 'assets/icons/menu.svg'),
-    Views(viewsName: 'Keluar', viewsImgUrl: 'assets/icons/menu.svg'),
+    Views(viewsName: 'Main', viewsImgUrl: 'assets/icons/sofa.svg'),
+    Views(viewsName: 'Iot', viewsImgUrl: 'assets/icons/sofa.svg'),
+    Views(viewsName: 'Home', viewsImgUrl: 'assets/icons/sofa.svg'),
+    Views(viewsName: 'Settings', viewsImgUrl: 'assets/icons/sofa.svg'),
+    Views(viewsName: 'Keluar', viewsImgUrl: 'assets/icons/sofa.svg'),
   ];
 
   List<bool> isToggled = [false, false, false, false];
