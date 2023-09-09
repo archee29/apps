@@ -1,80 +1,131 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
+
 import 'package:get/get.dart';
-import 'package:tugas_akhir/app/modules/home/views/home_view.dart';
-import 'package:tugas_akhir/app/modules/iot/views/iot_view.dart';
-import 'package:tugas_akhir/app/modules/main/views/main_view.dart';
-import 'package:tugas_akhir/app/modules/setting/views/setting_view.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
+import 'package:maps_launcher/maps_launcher.dart';
+import 'package:tugas_akhir/app/routes/app_pages.dart';
+import 'package:tugas_akhir/app/widgets/dialog/custom_notification.dart';
+import 'package:tugas_akhir/data_pengguna.dart';
 
 class HomeController extends GetxController {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  RxBool isLoading = false.obs;
+  RxString houseDistance = "-".obs;
 
-  RxInt _currentIndex = 0.obs;
-
-  get currentIndex => this._currentIndex.value;
-
-  final List<Widget> mainViews = [
-    HomeView(),
-    MainView(),
-    IotView(),
-    SettingView(),
-  ];
-
-  List<bool> selectedViews = [true, false, false, false, false];
-
-  List<Views> view = [
-    Views(viewsName: 'Main', viewsImgUrl: 'assets/icons/sofa.svg'),
-    Views(viewsName: 'Iot', viewsImgUrl: 'assets/icons/sofa.svg'),
-    Views(viewsName: 'Home', viewsImgUrl: 'assets/icons/sofa.svg'),
-    Views(viewsName: 'Settings', viewsImgUrl: 'assets/icons/sofa.svg'),
-    Views(viewsName: 'Keluar', viewsImgUrl: 'assets/icons/sofa.svg'),
-  ];
-
-  List<bool> isToggled = [false, false, false, false];
-
-  Widget navBarSwitcher() {
-    return mainViews.elementAt(currentIndex);
-  }
-
-  void viewChange(int index) {
-    selectedViews = [false, false, false, false, false];
-    selectedViews[index] = true;
-    update([1, true]);
-  }
-
-  onSwitched(int index) {
-    isToggled[index] = !isToggled[index];
-    if (index == 0) {
-      // var value = isToggled[index] ? "1" : "0";
-      isToggled[index] ? "1" : "0";
-    }
-    if (index == 1) {
-      // var value = isToggled[index] ? "#fffff" : "#00000";
-      isToggled[index] ? "#fffff" : "#00000";
-    }
-    update([2, true]);
-  }
-
-  setCurrentIndex(int index) {
-    _currentIndex.value = index;
-    if (index == 1 || index == 5) {
-      Get.back();
-      Get.back();
-    } else if (index == 0) {
-      // streamInit();
-    }
-  }
+  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  Timer? timer;
 
   @override
-  void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.onClose();
+  void onInit() {
+    super.onInit();
+    timer = Timer.periodic(Duration(seconds: 10), (timer) {
+      if (Get.currentRoute == Routes.HOME) {
+        getDistanceToHouse().then((value) {
+          houseDistance.value = value;
+        });
+      }
+    });
   }
-}
 
-class Views {
-  String viewsName;
-  String viewsImgUrl;
-  Views({required this.viewsName, required this.viewsImgUrl});
+  launchHouseOnMap() {
+    try {
+      MapsLauncher.launchCoordinates(
+        DataPengguna.house['latitude'],
+        DataPengguna.house['longtitude'],
+      );
+    } catch (e) {
+      CustomNotification.errorNotification("Error", "Error:${e}");
+    }
+  }
+
+  Future<String> getDistanceToHouse() async {
+    print('called');
+    Map<String, dynamic> determinePosition = await _determinePosition();
+    if (!determinePosition["error"]) {
+      Position posisi = determinePosition["position"];
+      double distance = Geolocator.distanceBetween(
+          DataPengguna.house['latitude'],
+          DataPengguna.house['longtitude'],
+          posisi.latitude,
+          posisi.longitude);
+      if (distance > 1000) {
+        return "${(distance / 1000).toStringAsFixed(2)}km";
+      } else {
+        return "${distance.toStringAsFixed(2)}m";
+      }
+    } else {
+      return "-";
+    }
+  }
+
+  Future<Map<String, dynamic>> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      Get.rawSnackbar(
+        title: 'GPS Mati',
+        message: 'Mohon Hidupkan GPS',
+        duration: Duration(seconds: 3),
+      );
+      return Future.error('Akses Lokasi dimatikan');
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return {
+          "message":
+              "Tidak Dapat Mengakses karena anda menolak permintaan lokasi",
+          "error": true,
+        };
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      return {
+        "message":
+            "Akses Lokasi Telah Dimatikan Secara Permanen, kami tidak dapat melakukan data lokasi anda",
+        "error": true,
+      };
+    }
+    Position posisi = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.bestForNavigation);
+    return {
+      "positon": posisi,
+      "message": "Berhasil mendapatkan posisi device",
+      "error": false,
+    };
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> streamUser() async* {
+    String uid = auth.currentUser!.uid;
+    yield* firestore.collection("user").doc(uid).snapshots();
+  }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamLastFeeder() async* {
+    String uid = auth.currentUser!.uid;
+    yield* firestore
+        .collection("user")
+        .doc(uid)
+        .collection("feeder")
+        .orderBy("date", descending: true)
+        .limitToLast(5)
+        .snapshots();
+  }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> streamTodayFeeder() async* {
+    String uid = auth.currentUser!.uid;
+    String todayDocId =
+        DateFormat.yMd().format(DateTime.now()).replaceAll("/", "-");
+    yield* firestore
+        .collection("user")
+        .doc(uid)
+        .collection("feeder")
+        .doc(todayDocId)
+        .snapshots();
+  }
 }

@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/all_feeder/bindings/all_feeder_binding.dart';
+import '../modules/all_feeder/views/all_feeder_view.dart';
 import '../modules/detail_feeder/bindings/detail_feeder_binding.dart';
 import '../modules/detail_feeder/views/detail_feeder_view.dart';
 import '../modules/edit_jadwal/bindings/edit_jadwal_binding.dart';
@@ -85,6 +87,11 @@ class AppPages {
       name: _Paths.NEW_PASSWORD,
       page: () => NewPasswordView(),
       binding: NewPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.ALL_FEEDER,
+      page: () => const AllFeederView(),
+      binding: AllFeederBinding(),
     ),
   ];
 }

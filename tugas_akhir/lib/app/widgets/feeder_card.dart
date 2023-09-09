@@ -4,7 +4,7 @@ import 'package:tugas_akhir/app/styles/app_colors.dart';
 
 class FeederCard extends StatelessWidget {
   final Map<String, dynamic> userData;
-  final Map<String, dynamic> todayFeederData;
+  final Map<String, dynamic>? todayFeederData;
 
   FeederCard({
     required this.userData,

@@ -14,6 +14,7 @@ abstract class Routes {
   static const EDIT_JADWAL = _Paths.EDIT_JADWAL;
   static const DETAIL_FEEDER = _Paths.DETAIL_FEEDER;
   static const NEW_PASSWORD = _Paths.NEW_PASSWORD;
+  static const ALL_FEEDER = _Paths.ALL_FEEDER;
 }
 
 abstract class _Paths {
@@ -29,4 +30,5 @@ abstract class _Paths {
   static const EDIT_JADWAL = '/edit-jadwal';
   static const DETAIL_FEEDER = '/detail-feeder';
   static const NEW_PASSWORD = '/new-password';
+  static const ALL_FEEDER = '/all-feeder';
 }

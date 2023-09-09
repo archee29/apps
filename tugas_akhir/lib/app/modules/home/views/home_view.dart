@@ -1,186 +1,224 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:tugas_akhir/app/controllers/auth_controller.dart';
-import 'package:tugas_akhir/app/modules/iot/views/iot_view.dart';
-import 'package:tugas_akhir/app/modules/main/views/main_view.dart';
-import 'package:tugas_akhir/app/modules/setting/views/setting_view.dart';
-import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_side_menu.dart';
-import 'package:tugas_akhir/app/modules/home/views/history_feeder.dart';
-import 'package:tugas_akhir/app/modules/home/views/info_feeder.dart';
-import 'package:tugas_akhir/app/modules/home/views/menu.dart';
-// import 'package:tugas_akhir/app/modules/home/views/menu_button.dart';
+import 'package:maps_launcher/maps_launcher.dart';
+import 'package:tugas_akhir/app/routes/app_pages.dart';
+import 'package:tugas_akhir/app/styles/app_colors.dart';
+import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_bottom_navbar.dart';
+import 'package:tugas_akhir/app/widgets/feeder_card.dart';
+import 'package:tugas_akhir/app/widgets/feeder_tile.dart';
+import 'package:tugas_akhir/app/widgets/dialog/custom_notification.dart';
+import 'package:tugas_akhir/data_pengguna.dart';
 
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  // const HomeView({Key? key}) : super(key: key);
-  final authC = Get.find<AuthController>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        iconTheme: const IconThemeData(color: Colors.grey, size: 28),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.search,
-              color: Colors.grey,
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.notifications,
-              color: Colors.grey,
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 5, right: 16, bottom: 5),
-            child: const CircleAvatar(
-                backgroundImage: AssetImage("assets/images/icon-kucing.png"),
-                backgroundColor: Colors.pinkAccent),
-          )
-        ],
-      ),
-      drawer: SideMenu(),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              RichText(
-                text: const TextSpan(
-                  text: "Hello ",
-                  style: TextStyle(color: Colors.pinkAccent, fontSize: 20),
-                  children: [
-                    TextSpan(
-                      text: "a",
-                      style: TextStyle(
-                          color: Colors.pink, fontWeight: FontWeight.bold),
-                    ),
-                    TextSpan(
-                      text: ", welcome back!",
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      bottomNavigationBar: CustomBottomNavigationBar(),
+      extendBody: true,
+      body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+        stream: controller.streamUser(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.active:
+            case ConnectionState.done:
+              Map<String, dynamic> user = snapshot.data!.data()!;
+              return ListView(
+                shrinkWrap: true,
+                physics: BouncingScrollPhysics(),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 36),
                 children: [
-                  Text(
-                    "Home Screens",
-                    style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                  SizedBox(height: 16),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 16),
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      children: [
+                        ClipOval(
+                          child: Container(
+                            width: 42,
+                            height: 42,
+                            child: Image.network(
+                              (user["avatar"] == null || user['avatar'] == "")
+                                  ? "https://ui-avatars.com/api/?name=${user['name']}/"
+                                  : user['avatar'],
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 24),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Selamat Datang",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: AppColors.secondarySoft,
+                              ),
+                            ),
+                            SizedBox(height: 4),
+                            Text(
+                              user["name"],
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'poppins',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                    "View All",
-                    style: TextStyle(color: Colors.pinkAccent),
+                  StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                      stream: controller.streamTodayFeeder(),
+                      builder: (context, snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.waiting:
+                            return Center(child: CircularProgressIndicator());
+                          case ConnectionState.active:
+                          case ConnectionState.done:
+                            var todayFeederData = snapshot.data?.data();
+                            return FeederCard(
+                              userData: user,
+                              todayFeederData: todayFeederData,
+                            );
+                          default:
+                            return SizedBox();
+                        }
+                      }),
+                  Container(
+                    margin: EdgeInsets.only(top: 12, bottom: 24, left: 4),
+                    child: Text(
+                      (user["address"] != null)
+                          ? "${user['address']}"
+                          : "Belum Ada Lokasi",
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: AppColors.secondarySoft,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            height: 84,
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryExtraSoft,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.only(bottom: 6),
+                                  child: Text(
+                                    'Jarak Dari Rumah',
+                                    style: TextStyle(fontSize: 10),
+                                  ),
+                                ),
+                                Obx(
+                                  () => Text(
+                                    '${controller.houseDistance.value}',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontFamily: 'poppins',
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 16),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: controller.launchHouseOnMap,
+                            child: Container(
+                              height: 84,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: AppColors.primaryExtraSoft,
+                                borderRadius: BorderRadius.circular(8),
+                                image: DecorationImage(
+                                  image: AssetImage('assets/images/map.JPG'),
+                                  fit: BoxFit.cover,
+                                  opacity: 0.3,
+                                ),
+                              ),
+                              child: Text(
+                                "Buka di Maps",
+                                style: TextStyle(fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Feeder History",
+                          style: TextStyle(
+                            fontFamily: "poppins",
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () => Get.toNamed(Routes.ALL_FEEDER),
+                          child: Text("Lihat Semua"),
+                          style: TextButton.styleFrom(
+                            primary: AppColors.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                    stream: controller.streamLastFeeder(),
+                    builder: (context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return Center(child: CircularProgressIndicator());
+                        case ConnectionState.active:
+                        case ConnectionState.done:
+                          List<QueryDocumentSnapshot<Map<String, dynamic>>>
+                              listFeeder = snapshot.data!.docs;
+                          return ListView.separated(
+                            itemCount: listFeeder.length,
+                            shrinkWrap: true,
+                            physics: BouncingScrollPhysics(),
+                            separatorBuilder: (context, index) =>
+                                SizedBox(height: 16),
+                            itemBuilder: (context, index) {
+                              Map<String, dynamic> feederData =
+                                  listFeeder[index].data();
+                              return FeederTile(feederData: feederData);
+                            },
+                          );
+                        default:
+                          return SizedBox();
+                      }
+                    },
                   ),
                 ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const HistoryFeeder(),
-              const SizedBox(
-                height: 20,
-              ),
-              const InfoFeeder(),
-              const SizedBox(
-                height: 15,
-              ),
-              const MenuView(),
-              const SizedBox(
-                height: 15,
-              ),
-              // MenuButton(),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class MenuButton extends StatefulWidget {
-  const MenuButton({super.key});
-
-  @override
-  State<MenuButton> createState() => _MenuButtonState();
-}
-
-class _MenuButtonState extends State<MenuButton> {
-  int selectedView = 0;
-  final List<Widget> mainViews = [
-    HomeView(),
-    MainView(),
-    IotView(),
-    SettingView(),
-  ];
-
-  void onViewPressed(int index) {
-    setState(() {
-      selectedView = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext build) {
-    return Scaffold(
-      body: IndexedStack(
-        index: selectedView,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 0,
-        selectedFontSize: 10,
-        unselectedFontSize: 10,
-        type: BottomNavigationBarType.fixed,
-        unselectedItemColor: Colors.black,
-        selectedItemColor: Colors.pink,
-        onTap: onViewPressed,
-        currentIndex: selectedView,
-        items: [
-          BottomNavigationBarItem(
-            icon: selectedView == 0
-                ? const ImageIcon(AssetImage('assets/icons/hut2.png'))
-                : const ImageIcon(AssetImage("assets/icons/hut.png")),
-            label: "Main Views",
-          ),
-          BottomNavigationBarItem(
-            icon: selectedView == 1
-                ? const ImageIcon(AssetImage('assets/icons/hut2.png'))
-                : const ImageIcon(AssetImage("assets/icons/hut.png")),
-            label: "IoT",
-          ),
-          BottomNavigationBarItem(
-            icon: selectedView == 2
-                ? const ImageIcon(AssetImage('assets/icons/hut2.png'))
-                : const ImageIcon(AssetImage("assets/icons/hut.png")),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: selectedView == 3
-                ? const ImageIcon(AssetImage('assets/icons/hut2.png'))
-                : const ImageIcon(AssetImage("assets/icons/hut.png")),
-            label: "Settings",
-          ),
-          BottomNavigationBarItem(
-            icon: selectedView == 4
-                ? const ImageIcon(AssetImage('assets/icons/hut2.png'))
-                : const ImageIcon(AssetImage("assets/icons/hut.png")),
-            label: "Keluar",
-          ),
-        ],
+              );
+            case ConnectionState.waiting:
+              return Center(child: CircularProgressIndicator());
+            default:
+              return Center(child: Text("Error"));
+          }
+        },
       ),
     );
   }
