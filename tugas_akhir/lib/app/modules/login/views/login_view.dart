@@ -1,202 +1,206 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:tugas_akhir/app/controllers/auth_controller.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
-import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_button.dart';
-import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_formfield.dart';
-import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_header.dart';
-import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_richtext.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
-  // const LoginView({Key? key}) : super(key: key);
-
-  bool _isVisible = false;
-
-  final authC = Get.find<AuthController>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              color: const Color.fromARGB(255, 239, 62, 255).withOpacity(0.7),
-            ),
-            CustomHeader(
-              text: 'Automatic Cat Feeder',
-              onTap: () {
-                // Navigator.pushReplacement(context,
-                //     MaterialPageRoute(builder: (context) => const SignUp()));
-              },
-            ),
-            Positioned(
-              top: MediaQuery.of(context).size.height * 0.08,
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.9,
-                width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(
-                    color: AppColors.whiteshade,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(40),
-                        topRight: Radius.circular(40))),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      margin: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width * 0.09),
-                      child: Image.asset("assets/images/icon-kucing.png"),
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    CustomFormField(
-                      headingText: "Email",
-                      hintText: "Masukkan Email",
-                      icon: const Icon(Icons.email),
-                      obsecureText: false,
-                      suffixIcon: const SizedBox(),
-                      controller: controller.emailController,
-                      maxLines: 1,
-                      textInputAction: TextInputAction.done,
-                      textInputType: TextInputType.emailAddress,
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    CustomFormField(
-                      headingText: "Password",
-                      maxLines: 1,
-                      textInputAction: TextInputAction.done,
-                      textInputType: TextInputType.text,
-                      icon: const Icon(Icons.password),
-                      hintText: "Masukkan Password Dengan 8 Karakter",
-                      obsecureText: !_isVisible,
-                      suffixIcon: IconButton(
-                          icon: Icon(_isVisible
-                              ? Icons.visibility_off
-                              : Icons.visibility),
-                          onPressed: () {
-                            // setState(
-                            //   () {
-                            //     _isVisible = !_isVisible;
-                            //   },
-                            // );
-                          }),
-                      controller: controller.passwordController,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Container(
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 16, horizontal: 24),
-                          child: InkWell(
-                            onTap: () => Get.toNamed(Routes.RESET),
-                            child: Text(
-                              "Lupa Password?",
-                              style: TextStyle(
-                                  color: const Color.fromARGB(255, 239, 62, 255)
-                                      .withOpacity(0.7),
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    GestureDetector(
-                      child: AuthButton(
-                        onTap: () => authC.login(
-                            controller.emailController.text,
-                            controller.passwordController.text),
-                        text: 'Masuk',
-                      ),
-                    ),
-                    CustomRichText(
-                      discription: "Belum Punya Akun? ",
-                      text: "Daftar Disini",
-                      onTap: () => Get.toNamed(Routes.SIGNUP),
-                    ),
-                  ],
-                ),
+      backgroundColor: AppColors.primary,
+      body: ListView(
+        shrinkWrap: true,
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height * 35 / 100,
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.only(left: 32),
+            decoration: BoxDecoration(
+              gradient: AppColors.primaryGradient,
+              image: DecorationImage(
+                image: AssetImage('assets/images/pattern-1-1.png'),
+                fit: BoxFit.cover,
               ),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Automatic Cat Feeder App \n Mobile Application",
+                  style: TextStyle(
+                    fontSize: 28,
+                    color: Colors.white,
+                    fontFamily: 'poppins',
+                    height: 150 / 100,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "by Muhammad Aswin Sigit",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height * 65 / 100,
+            width: MediaQuery.of(context).size.width,
+            color: Colors.white,
+            padding: EdgeInsets.only(left: 20, right: 20, top: 36, bottom: 84),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
-                        offset: const Offset(0, -2),
-                        blurRadius: 2,
-                      ),
-                    ],
-                    color: Colors.white,
+                  margin: EdgeInsets.only(bottom: 24),
+                  child: Text(
+                    'Masuk',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontFamily: 'poppins',
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: Container(
-                          padding: const EdgeInsets.only(
-                            bottom: 5,
-                            left: 5,
-                            right: 5,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.only(left: 14, right: 14, top: 4),
+                  margin: EdgeInsets.only(bottom: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      width: 1,
+                      color: AppColors.secondaryExtraSoft,
+                    ),
+                  ),
+                  child: TextField(
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontFamily: 'poppins',
+                    ),
+                    maxLines: 1,
+                    controller: controller.emailController,
+                    decoration: InputDecoration(
+                      label: Text(
+                        "Email",
+                        style: TextStyle(
+                          color: AppColors.secondarySoft,
+                          fontSize: 14,
+                        ),
+                      ),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      border: InputBorder.none,
+                      hintText: "email@gmail.com",
+                      hintStyle: TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'poppins',
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.secondarySoft,
+                      ),
+                    ),
+                  ),
+                ),
+                Material(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.only(left: 14, right: 14, top: 4),
+                    margin: EdgeInsets.only(bottom: 24),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        width: 1,
+                        color: AppColors.secondaryExtraSoft,
+                      ),
+                    ),
+                    child: Obx(
+                      () => TextField(
+                        style: TextStyle(fontSize: 14, fontFamily: 'poppins'),
+                        maxLines: 1,
+                        controller: controller.passwordController,
+                        obscureText: controller.obsecureText.value,
+                        decoration: InputDecoration(
+                          label: Text(
+                            "Password",
+                            style: TextStyle(
+                              color: AppColors.secondarySoft,
+                              fontSize: 14,
+                            ),
                           ),
-                          width: 65,
-                          height: 65,
-                          decoration:
-                              BoxDecoration(shape: BoxShape.circle, boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
-                              offset: const Offset(0, 2),
-                              blurRadius: 2,
-                            ),
-                          ]),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 239, 62, 255)
-                                  .withOpacity(0.7),
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.3),
-                                  offset: const Offset(0, 2),
-                                  blurRadius: 2,
-                                ),
-                              ],
-                            ),
-                            child: const Icon(
-                              Icons.home,
-                              color: Colors.white,
-                            ),
+                          floatingLabelBehavior: FloatingLabelBehavior.always,
+                          border: InputBorder.none,
+                          hintText: "*********",
+                          suffixIcon: IconButton(
+                            icon: (controller.obsecureText != false)
+                                ? SvgPicture.asset('assets/icons/show.svg')
+                                : SvgPicture.asset('assets/icons/hide.svg'),
+                            onPressed: () {
+                              controller.obsecureText.value =
+                                  !(controller.obsecureText.value);
+                            },
+                          ),
+                          hintStyle: TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'poppins',
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.secondarySoft,
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 20,
+                    ),
+                  ),
+                ),
+                Obx(
+                  () => Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        if (controller.isLoading.isFalse) {
+                          await controller.login();
+                        }
+                      },
+                      child: Text(
+                        (controller.isLoading.isFalse)
+                            ? 'Masuk'
+                            : 'Loading ....',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'poppins',
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ],
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(vertical: 18),
+                        elevation: 0,
+                        primary: AppColors.primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin: EdgeInsets.only(top: 4),
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    onPressed: () => Get.toNamed(Routes.RESET),
+                    child: Text("Lupa Password?"),
+                    style: TextButton.styleFrom(
+                      primary: AppColors.secondarySoft,
+                    ),
                   ),
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

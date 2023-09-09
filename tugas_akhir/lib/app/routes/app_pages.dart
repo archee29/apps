@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/detail_feeder/bindings/detail_feeder_binding.dart';
+import '../modules/detail_feeder/views/detail_feeder_view.dart';
 import '../modules/edit_jadwal/bindings/edit_jadwal_binding.dart';
 import '../modules/edit_jadwal/views/edit_jadwal_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -10,6 +12,8 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/main/bindings/main_binding.dart';
 import '../modules/main/views/main_view.dart';
+import '../modules/new_password/bindings/new_password_binding.dart';
+import '../modules/new_password/views/new_password_view.dart';
 import '../modules/reset/bindings/reset_binding.dart';
 import '../modules/reset/views/reset_view.dart';
 import '../modules/setting/bindings/setting_binding.dart';
@@ -71,6 +75,16 @@ class AppPages {
       name: _Paths.EDIT_JADWAL,
       page: () => EditJadwalView(),
       binding: EditJadwalBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_FEEDER,
+      page: () => DetailFeederView(),
+      binding: DetailFeederBinding(),
+    ),
+    GetPage(
+      name: _Paths.NEW_PASSWORD,
+      page: () => NewPasswordView(),
+      binding: NewPasswordBinding(),
     ),
   ];
 }
