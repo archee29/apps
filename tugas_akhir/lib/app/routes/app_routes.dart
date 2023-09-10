@@ -15,6 +15,7 @@ abstract class Routes {
   static const DETAIL_FEEDER = _Paths.DETAIL_FEEDER;
   static const NEW_PASSWORD = _Paths.NEW_PASSWORD;
   static const ALL_FEEDER = _Paths.ALL_FEEDER;
+  static const UPDATE_PROFILE = _Paths.UPDATE_PROFILE;
 }
 
 abstract class _Paths {
@@ -31,4 +32,5 @@ abstract class _Paths {
   static const DETAIL_FEEDER = '/detail-feeder';
   static const NEW_PASSWORD = '/new-password';
   static const ALL_FEEDER = '/all-feeder';
+  static const UPDATE_PROFILE = '/update-profile';
 }

@@ -24,6 +24,8 @@ import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
 import '../modules/tambah_jadwal/bindings/tambah_jadwal_binding.dart';
 import '../modules/tambah_jadwal/views/tambah_jadwal_view.dart';
+import '../modules/update_profile/bindings/update_profile_binding.dart';
+import '../modules/update_profile/views/update_profile_view.dart';
 
 part 'app_routes.dart';
 
@@ -92,6 +94,11 @@ class AppPages {
       name: _Paths.ALL_FEEDER,
       page: () => const AllFeederView(),
       binding: AllFeederBinding(),
+    ),
+    GetPage(
+      name: _Paths.UPDATE_PROFILE,
+      page: () => const UpdateProfileView(),
+      binding: UpdateProfileBinding(),
     ),
   ];
 }

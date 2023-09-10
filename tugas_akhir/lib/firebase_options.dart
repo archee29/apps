@@ -25,30 +25,27 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCsVuVW9b3mpOPGrlod170hZnd6_qOYIwk',
-    appId: '1:1045475764615:web:fb207460f8df9024f4cb22',
-    messagingSenderId: '1045475764615',
-    projectId: 'presence-5c341',
-    authDomain: 'presence-5c341.firebaseapp.com',
-    storageBucket: 'presence-5c341.appspot.com',
-    measurementId: 'G-ECMDFE63S7',
+    apiKey: "AIzaSyA8v5gthSBoSNPa_GZ1hZlYWY7vpZCDCbA",
+    authDomain: "tugas-akhir-3c0d9.firebaseapp.com",
+    projectId: "tugas-akhir-3c0d9",
+    storageBucket: "tugas-akhir-3c0d9.appspot.com",
+    messagingSenderId: "250405337714",
+    appId: "1:250405337714:web:b9a1f854d98417d067e0eb",
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCL-UrJxb4egmbsAbgCuUuGM6vsyi1Z28w',
-    appId: '1:1045475764615:android:f4cbab011b12526ff4cb22',
-    messagingSenderId: '1045475764615',
-    projectId: 'presence-5c341',
-    storageBucket: 'presence-5c341.appspot.com',
+    apiKey: 'AIzaSyD9cMliTs9G41vgRLcjS2VacvtMWWR1doQ',
+    appId: '1:250405337714:android:8ce3efd5d761bd2367e0eb',
+    messagingSenderId: '250405337714',
+    projectId: 'tugas-akhir-3c0d9',
+    storageBucket: 'tugas-akhir-3c0d9.appspot.com',
   );
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBI-Pz4lEdGD_5CkolwZsuWxvk5YH0Xy-k',
-    appId: '1:1045475764615:ios:25973a1fc7add129f4cb22',
-    messagingSenderId: '1045475764615',
-    projectId: 'presence-5c341',
-    storageBucket: 'presence-5c341.appspot.com',
-    iosClientId:
-        '1045475764615-sh6bdtfvq5gi9hdi9elu247v7usqsvpl.apps.googleusercontent.com',
-    iosBundleId: 'com.mrezys',
+    apiKey: 'AIzaSyBCWj9mSPTC_XvKr9oFlbdw_nC5Ggbid0M',
+    appId: '1:250405337714:ios:6b93b73b29e25b6567e0eb',
+    messagingSenderId: '250405337714',
+    projectId: 'tugas-akhir-3c0d9',
+    storageBucket: 'tugas-akhir-3c0d9.appspot.com',
+    iosBundleId: 'com.tugas-akhir',
   );
 }
