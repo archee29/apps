@@ -1,9 +1,8 @@
 import 'package:get/get.dart';
 
 class DetailFeederController extends GetxController {
-  //TODO: Implement DetailFeederController
-
   final count = 0.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -15,9 +14,6 @@ class DetailFeederController extends GetxController {
   }
 
   @override
-  void onClose() {
-    super.onClose();
-  }
-
+  void onClose() {}
   void increment() => count.value++;
 }

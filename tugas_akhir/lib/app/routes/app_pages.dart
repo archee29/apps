@@ -92,7 +92,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.ALL_FEEDER,
-      page: () => const AllFeederView(),
+      page: () => AllFeederView(),
       binding: AllFeederBinding(),
     ),
     GetPage(
