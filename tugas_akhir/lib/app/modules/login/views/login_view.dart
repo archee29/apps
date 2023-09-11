@@ -30,7 +30,7 @@ class LoginView extends GetView<LoginController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Automatic Cat Feeder App \n Mobile Application",
+                  "Automatic Cat Feeder\nMobile Application",
                   style: TextStyle(
                     fontSize: 28,
                     color: Colors.white,

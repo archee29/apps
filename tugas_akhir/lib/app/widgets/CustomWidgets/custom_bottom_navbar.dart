@@ -62,7 +62,7 @@ class CustomBottomNavigationBar extends GetView<PageIndexController> {
                       margin: EdgeInsets.only(top: 24),
                       alignment: Alignment.center,
                       child: Text(
-                        "IoT",
+                        "Feeder",
                         style: TextStyle(
                           fontSize: 10,
                           color: AppColors.secondary,
@@ -80,13 +80,13 @@ class CustomBottomNavigationBar extends GetView<PageIndexController> {
                               Container(
                                 child: (controller.pageIndex.value == 2)
                                     ? SvgPicture.asset(
-                                        'assets/icons/profile-active.svg')
+                                        'assets/icons/setting-black.svg')
                                     : SvgPicture.asset(
-                                        'assets/icons/profile.svg'),
+                                        'assets/icons/setting.svg'),
                                 margin: EdgeInsets.only(bottom: 4),
                               ),
                               Text(
-                                "Profile",
+                                "Settings",
                                 style: TextStyle(
                                   fontSize: 10,
                                   color: AppColors.secondary,
@@ -112,7 +112,7 @@ class CustomBottomNavigationBar extends GetView<PageIndexController> {
                   onPressed: () => controller.changePage(1),
                   elevation: 0,
                   child: (controller.feederController.isLoading.isFalse)
-                      ? SvgPicture.asset('assets/icons/fingerprint.svg',
+                      ? SvgPicture.asset('assets/icons/feeder.svg',
                           color: Colors.white)
                       : Center(
                           child: CircularProgressIndicator(

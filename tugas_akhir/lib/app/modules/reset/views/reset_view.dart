@@ -92,6 +92,44 @@ class ResetView extends GetView<ResetController> {
                     ],
                   ),
                 ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.only(left: 14, right: 14, top: 4),
+                  margin: EdgeInsets.only(bottom: 24),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      width: 1,
+                      color: AppColors.secondaryExtraSoft,
+                    ),
+                  ),
+                  child: TextField(
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontFamily: 'poppins',
+                    ),
+                    maxLines: 1,
+                    controller: controller.emailController,
+                    decoration: InputDecoration(
+                        label: Text(
+                          "Email",
+                          style: TextStyle(
+                            color: AppColors.secondarySoft,
+                            fontSize: 14,
+                          ),
+                        ),
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
+                        border: InputBorder.none,
+                        hintText: "youremail@email.com",
+                        hintStyle: TextStyle(
+                          fontSize: 14,
+                          fontFamily: 'poppins',
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.secondarySoft,
+                        )),
+                  ),
+                ),
                 Obx(
                   () => Container(
                     width: MediaQuery.of(context).size.width,
@@ -103,7 +141,7 @@ class ResetView extends GetView<ResetController> {
                       },
                       child: Text(
                         (controller.isLoading.isFalse)
-                            ? 'Sedang di Kirim ke Email'
+                            ? 'Reset Password'
                             : 'Loading....',
                         style: TextStyle(
                           fontSize: 16,
