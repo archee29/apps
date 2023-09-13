@@ -148,7 +148,7 @@ class HomeView extends GetView<HomeController> {
                                 color: AppColors.primaryExtraSoft,
                                 borderRadius: BorderRadius.circular(8),
                                 image: DecorationImage(
-                                  image: AssetImage('assets/images/map.JPG'),
+                                  image: AssetImage('assets/images/map.jpg'),
                                   fit: BoxFit.cover,
                                   opacity: 0.3,
                                 ),

@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart' as firebaseStorage;
+import 'package:firebase_storage/firebase_storage.dart' as s;
 import 'package:tugas_akhir/app/widgets/dialog/custom_notification.dart';
 
 class UpdateProfileController extends GetxController {
@@ -15,8 +15,7 @@ class UpdateProfileController extends GetxController {
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
-  firebaseStorage.FirebaseStorage storage =
-      firebaseStorage.FirebaseStorage.instance;
+  s.FirebaseStorage storage = s.FirebaseStorage.instance;
   final ImagePicker picker = ImagePicker();
   XFile? image;
 
@@ -30,22 +29,22 @@ class UpdateProfileController extends GetxController {
         Map<String, dynamic> data = {
           "name": nameController.text,
         };
-        if (image! != null) {
+        if (image != null) {
           File file = File(image!.path);
           String ext = image!.name.split(".").last;
-          String upDir = "${uid}/avatar.$ext";
+          String upDir = "$uid/avatar.$ext";
           await storage.ref(upDir).putFile(file);
           String avatarUrl = await storage.ref(upDir).getDownloadURL();
 
-          data.addAll({"avatar": "$avatarUrl"});
+          data.addAll({"avatar": avatarUrl});
         }
         await firestore.collection("user").doc(uid).update(data);
-        image = null;
         Get.back();
+        image = null;
         CustomNotification.successNotification(
             "Sukses", "Sukses Update Profile");
       } catch (e) {
-        CustomNotification.successNotification(
+        CustomNotification.errorNotification(
             "Error", "Tidak Dapat Update Profile. Error : ${e.toString()}");
       } finally {
         isLoading.value = false;

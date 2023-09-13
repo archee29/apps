@@ -37,7 +37,7 @@ class HomeController extends GetxController {
         DataPengguna.house['longtitude'],
       );
     } catch (e) {
-      CustomNotification.errorNotification("Error", "Error:${e}");
+      CustomNotification.errorNotification('Error', 'Error: $e');
     }
   }
 

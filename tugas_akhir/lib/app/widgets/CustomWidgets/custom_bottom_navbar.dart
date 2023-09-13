@@ -30,6 +30,7 @@ class CustomBottomNavigationBar extends GetView<PageIndexController> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
+                    // Button Home
                     Expanded(
                       child: InkWell(
                         onTap: () => controller.changePage(0),
@@ -41,7 +42,7 @@ class CustomBottomNavigationBar extends GetView<PageIndexController> {
                               Container(
                                 child: (controller.pageIndex.value == 0)
                                     ? SvgPicture.asset(
-                                        'assets/icons/home-activity.svg')
+                                        'assets/icons/home-active.svg')
                                     : SvgPicture.asset("assets/icons/home.svg"),
                                 margin: EdgeInsets.only(bottom: 4),
                               ),
@@ -57,6 +58,36 @@ class CustomBottomNavigationBar extends GetView<PageIndexController> {
                         ),
                       ),
                     ),
+                    // Button Statistik
+                    Expanded(
+                      child: InkWell(
+                        onTap: () => controller.changePage(3),
+                        child: Container(
+                          height: 65,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                child: (controller.pageIndex.value == 3)
+                                    ? SvgPicture.asset(
+                                        'assets/icons/chart-inactive.svg')
+                                    : SvgPicture.asset(
+                                        "assets/icons/chart-active.svg"),
+                                margin: EdgeInsets.only(bottom: 4),
+                              ),
+                              Text(
+                                "Statistic",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: AppColors.secondary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    // Container untuk Text pada Button Feeder
                     Container(
                       width: MediaQuery.of(context).size.width / 4,
                       margin: EdgeInsets.only(top: 24),
@@ -69,6 +100,7 @@ class CustomBottomNavigationBar extends GetView<PageIndexController> {
                         ),
                       ),
                     ),
+                    //  Button Settings
                     Expanded(
                       child: InkWell(
                         onTap: () => controller.changePage(2),
@@ -87,6 +119,35 @@ class CustomBottomNavigationBar extends GetView<PageIndexController> {
                               ),
                               Text(
                                 "Settings",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: AppColors.secondary,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    //  Button Logout
+                    Expanded(
+                      child: InkWell(
+                        onTap: () => controller.changePage(4),
+                        child: Container(
+                          height: 65,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                child: (controller.pageIndex.value == 4)
+                                    ? SvgPicture.asset(
+                                        'assets/icons/logout-black.svg')
+                                    : SvgPicture.asset(
+                                        'assets/icons/logout-button.svg'),
+                                margin: EdgeInsets.only(bottom: 4),
+                              ),
+                              Text(
+                                "Keluar",
                                 style: TextStyle(
                                   fontSize: 10,
                                   color: AppColors.secondary,

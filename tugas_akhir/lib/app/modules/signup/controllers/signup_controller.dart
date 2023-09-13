@@ -8,7 +8,7 @@ import 'package:tugas_akhir/data_pengguna.dart';
 
 class SignupController extends GetxController {
   @override
-  void onClose() {
+  onClose() {
     idController.dispose();
     nameController.dispose();
     emailController.dispose();

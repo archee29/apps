@@ -28,7 +28,7 @@ class FeederCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            userData["user"],
+            userData["job"],
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'poppins',

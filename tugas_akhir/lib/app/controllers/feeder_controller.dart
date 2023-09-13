@@ -77,7 +77,7 @@ class FeederController extends GetxController {
     Position posisi,
     String alamat,
     double distance,
-    bool in_area,
+    bool inArea,
   ) async {
     CustomAlertDialog.showFeederAlert(
       title: "title",
@@ -93,7 +93,7 @@ class FeederController extends GetxController {
               "latitude": posisi.latitude,
               "longtitude": posisi.longitude,
               "alamat": alamat,
-              "in_area": in_area,
+              "in_area": inArea,
               "distance": distance,
             }
           },
