@@ -46,6 +46,7 @@ class AllFeederView extends GetView<AllFeederController> {
                             DateRangePickerMonthViewSettings(firstDayOfWeek: 1),
                         selectionMode: DateRangePickerSelectionMode.range,
                         rangeSelectionColor: AppColors.primary.withOpacity(0.2),
+                        backgroundColor: AppColors.primary,
                         viewSpacing: 10,
                         showActionButtons: true,
                         onCancel: () => Get.back(),
@@ -65,6 +66,7 @@ class AllFeederView extends GetView<AllFeederController> {
               },
               child: SvgPicture.asset('assets/icons/filter.svg'),
               style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
                 elevation: 0,
                 padding: EdgeInsets.zero,
                 shape: RoundedRectangleBorder(

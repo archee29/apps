@@ -180,6 +180,7 @@ class CustomBottomNavigationBar extends GetView<PageIndexController> {
                             color: Colors.white,
                           ),
                         ),
+                  backgroundColor: AppColors.primary,
                 ),
               ),
             ),
