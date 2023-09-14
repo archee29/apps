@@ -43,7 +43,7 @@ class FeederController extends GetxController {
     Position posisi,
     String alamat,
     double distance,
-    bool in_area,
+    bool inArea,
   ) async {
     CustomAlertDialog.showFeederAlert(
       title: "title",
@@ -59,7 +59,7 @@ class FeederController extends GetxController {
               "latitude": posisi.latitude,
               "longtitude": posisi.longitude,
               "alamat": alamat,
-              "in_area": in_area,
+              "in_area": inArea,
               "distance": distance,
             }
           },
@@ -111,7 +111,7 @@ class FeederController extends GetxController {
     Position posisi,
     String alamat,
     double distance,
-    bool in_area,
+    bool inArea,
   ) async {
     CustomAlertDialog.showFeederAlert(
       title: "title",
@@ -126,7 +126,7 @@ class FeederController extends GetxController {
               "latitude": posisi.latitude,
               "longtitude": posisi.longitude,
               "address": alamat,
-              "in_area": in_area,
+              "in_area": inArea,
               "distance": distance,
             }
           },
@@ -146,17 +146,17 @@ class FeederController extends GetxController {
     String todayDocId =
         DateFormat.yMd().format(DateTime.now()).replaceAll("/", "-");
     CollectionReference<Map<String, dynamic>> feederCollection =
-        await firestore.collection("user").doc(uid).collection("feeder");
+        firestore.collection("user").doc(uid).collection("feeder");
     QuerySnapshot<Map<String, dynamic>> snapshotPreference =
         await feederCollection.get();
-    bool in_area = false;
+    bool inArea = false;
 
     if (distance <= 200) {
-      in_area = true;
+      inArea = true;
     }
-    if (snapshotPreference.docs.length == 0) {
+    if (snapshotPreference.docs.isEmpty) {
       firstFeeder(
-          feederCollection, todayDocId, posisi, alamat, distance, in_area);
+          feederCollection, todayDocId, posisi, alamat, distance, inArea);
     } else {
       DocumentSnapshot<Map<String, dynamic>> todayDoc =
           await feederCollection.doc(todayDocId).get();
@@ -169,11 +169,11 @@ class FeederController extends GetxController {
           );
         } else {
           afternoonFeeder(
-              feederCollection, todayDocId, posisi, alamat, distance, in_area);
+              feederCollection, todayDocId, posisi, alamat, distance, inArea);
         }
       } else {
         morningFeeder(
-            feederCollection, todayDocId, posisi, alamat, distance, in_area);
+            feederCollection, todayDocId, posisi, alamat, distance, inArea);
       }
     }
   }

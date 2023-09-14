@@ -46,7 +46,6 @@ class AllFeederView extends GetView<AllFeederController> {
                             DateRangePickerMonthViewSettings(firstDayOfWeek: 1),
                         selectionMode: DateRangePickerSelectionMode.range,
                         rangeSelectionColor: AppColors.primary.withOpacity(0.2),
-                        backgroundColor: AppColors.primary,
                         viewSpacing: 10,
                         showActionButtons: true,
                         onCancel: () => Get.back(),

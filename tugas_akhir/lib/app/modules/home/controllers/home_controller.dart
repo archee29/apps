@@ -21,7 +21,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    timer = Timer.periodic(Duration(seconds: 10), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 10), (timer) {
       if (Get.currentRoute == Routes.HOME) {
         getDistanceToHouse().then((value) {
           houseDistance.value = value;
@@ -42,7 +42,7 @@ class HomeController extends GetxController {
   }
 
   Future<String> getDistanceToHouse() async {
-    print('called');
+    // print('called');
     Map<String, dynamic> determinePosition = await _determinePosition();
     if (!determinePosition["error"]) {
       Position posisi = determinePosition["position"];
@@ -70,7 +70,7 @@ class HomeController extends GetxController {
       Get.rawSnackbar(
         title: 'GPS Mati',
         message: 'Mohon Hidupkan GPS',
-        duration: Duration(seconds: 3),
+        duration: const Duration(seconds: 3),
       );
       return Future.error('Akses Lokasi dimatikan');
     }
