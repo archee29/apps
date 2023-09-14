@@ -5,8 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_bottom_navbar.dart';
-import 'package:tugas_akhir/app/widgets/feeder_card.dart';
-import 'package:tugas_akhir/app/widgets/feeder_tile.dart';
+import 'package:tugas_akhir/app/widgets/card/feeder_card.dart';
+import 'package:tugas_akhir/app/widgets/card/feeder_tile.dart';
 import 'package:tugas_akhir/app/widgets/dialog/custom_notification.dart';
 import 'package:tugas_akhir/data_pengguna.dart';
 

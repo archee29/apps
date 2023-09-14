@@ -45,12 +45,12 @@ class HomeController extends GetxController {
     // print('called');
     Map<String, dynamic> determinePosition = await _determinePosition();
     if (!determinePosition["error"]) {
-      Position posisi = determinePosition["position"];
+      Position position = determinePosition["position"];
       double distance = Geolocator.distanceBetween(
           DataPengguna.house['latitude'],
           DataPengguna.house['longtitude'],
-          posisi.latitude,
-          posisi.longitude);
+          position.latitude,
+          position.longitude);
       if (distance > 1000) {
         return "${(distance / 1000).toStringAsFixed(2)}km";
       } else {
@@ -92,11 +92,11 @@ class HomeController extends GetxController {
         "error": true,
       };
     }
-    Position posisi = await Geolocator.getCurrentPosition(
+    Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.bestForNavigation);
     return {
-      "positon": posisi,
-      "message": "Berhasil mendapatkan posisi device",
+      "positon": position,
+      "message": "Berhasil mendapatkan position device",
       "error": false,
     };
   }

@@ -5,8 +5,8 @@ import 'package:maps_launcher/maps_launcher.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_bottom_navbar.dart';
-import 'package:tugas_akhir/app/widgets/feeder_card.dart';
-import 'package:tugas_akhir/app/widgets/feeder_tile.dart';
+import 'package:tugas_akhir/app/widgets/card/feeder_card.dart';
+import 'package:tugas_akhir/app/widgets/card/feeder_tile.dart';
 import 'package:tugas_akhir/app/widgets/dialog/custom_notification.dart';
 import 'package:tugas_akhir/data_pengguna.dart';
 
@@ -27,12 +27,13 @@ class HomeView extends GetView<HomeController> {
               Map<String, dynamic> user = snapshot.data!.data()!;
               return ListView(
                 shrinkWrap: true,
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 36),
+                physics: const BouncingScrollPhysics(),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 36),
                 children: [
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Container(
-                    margin: EdgeInsets.only(bottom: 16),
+                    margin: const EdgeInsets.only(bottom: 16),
                     width: MediaQuery.of(context).size.width,
                     child: Row(
                       children: [
@@ -48,7 +49,7 @@ class HomeView extends GetView<HomeController> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 24),
+                        const SizedBox(width: 24),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -59,10 +60,10 @@ class HomeView extends GetView<HomeController> {
                                 color: AppColors.secondarySoft,
                               ),
                             ),
-                            SizedBox(height: 4),
+                            const SizedBox(height: 4),
                             Text(
                               user["name"],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontFamily: 'poppins',
                               ),
@@ -77,7 +78,8 @@ class HomeView extends GetView<HomeController> {
                       builder: (context, snapshot) {
                         switch (snapshot.connectionState) {
                           case ConnectionState.waiting:
-                            return Center(child: CircularProgressIndicator());
+                            return const Center(
+                                child: CircularProgressIndicator());
                           case ConnectionState.active:
                           case ConnectionState.done:
                             var todayFeederData = snapshot.data?.data();
@@ -86,11 +88,11 @@ class HomeView extends GetView<HomeController> {
                               todayFeederData: todayFeederData,
                             );
                           default:
-                            return SizedBox();
+                            return const SizedBox();
                         }
                       }),
                   Container(
-                    margin: EdgeInsets.only(top: 12, bottom: 24, left: 4),
+                    margin: const EdgeInsets.only(top: 12, bottom: 24, left: 4),
                     child: Text(
                       (user["address"] != null)
                           ? "${user['address']}"
@@ -103,7 +105,7 @@ class HomeView extends GetView<HomeController> {
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.only(bottom: 10),
+                    margin: const EdgeInsets.only(bottom: 10),
                     child: Row(
                       children: [
                         Expanded(
@@ -117,8 +119,8 @@ class HomeView extends GetView<HomeController> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
-                                  margin: EdgeInsets.only(bottom: 6),
-                                  child: Text(
+                                  margin: const EdgeInsets.only(bottom: 6),
+                                  child: const Text(
                                     'Jarak Dari Rumah',
                                     style: TextStyle(fontSize: 10),
                                   ),
@@ -126,7 +128,7 @@ class HomeView extends GetView<HomeController> {
                                 Obx(
                                   () => Text(
                                     '${controller.houseDistance.value}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 24,
                                       fontFamily: 'poppins',
                                       fontWeight: FontWeight.w700,
@@ -137,7 +139,7 @@ class HomeView extends GetView<HomeController> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 16),
+                        const SizedBox(width: 16),
                         Expanded(
                           child: GestureDetector(
                             onTap: controller.launchHouseOnMap,
@@ -147,13 +149,13 @@ class HomeView extends GetView<HomeController> {
                               decoration: BoxDecoration(
                                 color: AppColors.primaryExtraSoft,
                                 borderRadius: BorderRadius.circular(8),
-                                image: DecorationImage(
+                                image: const DecorationImage(
                                   image: AssetImage('assets/images/map.jpg'),
                                   fit: BoxFit.cover,
                                   opacity: 0.3,
                                 ),
                               ),
-                              child: Text(
+                              child: const Text(
                                 "Buka di Maps",
                                 style: TextStyle(fontWeight: FontWeight.w600),
                               ),
@@ -167,7 +169,7 @@ class HomeView extends GetView<HomeController> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           "Feeder History",
                           style: TextStyle(
                             fontFamily: "poppins",
@@ -176,7 +178,7 @@ class HomeView extends GetView<HomeController> {
                         ),
                         TextButton(
                           onPressed: () => Get.toNamed(Routes.ALL_FEEDER),
-                          child: Text("Lihat Semua"),
+                          child: const Text("Lihat Semua"),
                           style: TextButton.styleFrom(
                             primary: AppColors.primary,
                           ),
@@ -189,7 +191,8 @@ class HomeView extends GetView<HomeController> {
                     builder: (context, snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
-                          return Center(child: CircularProgressIndicator());
+                          return const Center(
+                              child: CircularProgressIndicator());
                         case ConnectionState.active:
                         case ConnectionState.done:
                           List<QueryDocumentSnapshot<Map<String, dynamic>>>
@@ -199,7 +202,7 @@ class HomeView extends GetView<HomeController> {
                             shrinkWrap: true,
                             physics: BouncingScrollPhysics(),
                             separatorBuilder: (context, index) =>
-                                SizedBox(height: 16),
+                                const SizedBox(height: 16),
                             itemBuilder: (context, index) {
                               Map<String, dynamic> feederData =
                                   listFeeder[index].data();
@@ -207,16 +210,62 @@ class HomeView extends GetView<HomeController> {
                             },
                           );
                         default:
-                          return SizedBox();
+                          return const SizedBox();
                       }
                     },
                   ),
+                  // Menu Card
+                  // Container(
+                  //   width: MediaQuery.of(context).size.width,
+                  //   margin: const EdgeInsets.only(bottom: 10),
+                  //   child: Row(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       Text(
+                  //         "Main Menu",
+                  //         style: TextStyle(
+                  //           color: Colors.black,
+                  //           fontFamily: 'poppins',
+                  //           fontWeight: FontWeight.w800,
+                  //           decoration: TextDecoration.underline,
+                  //           decorationColor: AppColors.primary,
+                  //           fontSize: 14,
+                  //         ),
+                  //       ),
+                  //       Expanded(
+                  //         child: Container(
+                  //           height: 84,
+                  //           decoration: BoxDecoration(
+                  //             color: AppColors.primary,
+                  //             borderRadius: BorderRadius.circular(8),
+                  //           ),
+                  //           child: Column(
+                  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //             crossAxisAlignment: CrossAxisAlignment.center,
+                  //             children: [
+                  //               Container(
+                  //                 child: const Text(
+                  //                   "Feeder &\nPool",
+                  //                   style: TextStyle(
+                  //                       color: Colors.white,
+                  //                       fontFamily: 'poppins',
+                  //                       fontWeight: FontWeight.w400,
+                  //                       fontSize: 14),
+                  //                 ),
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               );
             case ConnectionState.waiting:
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             default:
-              return Center(child: Text("Error"));
+              return const Center(child: Text("Error"));
           }
         },
       ),

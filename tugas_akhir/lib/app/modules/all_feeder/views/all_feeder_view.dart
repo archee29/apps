@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
-import 'package:tugas_akhir/app/widgets/feeder_tile.dart';
+import 'package:tugas_akhir/app/widgets/card/feeder_tile.dart';
 
 import '../controllers/all_feeder_controller.dart';
 

@@ -17,18 +17,18 @@ class FeederController extends GetxController {
     isLoading.value = true;
     Map<String, dynamic> determinePosition = await _determinePosition();
     if (!determinePosition["error"]) {
-      Position posisi = determinePosition["posisi"];
+      Position position = determinePosition["position"];
       List<Placemark> placemarks =
-          await placemarkFromCoordinates(posisi.latitude, posisi.longitude);
+          await placemarkFromCoordinates(position.latitude, position.longitude);
       String alamat =
           "${placemarks.first.street}, ${placemarks.first.subLocality}, ${placemarks.first.locality}";
       double distance = Geolocator.distanceBetween(
           DataPengguna.house['latitude'],
           DataPengguna.house['longtitude'],
-          posisi.latitude,
-          posisi.longitude);
-      await updatePosisi(posisi, alamat);
-      await processFeeder(posisi, alamat, distance);
+          position.latitude,
+          position.longitude);
+      await updatePosisi(position, alamat);
+      await processFeeder(position, alamat, distance);
       isLoading.value = false;
     } else {
       isLoading.value = false;
@@ -40,7 +40,7 @@ class FeederController extends GetxController {
   firstFeeder(
     CollectionReference<Map<String, dynamic>> feederCollection,
     String todayDocId,
-    Position posisi,
+    Position position,
     String alamat,
     double distance,
     bool inArea,
@@ -56,8 +56,8 @@ class FeederController extends GetxController {
             "date": DateTime.now().toIso8601String(),
             "masuk": {
               "date": DateTime.now().toIso8601String(),
-              "latitude": posisi.latitude,
-              "longtitude": posisi.longitude,
+              "latitude": position.latitude,
+              "longtitude": position.longitude,
               "alamat": alamat,
               "in_area": inArea,
               "distance": distance,
@@ -74,7 +74,7 @@ class FeederController extends GetxController {
   morningFeeder(
     CollectionReference<Map<String, dynamic>> feederCollection,
     String todayDocId,
-    Position posisi,
+    Position position,
     String alamat,
     double distance,
     bool inArea,
@@ -90,8 +90,8 @@ class FeederController extends GetxController {
             "date": DateTime.now().toIso8601String(),
             "masuk": {
               "date": DateTime.now().toIso8601String(),
-              "latitude": posisi.latitude,
-              "longtitude": posisi.longitude,
+              "latitude": position.latitude,
+              "longtitude": position.longitude,
               "alamat": alamat,
               "in_area": inArea,
               "distance": distance,
@@ -108,7 +108,7 @@ class FeederController extends GetxController {
   afternoonFeeder(
     CollectionReference<Map<String, dynamic>> feederCollection,
     String todayDocId,
-    Position posisi,
+    Position position,
     String alamat,
     double distance,
     bool inArea,
@@ -123,8 +123,8 @@ class FeederController extends GetxController {
           {
             "keluar": {
               "date": DateTime.now().toIso8601String(),
-              "latitude": posisi.latitude,
-              "longtitude": posisi.longitude,
+              "latitude": position.latitude,
+              "longtitude": position.longitude,
               "address": alamat,
               "in_area": inArea,
               "distance": distance,
@@ -141,7 +141,7 @@ class FeederController extends GetxController {
   }
 
   Future<void> processFeeder(
-      Position posisi, String alamat, double distance) async {
+      Position position, String alamat, double distance) async {
     String uid = auth.currentUser!.uid;
     String todayDocId =
         DateFormat.yMd().format(DateTime.now()).replaceAll("/", "-");
@@ -156,7 +156,7 @@ class FeederController extends GetxController {
     }
     if (snapshotPreference.docs.isEmpty) {
       firstFeeder(
-          feederCollection, todayDocId, posisi, alamat, distance, inArea);
+          feederCollection, todayDocId, position, alamat, distance, inArea);
     } else {
       DocumentSnapshot<Map<String, dynamic>> todayDoc =
           await feederCollection.doc(todayDocId).get();
@@ -169,22 +169,22 @@ class FeederController extends GetxController {
           );
         } else {
           afternoonFeeder(
-              feederCollection, todayDocId, posisi, alamat, distance, inArea);
+              feederCollection, todayDocId, position, alamat, distance, inArea);
         }
       } else {
         morningFeeder(
-            feederCollection, todayDocId, posisi, alamat, distance, inArea);
+            feederCollection, todayDocId, position, alamat, distance, inArea);
       }
     }
   }
 
-  Future<void> updatePosisi(Position posisi, String alamat) async {
+  Future<void> updatePosisi(Position position, String alamat) async {
     String uid = auth.currentUser!.uid;
     await firestore.collection("user").doc(uid).update(
       {
         "position": {
-          "latitude": posisi.latitude,
-          "longtitude": posisi.longitude,
+          "latitude": position.latitude,
+          "longtitude": position.longitude,
         },
         "address": alamat,
       },
@@ -217,10 +217,10 @@ class FeederController extends GetxController {
         "error": true,
       };
     }
-    Position posisi = await Geolocator.getCurrentPosition(
+    Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.bestForNavigation);
     return {
-      "position": posisi,
+      "position": position,
       "message": "Berhasil Mendapatkan Posisi Device",
       "error": false,
     };
