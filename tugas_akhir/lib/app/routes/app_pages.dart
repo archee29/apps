@@ -32,22 +32,23 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
+  // ignore: constant_identifier_names
   static const INITIAL = Routes.HOME;
 
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () => HomeView(),
+      page: () => const HomeView(),
       binding: HomeBinding(),
     ),
     GetPage(
       name: _Paths.LOGIN,
-      page: () => LoginView(),
+      page: () => const LoginView(),
       binding: LoginBinding(),
     ),
     GetPage(
       name: _Paths.SIGNUP,
-      page: () => SignupView(),
+      page: () => const SignupView(),
       binding: SignupBinding(),
     ),
     GetPage(
@@ -62,22 +63,22 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.RESET,
-      page: () => ResetView(),
+      page: () => const ResetView(),
       binding: ResetBinding(),
     ),
     GetPage(
       name: _Paths.MAIN,
-      page: () => MainView(),
+      page: () => const MainView(),
       binding: MainBinding(),
     ),
     GetPage(
       name: _Paths.TAMBAH_JADWAL,
-      page: () => TambahJadwalView(),
+      page: () => const TambahJadwalView(),
       binding: TambahJadwalBinding(),
     ),
     GetPage(
       name: _Paths.EDIT_JADWAL,
-      page: () => EditJadwalView(),
+      page: () => const EditJadwalView(),
       binding: EditJadwalBinding(),
     ),
     GetPage(
@@ -87,12 +88,12 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.NEW_PASSWORD,
-      page: () => NewPasswordView(),
+      page: () => const NewPasswordView(),
       binding: NewPasswordBinding(),
     ),
     GetPage(
       name: _Paths.ALL_FEEDER,
-      page: () => AllFeederView(),
+      page: () => const AllFeederView(),
       binding: AllFeederBinding(),
     ),
     GetPage(

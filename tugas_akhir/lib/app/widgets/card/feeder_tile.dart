@@ -6,7 +6,7 @@ import 'package:tugas_akhir/app/styles/app_colors.dart';
 
 class FeederTile extends StatelessWidget {
   final Map<String, dynamic> feederData;
-  FeederTile({required this.feederData});
+  const FeederTile({super.key, required this.feederData});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,8 @@ class FeederTile extends StatelessWidget {
             color: AppColors.primaryExtraSoft,
           ),
         ),
-        padding: EdgeInsets.only(left: 24, top: 20, right: 29, bottom: 20),
+        padding:
+            const EdgeInsets.only(left: 24, top: 20, right: 29, bottom: 20),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,36 +33,38 @@ class FeederTile extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Feeder",
+                    const Text(
+                      "Pagi",
                       style: TextStyle(fontSize: 12),
                     ),
-                    SizedBox(height: 6),
+                    const SizedBox(height: 6),
                     Text(
                       (feederData["masuk"] == null)
                           ? "-"
-                          : "${DateFormat.jm().format(DateTime.parse(feederData["masuk"]["date"]))}",
-                      style: TextStyle(
+                          : DateFormat.jm().format(
+                              DateTime.parse(feederData["masuk"]["date"])),
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(width: 24),
+                const SizedBox(width: 24),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Feeder",
+                    const Text(
+                      "Sore",
                       style: TextStyle(fontSize: 12),
                     ),
-                    SizedBox(height: 6),
+                    const SizedBox(height: 6),
                     Text(
                       (feederData["keluar"] == null)
                           ? "-"
-                          : "${DateFormat.jm().format(DateTime.parse(feederData["keluar"]["date"]))}",
-                      style: TextStyle(
+                          : DateFormat.jm().format(
+                              DateTime.parse(feederData["keluar"]["date"])),
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                       ),
@@ -71,7 +74,8 @@ class FeederTile extends StatelessWidget {
               ],
             ),
             Text(
-              "${DateFormat.yMMMMEEEEd().format(DateTime.parse(feederData["date"]))}",
+              DateFormat.yMMMMEEEEd()
+                  .format(DateTime.parse(feederData["date"])),
               style: TextStyle(
                 fontSize: 10,
                 color: AppColors.secondarySoft,

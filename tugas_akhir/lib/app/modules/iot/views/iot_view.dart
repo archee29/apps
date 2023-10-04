@@ -8,6 +8,8 @@ import '../controllers/iot_controller.dart';
 
 class IotView extends GetView<IotController> {
   final authC = Get.find<AuthController>();
+
+  IotView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,7 +19,7 @@ class IotView extends GetView<IotController> {
         actions: [
           IconButton(
             onPressed: () => authC.logout(),
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
           ),
         ],
       ),
@@ -37,7 +39,7 @@ class IotView extends GetView<IotController> {
               ),
             );
           }
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         },
       ),
 
@@ -81,7 +83,7 @@ class IotView extends GetView<IotController> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.toNamed(Routes.TAMBAH_JADWAL),
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

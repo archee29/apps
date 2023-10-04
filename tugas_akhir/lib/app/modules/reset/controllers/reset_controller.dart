@@ -13,9 +13,9 @@ class ResetController extends GetxController {
   Future<void> sendEmail() async {
     if (emailController.text.isNotEmpty) {
       isLoading.value = true;
-      print("called");
+      // print("called");
       try {
-        print("success");
+        // print("success");
         auth.sendPasswordResetEmail(email: emailController.text);
         Get.back();
         CustomNotification.successNotification("Success",

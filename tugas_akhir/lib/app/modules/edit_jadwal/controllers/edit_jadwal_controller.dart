@@ -34,7 +34,7 @@ class EditJadwalController extends GetxController {
         textConfirm: "OKE",
       );
     } catch (e) {
-      print(e);
+      // print(e);
       Get.defaultDialog(
         title: "Terjadi Kesalahan",
         middleText: "Tidak Berhasil Mengubah Data Jadwal",

@@ -5,8 +5,9 @@ import 'package:tugas_akhir/app/controllers/auth_controller.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 
 class SideMenu extends StatelessWidget {
-  // const SideMenu({super.key});
   final authC = Get.find<AuthController>();
+
+  SideMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,7 @@ class SideMenu extends StatelessWidget {
             margin: const EdgeInsets.all(24),
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-                color: Color.fromARGB(255, 255, 136, 186),
+                color: const Color.fromARGB(255, 255, 136, 186),
                 borderRadius: BorderRadius.circular(15)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -83,7 +84,7 @@ class SideMenu extends StatelessWidget {
                         width: 30,
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: Color.fromARGB(255, 255, 0, 85),
+                            color: const Color.fromARGB(255, 255, 0, 85),
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),

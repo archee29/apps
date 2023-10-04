@@ -28,7 +28,7 @@ class IotController extends GetxController {
         textCancel: "Tidak",
       );
     } catch (e) {
-      print(e);
+      // print(e);
       Get.defaultDialog(
         title: "Terjadi Kesalahan",
         middleText: "Tidak Berhasil Menghapus Data ini",

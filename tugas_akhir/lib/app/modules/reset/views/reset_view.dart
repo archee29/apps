@@ -6,6 +6,8 @@ import 'package:tugas_akhir/app/styles/app_colors.dart';
 import '../controllers/reset_controller.dart';
 
 class ResetView extends GetView<ResetController> {
+  const ResetView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,6 +17,7 @@ class ResetView extends GetView<ResetController> {
         leading: IconButton(
           icon: SvgPicture.asset(
             'assets/icons/arrow-left.svg',
+            // ignore: deprecated_member_use
             color: Colors.white,
           ),
           onPressed: () => Get.back(),
@@ -29,15 +32,15 @@ class ResetView extends GetView<ResetController> {
           Container(
             height: MediaQuery.of(context).size.height * 35 / 100,
             width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.only(left: 32),
+            padding: const EdgeInsets.only(left: 32),
             decoration: BoxDecoration(
               gradient: AppColors.primaryGradient,
-              image: DecorationImage(
+              image: const DecorationImage(
                 image: AssetImage('assets/images/pattern-1-1.png'),
                 fit: BoxFit.cover,
               ),
             ),
-            child: Column(
+            child: const Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -63,17 +66,18 @@ class ResetView extends GetView<ResetController> {
             height: MediaQuery.of(context).size.height * 65 / 100,
             width: MediaQuery.of(context).size.width,
             color: Colors.white,
-            padding: EdgeInsets.only(left: 20, right: 20, top: 36, bottom: 84),
+            padding:
+                const EdgeInsets.only(left: 20, right: 20, top: 36, bottom: 84),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 24),
+                  margin: const EdgeInsets.only(bottom: 24),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Reset Password',
                         style: TextStyle(
                           fontSize: 18,
@@ -81,7 +85,7 @@ class ResetView extends GetView<ResetController> {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Text(
                         "Kami Akan Mengirimkan Link Untuk Reset Password\nKe Email Anda.",
                         style: TextStyle(
@@ -94,8 +98,8 @@ class ResetView extends GetView<ResetController> {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.only(left: 14, right: 14, top: 4),
-                  margin: EdgeInsets.only(bottom: 24),
+                  padding: const EdgeInsets.only(left: 14, right: 14, top: 4),
+                  margin: const EdgeInsets.only(bottom: 24),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(8),
@@ -105,7 +109,7 @@ class ResetView extends GetView<ResetController> {
                     ),
                   ),
                   child: TextField(
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       fontFamily: 'poppins',
                     ),
@@ -131,7 +135,7 @@ class ResetView extends GetView<ResetController> {
                   ),
                 ),
                 Obx(
-                  () => Container(
+                  () => SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
                       onPressed: () async {
@@ -139,22 +143,22 @@ class ResetView extends GetView<ResetController> {
                           await controller.sendEmail();
                         }
                       },
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 18),
+                        backgroundColor: AppColors.primary,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
                       child: Text(
                         (controller.isLoading.isFalse)
                             ? 'Reset Password'
                             : 'Loading....',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16,
                           fontFamily: 'poppins',
                           fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 18),
-                        elevation: 0,
-                        primary: AppColors.primary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
                         ),
                       ),
                     ),

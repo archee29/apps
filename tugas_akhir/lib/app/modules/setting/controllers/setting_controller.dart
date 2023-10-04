@@ -8,7 +8,7 @@ class SettingController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> streamUser() async* {
-    print("called");
+    // print("called");
     String uid = auth.currentUser!.uid;
     yield* firestore.collection("user").doc(uid).snapshots();
   }

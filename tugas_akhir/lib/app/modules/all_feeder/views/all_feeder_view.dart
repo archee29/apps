@@ -9,6 +9,8 @@ import 'package:tugas_akhir/app/widgets/card/feeder_tile.dart';
 import '../controllers/all_feeder_controller.dart';
 
 class AllFeederView extends GetView<AllFeederController> {
+  const AllFeederView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,19 +33,20 @@ class AllFeederView extends GetView<AllFeederController> {
           Container(
             width: 44,
             height: 44,
-            margin: EdgeInsets.only(bottom: 8, top: 8, right: 8),
+            margin: const EdgeInsets.only(bottom: 8, top: 8, right: 8),
             child: ElevatedButton(
               onPressed: () {
                 Get.dialog(
                   Dialog(
-                    child: Container(
+                    child: SizedBox(
                       height: 372,
                       child: SfDateRangePicker(
                         headerHeight: 50,
-                        headerStyle: DateRangePickerHeaderStyle(
+                        headerStyle: const DateRangePickerHeaderStyle(
                             textAlign: TextAlign.center),
                         monthViewSettings:
-                            DateRangePickerMonthViewSettings(firstDayOfWeek: 1),
+                            const DateRangePickerMonthViewSettings(
+                                firstDayOfWeek: 1),
                         selectionMode: DateRangePickerSelectionMode.range,
                         rangeSelectionColor: AppColors.primary.withOpacity(0.2),
                         viewSpacing: 10,
@@ -63,7 +66,6 @@ class AllFeederView extends GetView<AllFeederController> {
                   ),
                 );
               },
-              child: SvgPicture.asset('assets/icons/filter.svg'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 elevation: 0,
@@ -72,11 +74,12 @@ class AllFeederView extends GetView<AllFeederController> {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
+              child: SvgPicture.asset('assets/icons/filter.svg'),
             ),
           )
         ],
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(1),
+          preferredSize: const Size.fromHeight(1),
           child: Container(
               width: MediaQuery.of(context).size.width,
               height: 1,
@@ -90,16 +93,17 @@ class AllFeederView extends GetView<AllFeederController> {
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.waiting:
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 case ConnectionState.active:
                 case ConnectionState.done:
                   var data = snapshot.data!.docs;
                   return ListView.separated(
                     shrinkWrap: true,
-                    physics: BouncingScrollPhysics(),
-                    padding: EdgeInsets.all(20),
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.all(20),
                     itemCount: data.length,
-                    separatorBuilder: (context, index) => SizedBox(height: 16),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 16),
                     itemBuilder: (context, index) {
                       var feederData = data[index].data();
                       return FeederTile(
@@ -108,7 +112,7 @@ class AllFeederView extends GetView<AllFeederController> {
                     },
                   );
                 default:
-                  return SizedBox();
+                  return const SizedBox();
               }
             },
           );

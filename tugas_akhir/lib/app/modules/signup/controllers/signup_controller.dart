@@ -99,11 +99,11 @@ class SignupController extends GetxController {
       } on FirebaseAuthException catch (e) {
         isLoadingCreateUser.value = false;
         if (e.code == 'weak-password') {
-          print('the password provided is too weak.');
+          // print('the password provided is too weak.');
           CustomNotification.errorNotification(
               "Error", "default password too short");
         } else if (e.code == 'email-already-in-use') {
-          print('The account already exists for that email.');
+          // print('The account already exists for that email.');
           CustomNotification.errorNotification(
               'Error', 'Employee already exist');
         } else if (e.code == 'wrong-password') {

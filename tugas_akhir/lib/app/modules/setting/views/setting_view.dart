@@ -11,26 +11,28 @@ import '../controllers/setting_controller.dart';
 
 class SettingView extends GetView<SettingController> {
   final pageIndexController = Get.find<PageIndexController>();
+
+  SettingView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      bottomNavigationBar: CustomBottomNavigationBar(),
+      bottomNavigationBar: const CustomBottomNavigationBar(),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         stream: controller.streamUser(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             case ConnectionState.active:
             case ConnectionState.done:
               Map<String, dynamic> userData = snapshot.data!.data()!;
               return ListView(
                 shrinkWrap: true,
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.symmetric(vertical: 36),
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.symmetric(vertical: 36),
                 children: [
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -41,7 +43,7 @@ class SettingView extends GetView<SettingController> {
                           color: Colors.pink,
                           child: Image.network(
                             (userData["avatar"] == null ||
-                                    userData['avata'] == "")
+                                    userData['avatar'] == "")
                                 ? "https://ui-avatars.com/api/?name${userData['name']}/"
                                 : userData['avatar'],
                             fit: BoxFit.cover,
@@ -49,10 +51,10 @@ class SettingView extends GetView<SettingController> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(top: 16, bottom: 4),
+                        margin: const EdgeInsets.only(top: 16, bottom: 4),
                         child: Text(
                           userData["name"],
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                           ),
@@ -66,7 +68,7 @@ class SettingView extends GetView<SettingController> {
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.only(top: 42),
+                    margin: const EdgeInsets.only(top: 42),
                     child: Column(
                       children: [
                         MenuTile(
@@ -85,13 +87,20 @@ class SettingView extends GetView<SettingController> {
                                 ),
                                 onTap: () => Get.toNamed(Routes.SIGNUP),
                               )
-                            : SizedBox(),
+                            : const SizedBox(),
                         MenuTile(
                           title: "Ubah Password",
                           icon: SvgPicture.asset(
                             'assets/icons/password.svg',
                           ),
                           onTap: () => Get.toNamed(Routes.NEW_PASSWORD),
+                        ),
+                        MenuTile(
+                          title: "History Feeder",
+                          icon: SvgPicture.asset(
+                            'assets/icons/history.svg',
+                          ),
+                          onTap: () => Get.toNamed(Routes.ALL_FEEDER),
                         ),
                         MenuTile(
                           isDanger: true,
@@ -111,7 +120,7 @@ class SettingView extends GetView<SettingController> {
                 ],
               );
             default:
-              return SizedBox();
+              return const SizedBox();
           }
         },
       ),
@@ -125,7 +134,8 @@ class MenuTile extends StatelessWidget {
   final void Function() onTap;
   final bool isDanger;
 
-  MenuTile({
+  const MenuTile({
+    super.key,
     required this.title,
     required this.icon,
     required this.onTap,
@@ -137,7 +147,7 @@ class MenuTile extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         decoration: BoxDecoration(
           border: Border(
             top: BorderSide(
@@ -151,8 +161,8 @@ class MenuTile extends StatelessWidget {
             Container(
               width: 42,
               height: 42,
-              margin: EdgeInsets.only(right: 24),
-              padding: EdgeInsets.all(8),
+              margin: const EdgeInsets.only(right: 24),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: AppColors.primaryExtraSoft,
                 borderRadius: BorderRadius.circular(100),
@@ -171,9 +181,10 @@ class MenuTile extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(left: 24),
+              margin: const EdgeInsets.only(left: 24),
               child: SvgPicture.asset(
                 'assets/icon/arrow-right.svg',
+                // ignore: deprecated_member_use
                 color:
                     (isDanger == false) ? AppColors.secondary : AppColors.error,
               ),

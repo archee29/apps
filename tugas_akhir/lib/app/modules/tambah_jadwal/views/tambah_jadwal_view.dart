@@ -21,21 +21,21 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
               controller: controller.makananController,
               autocorrect: false,
               textInputAction: TextInputAction.next,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Makanan",
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             TextField(
               controller: controller.minumanController,
               textInputAction: TextInputAction.done,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Minuman",
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             ElevatedButton(
@@ -43,7 +43,7 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
                 controller.makananController.text,
                 controller.minumanController.text,
               ),
-              child: Text("Tambah Jadwal"),
+              child: const Text("Tambah Jadwal"),
             ),
           ],
         ),

@@ -10,6 +10,8 @@ import '../controllers/update_profile_controller.dart';
 class UpdateProfileView extends GetView<UpdateProfileController> {
   final Map<String, dynamic> user = Get.arguments;
 
+  UpdateProfileView({super.key});
+
   @override
   Widget build(BuildContext context) {
     controller.userIdController.text = user["user_id"];
@@ -37,11 +39,11 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                   controller.updateProfile();
                 }
               },
+              style: TextButton.styleFrom(
+                foregroundColor: AppColors.primary,
+              ),
               child: Text(
                   (controller.isLoading.isFalse) ? 'Selesai' : 'Loading....'),
-              style: TextButton.styleFrom(
-                primary: AppColors.primary,
-              ),
             ),
           ),
         ],
@@ -49,7 +51,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
         elevation: 0,
         centerTitle: true,
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(1),
+          preferredSize: const Size.fromHeight(1),
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: 1,
@@ -59,8 +61,8 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
       ),
       body: ListView(
         shrinkWrap: true,
-        physics: BouncingScrollPhysics(),
-        padding: EdgeInsets.all(20),
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.all(20),
         children: [
           Center(
             child: Stack(
@@ -106,13 +108,13 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                       onPressed: () {
                         controller.pickImage();
                       },
-                      child: SvgPicture.asset('assets/icons/camera.svg'),
                       style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.zero,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(100),
                         ),
                       ),
+                      child: SvgPicture.asset('assets/icons/camera.svg'),
                     ),
                   ),
                 ),
@@ -123,7 +125,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
             controller: controller.nameController,
             label: "Nama Lengkap",
             hint: "Masukkan Nama Lengkap",
-            margin: EdgeInsets.only(bottom: 16, top: 42),
+            margin: const EdgeInsets.only(bottom: 16, top: 42),
           ),
           CustomInput(
             controller: controller.userIdController,

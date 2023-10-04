@@ -1,22 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:maps_launcher/maps_launcher.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_bottom_navbar.dart';
 import 'package:tugas_akhir/app/widgets/card/feeder_card.dart';
 import 'package:tugas_akhir/app/widgets/card/feeder_tile.dart';
-import 'package:tugas_akhir/app/widgets/dialog/custom_notification.dart';
-import 'package:tugas_akhir/data_pengguna.dart';
 
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
+  const HomeView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: CustomBottomNavigationBar(),
+      bottomNavigationBar: const CustomBottomNavigationBar(),
       extendBody: true,
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         stream: controller.streamUser(),
@@ -32,13 +31,15 @@ class HomeView extends GetView<HomeController> {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 36),
                 children: [
                   const SizedBox(height: 16),
+                  // Menampilkan Foto dan Nama Admin
                   Container(
                     margin: const EdgeInsets.only(bottom: 16),
                     width: MediaQuery.of(context).size.width,
                     child: Row(
                       children: [
+                        // menampilkan Poto user
                         ClipOval(
-                          child: Container(
+                          child: SizedBox(
                             width: 42,
                             height: 42,
                             child: Image.network(
@@ -49,7 +50,9 @@ class HomeView extends GetView<HomeController> {
                             ),
                           ),
                         ),
+
                         const SizedBox(width: 24),
+                        // menampilkan nama user
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -73,6 +76,7 @@ class HomeView extends GetView<HomeController> {
                       ],
                     ),
                   ),
+                  // Menampilkan Card Feeder
                   StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                       stream: controller.streamTodayFeeder(),
                       builder: (context, snapshot) {
@@ -91,6 +95,7 @@ class HomeView extends GetView<HomeController> {
                             return const SizedBox();
                         }
                       }),
+                  // Menampilkan Alamat Feeder
                   Container(
                     margin: const EdgeInsets.only(top: 12, bottom: 24, left: 4),
                     child: Text(
@@ -103,6 +108,7 @@ class HomeView extends GetView<HomeController> {
                       ),
                     ),
                   ),
+                  // Menampilkan Card Jarak dan Peta Lokasi Yang Punya Kucing
                   Container(
                     width: MediaQuery.of(context).size.width,
                     margin: const EdgeInsets.only(bottom: 10),
@@ -127,7 +133,7 @@ class HomeView extends GetView<HomeController> {
                                 ),
                                 Obx(
                                   () => Text(
-                                    '${controller.houseDistance.value}',
+                                    controller.houseDistance.value,
                                     style: const TextStyle(
                                       fontSize: 24,
                                       fontFamily: 'poppins',
@@ -165,27 +171,70 @@ class HomeView extends GetView<HomeController> {
                       ],
                     ),
                   ),
+                  // Welcome Card
                   Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    width: MediaQuery.of(context).size.width,
+                    padding: const EdgeInsets.only(
+                        left: 24, top: 24, right: 24, bottom: 16),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(8),
+                      image: const DecorationImage(
+                        image: AssetImage('assets/images/pattern-1.png'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text(
-                          "Feeder History",
+                          "Halo, Admin !",
                           style: TextStyle(
-                            fontFamily: "poppins",
-                            fontWeight: FontWeight.w600,
+                            color: Colors.white,
+                            fontFamily: 'poppins',
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: 2,
                           ),
                         ),
-                        TextButton(
-                          onPressed: () => Get.toNamed(Routes.ALL_FEEDER),
-                          child: const Text("Lihat Semua"),
-                          style: TextButton.styleFrom(
-                            primary: AppColors.primary,
+                        Container(
+                          margin: const EdgeInsets.only(top: 4, bottom: 12),
+                          child: const Text(
+                            "Cek Kondisi Pakan Hari ini.\nPastikan Stok Pakan Cukup, Untuk Hari Ini!",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'poppins',
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              // letterSpacing: 2,
+                            ),
                           ),
                         ),
+                        Container()
                       ],
                     ),
                   ),
+                  // Menampilkan Feeder History
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Feeder History",
+                        style: TextStyle(
+                          fontFamily: "poppins",
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () => Get.toNamed(Routes.ALL_FEEDER),
+                        style: TextButton.styleFrom(
+                          foregroundColor: AppColors.primary,
+                        ),
+                        child: const Text("Lihat Semua"),
+                      ),
+                    ],
+                  ),
+                  // Menampilkan List Database Feeder Terakhir
                   StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                     stream: controller.streamLastFeeder(),
                     builder: (context, snapshot) {
@@ -200,7 +249,7 @@ class HomeView extends GetView<HomeController> {
                           return ListView.separated(
                             itemCount: listFeeder.length,
                             shrinkWrap: true,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             separatorBuilder: (context, index) =>
                                 const SizedBox(height: 16),
                             itemBuilder: (context, index) {
@@ -215,51 +264,87 @@ class HomeView extends GetView<HomeController> {
                     },
                   ),
                   // Menu Card
-                  // Container(
-                  //   width: MediaQuery.of(context).size.width,
-                  //   margin: const EdgeInsets.only(bottom: 10),
-                  //   child: Row(
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: [
-                  //       Text(
-                  //         "Main Menu",
-                  //         style: TextStyle(
-                  //           color: Colors.black,
-                  //           fontFamily: 'poppins',
-                  //           fontWeight: FontWeight.w800,
-                  //           decoration: TextDecoration.underline,
-                  //           decorationColor: AppColors.primary,
-                  //           fontSize: 14,
-                  //         ),
-                  //       ),
-                  //       Expanded(
-                  //         child: Container(
-                  //           height: 84,
-                  //           decoration: BoxDecoration(
-                  //             color: AppColors.primary,
-                  //             borderRadius: BorderRadius.circular(8),
-                  //           ),
-                  //           child: Column(
-                  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //             crossAxisAlignment: CrossAxisAlignment.center,
-                  //             children: [
-                  //               Container(
-                  //                 child: const Text(
-                  //                   "Feeder &\nPool",
-                  //                   style: TextStyle(
-                  //                       color: Colors.white,
-                  //                       fontFamily: 'poppins',
-                  //                       fontWeight: FontWeight.w400,
-                  //                       fontSize: 14),
-                  //                 ),
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: const EdgeInsets.only(
+                      left: 24,
+                      top: 24,
+                      right: 24,
+                      bottom: 16,
+                    ),
+                    decoration: BoxDecoration(
+                      color: AppColors.secondaryExtraSoft,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Menu",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'poppins',
+                            fontWeight: FontWeight.w800,
+                            fontSize: 14,
+                            decoration: TextDecoration.underline,
+                            decorationColor: AppColors.primary,
+                            decorationStyle: TextDecorationStyle.solid,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      margin: const EdgeInsets.only(bottom: 6),
+                                      child: TextButton(
+                                        onPressed: () =>
+                                            Get.toNamed(Routes.MAIN),
+                                        child: const Text(
+                                          "Feeder &\nPool",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              // Expanded(
+                              //   child: Column(
+                              //     children: [
+                              //       Container(
+                              //         margin: EdgeInsets.only(bottom: 6),
+                              //         child: Text(
+                              //           "Makanan &\nMinuman",
+                              //           style: TextStyle(
+                              //             fontSize: 12,
+                              //             color: AppColors.primary,
+                              //           ),
+                              //         ),
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               );
             case ConnectionState.waiting:

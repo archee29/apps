@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
-import 'package:tugas_akhir/app/routes/app_pages.dart';
-import 'package:get/get.dart';
 
 class MenuCard extends StatelessWidget {
   const MenuCard({super.key});
@@ -10,11 +8,11 @@ class MenuCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.only(left: 24, top: 24, right: 24, bottom: 16),
+      padding: const EdgeInsets.only(left: 24, top: 24, right: 24, bottom: 16),
       decoration: BoxDecoration(
         color: AppColors.primaryExtraSoft,
         borderRadius: BorderRadius.circular(8),
-        image: DecorationImage(
+        image: const DecorationImage(
           image: AssetImage('assets/images/pattern-1.png'),
           fit: BoxFit.cover,
         ),
@@ -44,8 +42,9 @@ class MenuCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  // ignore: avoid_unnecessary_containers
                   Container(
-                    child: Text(
+                    child: const Text(
                       "Feeder &\nPool",
                       style: TextStyle(
                         color: Colors.white,

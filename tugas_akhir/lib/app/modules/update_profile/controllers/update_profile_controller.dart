@@ -39,8 +39,8 @@ class UpdateProfileController extends GetxController {
           data.addAll({"avatar": avatarUrl});
         }
         await firestore.collection("user").doc(uid).update(data);
-        Get.back();
         image = null;
+        Get.back();
         CustomNotification.successNotification(
             "Sukses", "Sukses Update Profile");
       } catch (e) {
@@ -57,8 +57,8 @@ class UpdateProfileController extends GetxController {
   void pickImage() async {
     image = await picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      print(image!.path);
-      print(image!.name.split(".").last);
+      // print(image!.path);
+      // print(image!.name.split(".").last);
     }
     update();
   }

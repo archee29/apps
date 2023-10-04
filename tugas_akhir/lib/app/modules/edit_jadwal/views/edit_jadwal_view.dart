@@ -29,21 +29,21 @@ class EditJadwalView extends GetView<EditJadwalController> {
                     controller: controller.makananController,
                     autocorrect: false,
                     textInputAction: TextInputAction.next,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: "Makanan",
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   TextField(
                     controller: controller.minumanController,
                     textInputAction: TextInputAction.done,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: "Minuman",
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   ElevatedButton(
@@ -52,13 +52,13 @@ class EditJadwalView extends GetView<EditJadwalController> {
                       controller.minumanController.text,
                       Get.arguments,
                     ),
-                    child: Text("Edit Jadwal"),
+                    child: const Text("Edit Jadwal"),
                   ),
                 ],
               ),
             );
           }
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );

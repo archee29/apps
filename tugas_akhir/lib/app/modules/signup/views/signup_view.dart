@@ -7,6 +7,8 @@ import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_input.dart';
 import '../controllers/signup_controller.dart';
 
 class SignupView extends GetView<SignupController> {
+  const SignupView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +28,7 @@ class SignupView extends GetView<SignupController> {
         elevation: 0,
         centerTitle: true,
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(1),
+          preferredSize: const Size.fromHeight(1),
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: 1,
@@ -36,8 +38,8 @@ class SignupView extends GetView<SignupController> {
       ),
       body: ListView(
         shrinkWrap: true,
-        physics: BouncingScrollPhysics(),
-        padding: EdgeInsets.all(20),
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.all(20),
         children: [
           CustomInput(
             controller: controller.idController,
@@ -59,8 +61,8 @@ class SignupView extends GetView<SignupController> {
             label: 'Job',
             hint: 'User Job',
           ),
-          SizedBox(height: 8),
-          Container(
+          const SizedBox(height: 8),
+          SizedBox(
             width: MediaQuery.of(context).size.width,
             child: Obx(
               () => ElevatedButton(
@@ -69,21 +71,21 @@ class SignupView extends GetView<SignupController> {
                     controller.addUser();
                   }
                 },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  padding: const EdgeInsets.symmetric(vertical: 18),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
                 child: Text(
                   (controller.isLoading.isFalse)
                       ? 'Tambah User'
                       : 'Loading ...',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontFamily: 'poppins',
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  primary: AppColors.primary,
-                  padding: EdgeInsets.symmetric(vertical: 18),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
                   ),
                 ),
               ),
