@@ -1,0 +1,231 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tugas_akhir/app/controllers/page_index_controller.dart';
+import 'package:tugas_akhir/app/routes/app_pages.dart';
+import 'package:tugas_akhir/app/styles/app_colors.dart';
+import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_bottom_navbar.dart';
+import '../controllers/main_controller.dart';
+
+class MainView extends GetView<MainController> {
+  final pageIndexController = Get.find<PageIndexController>();
+  MainView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: const CustomBottomNavigationBar(),
+      extendBody: true,
+      body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+        stream: controller.streamUser(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.active:
+            case ConnectionState.done:
+              Map<String, dynamic> user = snapshot.data!.data()!;
+              return ListView(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 36),
+                children: [
+                  const SizedBox(height: 16),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 16),
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      children: [
+                        ClipOval(
+                          child: SizedBox(
+                            width: 42,
+                            height: 42,
+                            child: Image.network(
+                              (user["avatar"] == null || user['avatar'] == "")
+                                  ? "https://ui-avatars.com/api/?name=${user['name']}/"
+                                  : user['avatar'],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 24),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Selamat Datang",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: AppColors.secondarySoft,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              user["name"],
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'poppins',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Feeder Card
+                  const SizedBox(height: 30),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: const EdgeInsets.only(
+                        left: 24, top: 24, right: 24, bottom: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(color: AppColors.primary),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color(0x003f0000),
+                          blurRadius: 20,
+                          offset: Offset(4, 4),
+                          spreadRadius: 0,
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Row(
+                          children: [
+                            Row(
+                              children: [
+                                const Text(
+                                  "Feeder",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'poppins',
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(width: 80),
+                                MainTile(
+                                  title: "Cek Status Alat",
+                                  icon: SvgPicture.asset(
+                                      'assets/icons/setting.svg'),
+                                  onTap: () => Get.toNamed(Routes.SETTING),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 50),
+                  // Tambah Feeder Card
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Jadwal Feeder",
+                        style: TextStyle(
+                          fontFamily: 'poppins',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                        ),
+                      ),
+                      MainTile(
+                        title: "Tambah Jadwal",
+                        icon: SvgPicture.asset('assets/icons/tambah.svg'),
+                        onTap: () => Get.toNamed(Routes.TAMBAH_JADWAL),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 50),
+                  // Stok Pakan Card
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Stok Pakan",
+                        style: TextStyle(
+                          fontFamily: 'poppins',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                        ),
+                      ),
+                      MainTile(
+                        title: "Edit Jadwal",
+                        icon: SvgPicture.asset('assets/icons/edit.svg'),
+                        onTap: () => Get.toNamed(Routes.EDIT_JADWAL),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 50),
+                  // Jadwal Card
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Jadwal Tersedia",
+                        style: TextStyle(
+                          fontFamily: 'poppins',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                        ),
+                      ),
+                      MainTile(
+                        title: "lihat Jadwal",
+                        icon: SvgPicture.asset('assets/icons/jadwal.svg'),
+                        onTap: () => Get.toNamed(Routes.ALL_FEEDER),
+                      ),
+                    ],
+                  )
+                ],
+              );
+            case ConnectionState.waiting:
+              return const Center(child: CircularProgressIndicator());
+            default:
+              return const Center(child: Text("Error"));
+          }
+        },
+      ),
+    );
+  }
+}
+
+class MainTile extends StatelessWidget {
+  final String title;
+  final Widget icon;
+  final void Function() onTap;
+  final bool isDanger;
+
+  const MainTile({
+    super.key,
+    required this.title,
+    required this.icon,
+    required this.onTap,
+    this.isDanger = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Row(
+        children: [
+          Container(
+            child: icon,
+          ),
+          const SizedBox(width: 5),
+          Text(
+            title,
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: AppColors.primary,
+              fontSize: 16,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
