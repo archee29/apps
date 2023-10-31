@@ -262,88 +262,88 @@ class HomeView extends GetView<HomeController> {
                       },
                     ),
                     // Menu Card
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.only(
-                        left: 24,
-                        top: 24,
-                        right: 24,
-                        bottom: 16,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.secondaryExtraSoft,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Menu",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontFamily: 'poppins',
-                              fontWeight: FontWeight.w800,
-                              fontSize: 14,
-                              decoration: TextDecoration.underline,
-                              decorationColor: AppColors.primary,
-                              decorationStyle: TextDecorationStyle.solid,
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Container(
-                            width: MediaQuery.of(context).size.width,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 8),
-                            decoration: BoxDecoration(
-                              color: AppColors.primary,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        margin:
-                                            const EdgeInsets.only(bottom: 6),
-                                        child: TextButton(
-                                          onPressed: () =>
-                                              Get.toNamed(Routes.MAIN),
-                                          child: const Text(
-                                            "Feeder &\nPool",
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                    // Container(
+                    //   width: MediaQuery.of(context).size.width,
+                    //   padding: const EdgeInsets.only(
+                    //     left: 24,
+                    //     top: 24,
+                    //     right: 24,
+                    //     bottom: 16,
+                    //   ),
+                    //   decoration: BoxDecoration(
+                    //     color: AppColors.secondaryExtraSoft,
+                    //     borderRadius: BorderRadius.circular(8),
+                    //   ),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Text(
+                    //         "Menu",
+                    //         style: TextStyle(
+                    //           color: Colors.black,
+                    //           fontFamily: 'poppins',
+                    //           fontWeight: FontWeight.w800,
+                    //           fontSize: 14,
+                    //           decoration: TextDecoration.underline,
+                    //           decorationColor: AppColors.primary,
+                    //           decorationStyle: TextDecorationStyle.solid,
+                    //         ),
+                    //       ),
+                    //       const SizedBox(height: 4),
+                    //       Container(
+                    //         width: MediaQuery.of(context).size.width,
+                    //         padding: const EdgeInsets.symmetric(
+                    //             horizontal: 8, vertical: 8),
+                    //         decoration: BoxDecoration(
+                    //           color: AppColors.primary,
+                    //           borderRadius: BorderRadius.circular(8),
+                    //         ),
+                    //         child: Row(
+                    //           children: [
+                    //             Expanded(
+                    //               child: Column(
+                    //                 children: [
+                    //                   Container(
+                    //                     margin:
+                    //                         const EdgeInsets.only(bottom: 6),
+                    //                     child: TextButton(
+                    //                       onPressed: () =>
+                    //                           Get.toNamed(Routes.MAIN),
+                    //                       child: const Text(
+                    //                         "Feeder &\nPool",
+                    //                         style: TextStyle(
+                    //                           fontSize: 12,
+                    //                           color: Colors.white,
+                    //                         ),
+                    //                       ),
+                    //                     ),
+                    //                   ),
+                    //                 ],
+                    //               ),
+                    //             ),
 
-                                // Expanded(
-                                //   child: Column(
-                                //     children: [
-                                //       Container(
-                                //         margin: EdgeInsets.only(bottom: 6),
-                                //         child: Text(
-                                //           "Makanan &\nMinuman",
-                                //           style: TextStyle(
-                                //             fontSize: 12,
-                                //             color: AppColors.primary,
-                                //           ),
-                                //         ),
-                                //       ),
-                                //     ],
-                                //   ),
-                                // ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // Expanded(
+                    //             //   child: Column(
+                    //             //     children: [
+                    //             //       Container(
+                    //             //         margin: EdgeInsets.only(bottom: 6),
+                    //             //         child: Text(
+                    //             //           "Makanan &\nMinuman",
+                    //             //           style: TextStyle(
+                    //             //             fontSize: 12,
+                    //             //             color: AppColors.primary,
+                    //             //           ),
+                    //             //         ),
+                    //             //       ),
+                    //             //     ],
+                    //             //   ),
+                    //             // ),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 );
               });

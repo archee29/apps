@@ -110,18 +110,23 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
                       Get.toNamed(Routes.MAIN);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
+                      backgroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 18),
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
+                        side: const BorderSide(
+                            width: 1, color: Color(0xFFFF39B0)),
                       ),
+                      shadowColor: const Color(0x3F000000),
                     ),
-                    icon: SvgPicture.asset('assets/icons/cancel.svg'),
+                    icon: SvgPicture.asset('assets/icons/cancel_button.svg'),
                     label: const Text(
                       "Cancel",
                       style: TextStyle(
-                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 9,
                         fontFamily: 'poppins',
                       ),
                     ),
@@ -144,9 +149,14 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
+                        side: const BorderSide(
+                          width: 1,
+                          color: Colors.white,
+                        ),
                       ),
+                      shadowColor: const Color(0x3F000000),
                     ),
-                    icon: SvgPicture.asset('assets/icons/tambah.svg'),
+                    icon: SvgPicture.asset('assets/icons/tambah_button.svg'),
                     label: Text(
                       (controller.isLoading.isFalse)
                           ? 'Tambah Jadwal'
