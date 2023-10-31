@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:tugas_akhir/app/routes/app_pages.dart';
+import 'package:tugas_akhir/app/styles/app_colors.dart';
+import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_input.dart';
 
 import '../controllers/edit_jadwal_controller.dart';
 
@@ -11,56 +15,212 @@ class EditJadwalView extends GetView<EditJadwalController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Jadwal'),
+        title: Text(
+          'Tambah Jadwal',
+          style: TextStyle(
+            color: AppColors.secondary,
+            fontSize: 14,
+          ),
+        ),
+        leading: IconButton(
+          onPressed: () => Get.back(),
+          icon: SvgPicture.asset('assets/icons/arrow-left.svg'),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0,
         centerTitle: true,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 1,
+            color: AppColors.secondaryExtraSoft,
+          ),
+        ),
       ),
-      body: FutureBuilder<DocumentSnapshot<Object?>>(
-        future: controller.getData(Get.arguments),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            var data = snapshot.data!.data() as Map<String, dynamic>;
-            controller.makananController.text = data["makanan"];
-            controller.minumanController.text = data["minuman"];
-            return Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  TextField(
-                    controller: controller.makananController,
-                    autocorrect: false,
-                    textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(
-                      labelText: "Makanan",
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  TextField(
-                    controller: controller.minumanController,
-                    textInputAction: TextInputAction.done,
-                    decoration: const InputDecoration(
-                      labelText: "Minuman",
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  ElevatedButton(
-                    onPressed: () => controller.editJadwal(
-                      controller.makananController.text,
-                      controller.minumanController.text,
-                      Get.arguments,
-                    ),
-                    child: const Text("Edit Jadwal"),
-                  ),
-                ],
+      body: ListView(
+        shrinkWrap: true,
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.all(20),
+        children: [
+          // Calendar
+
+          // Input Judul
+          Obx(
+            () => CustomInput(
+              controller: controller.titleController,
+              label: "Judul",
+              hint: "Masukkan Judul",
+              suffixIcon: IconButton(
+                onPressed: () {},
+                icon: SvgPicture.asset('assets/icons/judul.svg'),
               ),
-            );
-          }
-          return const Center(child: CircularProgressIndicator());
-        },
+            ),
+          ),
+          // Input Deskripsi
+          Obx(
+            () => CustomInput(
+              controller: controller.deskripsiController,
+              label: "Deskripsi",
+              hint: "MasukkanDeskripsi",
+              suffixIcon: IconButton(
+                onPressed: () {},
+                icon: SvgPicture.asset('assets/icons/deskripsi.svg'),
+              ),
+            ),
+          ),
+          // Input Makanan
+          Obx(
+            () => CustomInput(
+              controller: controller.makananController,
+              label: "Makanan",
+              hint: "Makanan",
+              suffixIcon: IconButton(
+                onPressed: () {},
+                icon: SvgPicture.asset('assets/icons/makanan.svg'),
+              ),
+            ),
+          ),
+          // Input Minuman
+          Obx(
+            () => CustomInput(
+              controller: controller.minumanController,
+              label: "Minuman",
+              hint: "Minuman",
+              suffixIcon: IconButton(
+                onPressed: () {},
+                icon: SvgPicture.asset('assets/icons/minuman.svg'),
+              ),
+            ),
+          ),
+          // Batas
+          const SizedBox(
+            height: 10,
+          ),
+          // Button
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Cancel Button
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Obx(
+                  () => ElevatedButton.icon(
+                    onPressed: () {
+                      Get.toNamed(Routes.MAIN);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 18),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        side: const BorderSide(
+                            width: 1, color: Color(0xFFFF39B0)),
+                      ),
+                      shadowColor: const Color(0x3F000000),
+                    ),
+                    icon: SvgPicture.asset('assets/icons/cancel_button.svg'),
+                    label: const Text(
+                      "Cancel",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 9,
+                        fontFamily: 'poppins',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              // Tambah Button
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Obx(
+                  () => ElevatedButton.icon(
+                    onPressed: () {
+                      if (controller.isLoading.isFalse) {
+                        controller.editSchedule();
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      padding: const EdgeInsets.symmetric(vertical: 18),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        side: const BorderSide(
+                          width: 1,
+                          color: Colors.white,
+                        ),
+                      ),
+                      shadowColor: const Color(0x3F000000),
+                    ),
+                    icon: SvgPicture.asset('assets/icons/edit_button.svg'),
+                    label: Text(
+                      (controller.isLoading.isFalse)
+                          ? 'Edit Jadwal'
+                          : 'Loading ...',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'poppins',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
 }
+// body: FutureBuilder<DocumentSnapshot<Object?>>(
+//         future: controller.getData(Get.arguments),
+//         builder: (context, snapshot) {
+//           if (snapshot.connectionState == ConnectionState.done) {
+//             var data = snapshot.data!.data() as Map<String, dynamic>;
+//             controller.makananController.text = data["makanan"];
+//             controller.minumanController.text = data["minuman"];
+//             return Padding(
+//               padding: const EdgeInsets.all(20),
+//               child: Column(
+//                 children: [
+//                   TextField(
+//                     controller: controller.makananController,
+//                     autocorrect: false,
+//                     textInputAction: TextInputAction.next,
+//                     decoration: const InputDecoration(
+//                       labelText: "Makanan",
+//                     ),
+//                   ),
+//                   const SizedBox(
+//                     height: 10,
+//                   ),
+//                   TextField(
+//                     controller: controller.minumanController,
+//                     textInputAction: TextInputAction.done,
+//                     decoration: const InputDecoration(
+//                       labelText: "Minuman",
+//                     ),
+//                   ),
+//                   const SizedBox(
+//                     height: 30,
+//                   ),
+//                   ElevatedButton(
+//                     onPressed: () => controller.editJadwal(
+//                       controller.makananController.text,
+//                       controller.minumanController.text,
+//                       Get.arguments,
+//                     ),
+//                     child: const Text("Edit Jadwal"),
+//                   ),
+//                 ],
+//               ),
+//             );
+//           }
+//           return const Center(child: CircularProgressIndicator());
+//         },
+//       ),
+
