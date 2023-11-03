@@ -9,7 +9,7 @@ import 'package:tugas_akhir/data_pengguna.dart';
 class EditJadwalController extends GetxController {
   @override
   onClose() {
-    idSchedule.dispose();
+    // idSchedule.dispose();
     titleController.dispose();
     deskripsiController.dispose();
     makananController.dispose();
@@ -17,7 +17,7 @@ class EditJadwalController extends GetxController {
     adminPasswordController.dispose();
   }
 
-  TextEditingController idSchedule = TextEditingController();
+  // TextEditingController idSchedule = TextEditingController();
   TextEditingController titleController = TextEditingController();
   TextEditingController deskripsiController = TextEditingController();
   TextEditingController makananController = TextEditingController();
@@ -36,8 +36,7 @@ class EditJadwalController extends GetxController {
   }
 
   Future<void> addSchedule() async {
-    if (idSchedule.text.isNotEmpty &&
-        titleController.text.isNotEmpty &&
+    if (titleController.text.isNotEmpty &&
         deskripsiController.text.isNotEmpty &&
         makananController.text.isNotEmpty &&
         minumanController.text.isNotEmpty) {
@@ -78,8 +77,7 @@ class EditJadwalController extends GetxController {
           String uid = userCredential.user!.uid;
           DocumentReference schedule =
               firestore.collection("schedule").doc(uid);
-          await schedule.set({
-            "id_schedule": idSchedule.text,
+          await schedule.update({
             "title": titleController.text,
             "deskripsi": deskripsiController.text,
             "makanan": makananController.text,

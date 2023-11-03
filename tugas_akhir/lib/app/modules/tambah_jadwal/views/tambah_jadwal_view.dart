@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_input.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../controllers/tambah_jadwal_controller.dart';
 
@@ -43,7 +44,57 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(20),
         children: [
-          // Calendar
+          // Kalender
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Obx(
+              () => ElevatedButton.icon(
+                onPressed: () {
+                  Get.dialog(
+                    Dialog(
+                      child: SizedBox(
+                        height: 372,
+                        child: SfDateRangePicker(
+                          controller: controller.pickDate(),
+                          headerHeight: 50,
+                          headerStyle: const DateRangePickerHeaderStyle(
+                              textAlign: TextAlign.center),
+                          monthViewSettings:
+                              const DateRangePickerMonthViewSettings(
+                                  firstDayOfWeek: 1),
+                          selectionMode: DateRangePickerSelectionMode.range,
+                          rangeSelectionColor: AppColors.primary,
+                          viewSpacing: 10,
+                          showActionButtons: true,
+                          onCancel: () => Get.back(),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  padding: const EdgeInsets.symmetric(vertical: 18),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    side: const BorderSide(width: 1, color: Colors.white),
+                  ),
+                  shadowColor: const Color(0x3F000000),
+                ),
+                icon: SvgPicture.asset('assets/icons/calendar.svg'),
+                label: const Text(
+                  "Kalender",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 9,
+                    fontFamily: 'poppins',
+                  ),
+                ),
+              ),
+            ),
+          ),
 
           // Input Judul
           Obx(
@@ -140,7 +191,7 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
                   () => ElevatedButton.icon(
                     onPressed: () {
                       if (controller.isLoading.isFalse) {
-                        controller.addSchedule();
+                        controller.schedule();
                       }
                     },
                     style: ElevatedButton.styleFrom(
