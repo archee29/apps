@@ -2,31 +2,51 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 
-class CustomInput extends StatefulWidget {
-  final TextEditingController controller;
+class CustomSchedule extends StatefulWidget {
   final String label;
   final String hint;
-  final bool disabled;
+  final TextEditingController controller;
   final EdgeInsetsGeometry margin;
-  final bool obsecureText;
-  final Widget? suffixIcon;
+  final bool disabled;
+  final Widget? icon;
 
-  const CustomInput({
+  const CustomSchedule({
     super.key,
     required this.controller,
     required this.label,
     required this.hint,
-    this.disabled = false,
     this.margin = const EdgeInsets.only(bottom: 16),
-    this.obsecureText = false,
-    this.suffixIcon,
+    this.disabled = false,
+    this.icon,
   });
 
   @override
-  State<CustomInput> createState() => _CustomInputState();
+  State<CustomSchedule> createState() => _CustomScheduleState();
 }
 
-class _CustomInputState extends State<CustomInput> {
+class _CustomScheduleState extends State<CustomSchedule> {
+  DateTime? picked;
+  Timestamp? scheduledDateTimeStamp;
+  final TextEditingController scheduleController = TextEditingController();
+  void pickDateDialog() async {
+    picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now().subtract(
+        const Duration(days: 0),
+      ),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null) {
+      setState(() {
+        scheduleController.text =
+            '${picked!.year} - ${picked!.month} - ${picked!.day}';
+        scheduledDateTimeStamp = Timestamp.fromMicrosecondsSinceEpoch(
+            picked!.microsecondsSinceEpoch);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -36,23 +56,24 @@ class _CustomInputState extends State<CustomInput> {
         padding: const EdgeInsets.only(left: 14, right: 14, top: 4),
         margin: widget.margin,
         decoration: BoxDecoration(
-          color: (widget.disabled == false)
-              ? Colors.transparent
-              : AppColors.primaryExtraSoft,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(width: 1, color: AppColors.secondaryExtraSoft),
         ),
         child: TextField(
-          readOnly: widget.disabled,
-          obscureText: widget.obsecureText,
+          enableInteractiveSelection: widget.disabled,
           style: const TextStyle(
             fontSize: 14,
             fontFamily: 'poppins',
           ),
           maxLines: 1,
-          controller: widget.controller,
+          controller: scheduleController,
+          enabled: false,
+          onTap: () {
+            pickDateDialog();
+          },
           decoration: InputDecoration(
-            suffixIcon: widget.suffixIcon ?? const SizedBox(),
+            icon: widget.icon,
+            fillColor: AppColors.primary,
             label: Text(
               widget.label,
               style: TextStyle(

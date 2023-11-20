@@ -28,9 +28,6 @@ class TambahJadwalController extends GetxController {
   TextEditingController adminPasswordController = TextEditingController();
   TextEditingController dateController = TextEditingController();
 
-  DateTime? picked;
-  Timestamp? scheduledDateTimeStamp;
-
   RxBool isLoading = false.obs;
   RxBool isLoadingCreateSchedule = false.obs;
 
@@ -41,61 +38,43 @@ class TambahJadwalController extends GetxController {
     return DataPengguna.defaultPassword;
   }
 
-  pickDate() async {
-    if (picked != null) {
-      dateController.text =
-          '${picked!.year} - ${picked!.month} - ${picked!.day}';
-      scheduledDateTimeStamp =
-          Timestamp.fromMicrosecondsSinceEpoch(picked!.microsecondsSinceEpoch);
-    }
-  }
-
   schedule() async {
     isLoading.value = true;
     await processSchedule();
   }
 
-  createSchedule(int docId) async {
-    DocumentReference<Map<String, dynamic>> schedule =
-        firestore.collection("schedule").doc(docId.toString());
-    await schedule.set({
-      // "schedule_id": idSchedule,
-      "date": dateController.text,
-      "title": titleController.text,
-      "deskripsi": deskripsiController.text,
-      "makanan": makananController.text,
-      "minuman": minumanController.text,
-      "created_at": DateTime.now().toIso8601String(),
-    });
-  }
-
-  Future<void> addSchedule() async {
+  Future<void> createSchedule(
+    CollectionReference<Map<String, dynamic>> scheduleCollection,
+    String scheduleDocId,
+  ) async {
     if (dateController.text.isNotEmpty &&
         titleController.text.isNotEmpty &&
         deskripsiController.text.isNotEmpty &&
         makananController.text.isNotEmpty &&
         minumanController.text.isNotEmpty) {
       isLoading.value = true;
-      CustomAlertDialog.confirmAdmin(
-        title: "Konfirmasi Admin",
-        message:
-            "Konfirmasi Terlebih Dahulu \n Untuk Melakukan Pengisian Tempat Makan dan Minum Kucing",
+      CustomAlertDialog.showFeederAlert(
+        title: "Tambah Jadwal",
+        message: "Konfirmasi Terlebih Dahulu",
         onConfirm: () async {
-          if (isLoadingCreateSchedule.isFalse) {
-            await processSchedule();
-            isLoading.value = false;
-          }
-        },
-        controller: adminPasswordController,
-        onCancel: () {
-          isLoading.value = false;
+          await scheduleCollection.doc(scheduleDocId).set({
+            // "schedule_id": idSchedule,
+            "date": dateController.text,
+            "title": titleController.text,
+            "deskripsi": deskripsiController.text,
+            "makanan": makananController.text,
+            "minuman": minumanController.text,
+            "created_at": DateTime.now().toIso8601String(),
+          });
           Get.back();
+          CustomNotification.successNotification(
+              "Sukses", "Tambah Jadwal Berhasil");
         },
+        onCancel: () => Get.back(),
       );
     } else {
       isLoading.value = false;
-      CustomNotification.errorNotification(
-          "Error", "Isi Form Tambah Jadwal Terlebih Dahul");
+      CustomNotification.errorNotification("Error", "Isi Form Terlebih Dahulu");
     }
   }
 
@@ -108,7 +87,7 @@ class TambahJadwalController extends GetxController {
     QuerySnapshot<Map<String, dynamic>> snapshotPreference =
         await scheduleCollection.get();
     if (snapshotPreference.docs.isEmpty) {
-      addSchedule();
+      createSchedule(scheduleCollection, scheduleDocId);
     } else {
       DocumentSnapshot<Map<String, dynamic>> scheduleDoc =
           await scheduleCollection.doc(scheduleDocId).get();
