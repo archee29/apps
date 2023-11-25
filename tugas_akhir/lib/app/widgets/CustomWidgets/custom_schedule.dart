@@ -5,14 +5,14 @@ import 'package:tugas_akhir/app/styles/app_colors.dart';
 class CustomSchedule extends StatefulWidget {
   final String label;
   final String hint;
-  final TextEditingController controller;
+  // final TextEditingController controller;
   final EdgeInsetsGeometry margin;
   final bool disabled;
   final Widget? icon;
 
   const CustomSchedule({
     super.key,
-    required this.controller,
+    //required this.controller,
     required this.label,
     required this.hint,
     this.margin = const EdgeInsets.only(bottom: 16),
@@ -28,6 +28,7 @@ class _CustomScheduleState extends State<CustomSchedule> {
   DateTime? picked;
   Timestamp? scheduledDateTimeStamp;
   final TextEditingController scheduleController = TextEditingController();
+
   void pickDateDialog() async {
     picked = await showDatePicker(
       context: context,

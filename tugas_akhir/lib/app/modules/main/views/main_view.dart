@@ -175,7 +175,7 @@ class MainView extends GetView<MainController> {
                       MainTile(
                         title: "lihat Jadwal",
                         icon: SvgPicture.asset('assets/icons/jadwal.svg'),
-                        onTap: () => Get.toNamed(Routes.ALL_FEEDER),
+                        onTap: () => Get.toNamed(Routes.DETAIL_JADWAL),
                       ),
                     ],
                   )

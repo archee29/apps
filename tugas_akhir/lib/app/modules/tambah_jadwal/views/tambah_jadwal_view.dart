@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+// import 'package:intl/intl.dart';
+// import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
+// import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_input.dart';
-import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_schedule.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+// import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_schedule.dart';
 
 import '../controllers/tambah_jadwal_controller.dart';
 
@@ -45,8 +46,19 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(20),
-        children: [
-          // Kalender
+        children: <Widget>[
+          //  FormBuilderDateTimePicker(
+          //   name: "date",
+          //   initialValue: DateTime.now(),
+          //   fieldHintText: "Tambahkan Tanggal",
+          //   inputType: InputType.date,
+          //   format: DateFormat('EEEE, dd MMMM, yyyy'),
+          //   decoration: const InputDecoration(
+          //     border: InputBorder.none,
+          //     prefixIcon: Icon(Icons.calendar_month_outlined),
+          //   ),
+          // ),
+
           // SizedBox(
           //   width: MediaQuery.of(context).size.width,
           //   child: ElevatedButton.icon(
@@ -56,7 +68,6 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
           //           child: SizedBox(
           //             height: 372,
           //             child: SfDateRangePicker(
-          //               controller: controller.schedule(),
           //               headerHeight: 50,
           //               headerStyle: const DateRangePickerHeaderStyle(
           //                   textAlign: TextAlign.center),
@@ -65,9 +76,16 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
           //                       firstDayOfWeek: 1),
           //               selectionMode: DateRangePickerSelectionMode.single,
           //               rangeSelectionColor: AppColors.primary,
+          //               showNavigationArrow: true,
           //               viewSpacing: 10,
           //               showActionButtons: true,
           //               onCancel: () => Get.back(),
+          //               // Belum selesai, selesaikan controllernya dulu
+          //               onSubmit: (picked) {
+          //                 if (picked != null) {
+          //                   controller.pickDate();
+          //                 }
+          //               },
           //             ),
           //           ),
           //         ),
@@ -96,11 +114,18 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
           //   ),
           // ),
 
+          // const SizedBox(height: 20),
+
           CustomInput(
             controller: controller.dateController,
             label: "Masukkan Jadwal",
             hint: "Kalendar",
           ),
+
+          // const CustomSchedule(
+          //   label: "Kalendar",
+          //   hint: "Masukkan Data Kalendar",
+          // ),
 
           // CustomSchedule(
           //   controller: controller.dateController,
@@ -120,6 +145,7 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
               icon: SvgPicture.asset('assets/icons/judul.svg'),
             ),
           ),
+
           // Input Deskripsi
           CustomInput(
             controller: controller.deskripsiController,
@@ -130,6 +156,7 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
               icon: SvgPicture.asset('assets/icons/deskripsi.svg'),
             ),
           ),
+
           // Input Makanan
           CustomInput(
             controller: controller.makananController,
@@ -152,9 +179,7 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
             ),
           ),
 
-          // Batas
-          const SizedBox(height: 10),
-
+          const SizedBox(height: 20),
           // Button
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -194,29 +219,35 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
               SizedBox(
                 width: 200,
                 height: 60,
-                child: ElevatedButton.icon(
-                  onPressed: () => controller.schedule(),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    padding: const EdgeInsets.symmetric(vertical: 18),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      side: const BorderSide(
-                        width: 1,
-                        color: Colors.white,
+                child: Obx(
+                  () => ElevatedButton.icon(
+                    onPressed: () {
+                      if (controller.isLoading.isFalse) {
+                        controller.schedule();
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      padding: const EdgeInsets.symmetric(vertical: 18),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        side: const BorderSide(
+                          width: 1,
+                          color: Colors.white,
+                        ),
                       ),
+                      shadowColor: const Color(0x3F000000),
                     ),
-                    shadowColor: const Color(0x3F000000),
-                  ),
-                  icon: SvgPicture.asset('assets/icons/tambah_button.svg'),
-                  label: Text(
-                    (controller.isLoading.isFalse)
-                        ? 'Tambah Jadwal'
-                        : 'Loading ...',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontFamily: 'poppins',
+                    icon: SvgPicture.asset('assets/icons/tambah_button.svg'),
+                    label: Text(
+                      (controller.isLoading.isFalse)
+                          ? 'Tambah Jadwal'
+                          : 'Loading ...',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'poppins',
+                      ),
                     ),
                   ),
                 ),

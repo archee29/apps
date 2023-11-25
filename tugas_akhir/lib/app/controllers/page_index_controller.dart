@@ -5,6 +5,7 @@ import 'package:tugas_akhir/app/routes/app_pages.dart';
 
 class PageIndexController extends GetxController {
   final feederController = Get.find<FeederController>();
+
   RxInt pageIndex = 0.obs;
   FirebaseAuth auth = FirebaseAuth.instance;
 
