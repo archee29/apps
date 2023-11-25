@@ -42,7 +42,6 @@ class HomeController extends GetxController {
   }
 
   Future<String> getDistanceToHouse() async {
-    // print('called');
     Map<String, dynamic> determinePosition = await _determinePosition();
     if (!determinePosition["error"]) {
       Position position = determinePosition["position"];
