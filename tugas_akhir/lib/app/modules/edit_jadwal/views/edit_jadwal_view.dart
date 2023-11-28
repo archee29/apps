@@ -1,7 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:get/get.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
@@ -44,103 +43,104 @@ class EditJadwalView extends GetView<EditJadwalController> {
         padding: const EdgeInsets.all(20),
         children: [
           // Calendar
-
+          // Input Kalender
+          CustomInput(
+            controller: controller.dateController,
+            label: "Kalendar",
+            hint: "Masukkan Kalendar",
+            suffixIcon: IconButton(
+              onPressed: () {},
+              icon: SvgPicture.asset('assets/icons/judul.svg'),
+            ),
+          ),
           // Input Judul
-          Obx(
-            () => CustomInput(
-              controller: controller.titleController,
-              label: "Judul",
-              hint: "Masukkan Judul",
-              suffixIcon: IconButton(
-                onPressed: () {},
-                icon: SvgPicture.asset('assets/icons/judul.svg'),
-              ),
+          CustomInput(
+            controller: controller.titleController,
+            label: "Judul",
+            hint: "Masukkan Judul",
+            suffixIcon: IconButton(
+              onPressed: () {},
+              icon: SvgPicture.asset('assets/icons/judul.svg'),
             ),
           ),
           // Input Deskripsi
-          Obx(
-            () => CustomInput(
-              controller: controller.deskripsiController,
-              label: "Deskripsi",
-              hint: "MasukkanDeskripsi",
-              suffixIcon: IconButton(
-                onPressed: () {},
-                icon: SvgPicture.asset('assets/icons/deskripsi.svg'),
-              ),
+          CustomInput(
+            controller: controller.deskripsiController,
+            label: "Deskripsi",
+            hint: "MasukkanDeskripsi",
+            suffixIcon: IconButton(
+              onPressed: () {},
+              icon: SvgPicture.asset('assets/icons/deskripsi.svg'),
             ),
           ),
           // Input Makanan
-          Obx(
-            () => CustomInput(
-              controller: controller.makananController,
-              label: "Makanan",
-              hint: "Makanan",
-              suffixIcon: IconButton(
-                onPressed: () {},
-                icon: SvgPicture.asset('assets/icons/makanan.svg'),
-              ),
+          CustomInput(
+            controller: controller.makananController,
+            label: "Makanan",
+            hint: "Makanan",
+            suffixIcon: IconButton(
+              onPressed: () {},
+              icon: SvgPicture.asset('assets/icons/makanan.svg'),
             ),
           ),
           // Input Minuman
-          Obx(
-            () => CustomInput(
-              controller: controller.minumanController,
-              label: "Minuman",
-              hint: "Minuman",
-              suffixIcon: IconButton(
-                onPressed: () {},
-                icon: SvgPicture.asset('assets/icons/minuman.svg'),
-              ),
+          CustomInput(
+            controller: controller.minumanController,
+            label: "Minuman",
+            hint: "Minuman",
+            suffixIcon: IconButton(
+              onPressed: () {},
+              icon: SvgPicture.asset('assets/icons/minuman.svg'),
             ),
           ),
           // Batas
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           // Button
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               // Cancel Button
               SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Obx(
-                  () => ElevatedButton.icon(
-                    onPressed: () {
-                      Get.toNamed(Routes.MAIN);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 18),
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        side: const BorderSide(
-                            width: 1, color: Color(0xFFFF39B0)),
-                      ),
-                      shadowColor: const Color(0x3F000000),
+                width: 120,
+                height: 60,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Get.toNamed(Routes.MAIN);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 18),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side:
+                          const BorderSide(width: 1, color: Color(0xFFFF39B0)),
                     ),
-                    icon: SvgPicture.asset('assets/icons/cancel_button.svg'),
-                    label: const Text(
-                      "Cancel",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 9,
-                        fontFamily: 'poppins',
-                      ),
+                    shadowColor: const Color(0x3F000000),
+                  ),
+                  icon: SvgPicture.asset('assets/icons/cancel_button.svg'),
+                  label: const Text(
+                    "Cancel",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 9,
+                      fontFamily: 'poppins',
                     ),
                   ),
                 ),
               ),
+
               // Tambah Button
               SizedBox(
-                width: MediaQuery.of(context).size.width,
+                width: 200,
+                height: 60,
                 child: Obx(
                   () => ElevatedButton.icon(
                     onPressed: () {
                       if (controller.isLoading.isFalse) {
-                        controller.editSchedule();
+                        // controller.editSchedule();
+                        controller.scheduleEditForm();
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -176,6 +176,8 @@ class EditJadwalView extends GetView<EditJadwalController> {
     );
   }
 }
+
+
 // body: FutureBuilder<DocumentSnapshot<Object?>>(
 //         future: controller.getData(Get.arguments),
 //         builder: (context, snapshot) {
