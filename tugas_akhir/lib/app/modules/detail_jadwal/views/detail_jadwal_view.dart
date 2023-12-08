@@ -6,8 +6,10 @@ import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
+import 'package:tugas_akhir/app/widgets/card/schedule_card.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_bottom_navbar.dart';
+import 'package:tugas_akhir/app/widgets/card/schedule_tile.dart';
 
 import '../controllers/detail_jadwal_controller.dart';
 
@@ -95,6 +97,111 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
                                   ),
                                 ),
                               ],
+                            ),
+                            StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                                stream: controller.streamLastSchedule(),
+                                builder: (context, snapshot) {
+                                  switch (snapshot.connectionState) {
+                                    case ConnectionState.waiting:
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    case ConnectionState.active:
+                                    case ConnectionState.done:
+                                      List<
+                                              QueryDocumentSnapshot<
+                                                  Map<String, dynamic>>>
+                                          listSchedule = snapshot.data!.docs;
+                                      return ListView.separated(
+                                        itemCount: listSchedule.length,
+                                        shrinkWrap: true,
+                                        physics: const BouncingScrollPhysics(),
+                                        separatorBuilder: (context, index) =>
+                                            const SizedBox(height: 16),
+                                        itemBuilder: (context, index) {
+                                          Map<String, dynamic> scheduleData =
+                                              listSchedule[index].data();
+                                          return ScheduleTile(
+                                              scheduleData: scheduleData);
+                                        },
+                                      );
+                                    default:
+                                      return const SizedBox();
+                                  }
+                                }),
+                            const SizedBox(width: 24),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              margin: const EdgeInsets.only(bottom: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: ElevatedButton.icon(
+                                      onPressed: () {
+                                        Get.toNamed(Routes.DETAIL_FOOD);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor: AppColors.primary,
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 18),
+                                          elevation: 0,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            side: const BorderSide(
+                                              width: 1,
+                                              color: Colors.white,
+                                            ),
+                                          )),
+                                      icon: SvgPicture.asset(
+                                          'assets/icons/dry_food.svg'),
+                                      label: const Text(
+                                        "Dry Food",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                          fontFamily: 'poppins',
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Expanded(
+                                    child: ElevatedButton.icon(
+                                      onPressed: () {
+                                        Get.toNamed(Routes.DETAIL_WATER);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              AppColors.primaryExtraSoft,
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 18),
+                                          elevation: 0,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            side: const BorderSide(
+                                              width: 1,
+                                              color: Color(0xfffff39b0),
+                                            ),
+                                          )),
+                                      icon: SvgPicture.asset(
+                                          'assets/icons/water.svg'),
+                                      label: const Text(
+                                        "Water",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12,
+                                          fontFamily: 'poppins',
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),

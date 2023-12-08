@@ -19,6 +19,8 @@ abstract class Routes {
   static const ALL_FEEDER = _Paths.ALL_FEEDER;
   static const UPDATE_PROFILE = _Paths.UPDATE_PROFILE;
   static const DETAIL_JADWAL = _Paths.DETAIL_JADWAL;
+  static const DETAIL_FOOD = _Paths.DETAIL_FOOD;
+  static const DETAIL_WATER = _Paths.DETAIL_WATER;
 }
 
 abstract class _Paths {
@@ -37,4 +39,6 @@ abstract class _Paths {
   static const ALL_FEEDER = '/all-feeder';
   static const UPDATE_PROFILE = '/update-profile';
   static const DETAIL_JADWAL = '/detail-jadwal';
+  static const DETAIL_FOOD = '/detail-food';
+  static const DETAIL_WATER = '/detail-water';
 }

@@ -4,8 +4,12 @@ import '../modules/all_feeder/bindings/all_feeder_binding.dart';
 import '../modules/all_feeder/views/all_feeder_view.dart';
 import '../modules/detail_feeder/bindings/detail_feeder_binding.dart';
 import '../modules/detail_feeder/views/detail_feeder_view.dart';
+import '../modules/detail_food/bindings/detail_food_binding.dart';
+import '../modules/detail_food/views/detail_food_view.dart';
 import '../modules/detail_jadwal/bindings/detail_jadwal_binding.dart';
 import '../modules/detail_jadwal/views/detail_jadwal_view.dart';
+import '../modules/detail_water/bindings/detail_water_binding.dart';
+import '../modules/detail_water/views/detail_water_view.dart';
 import '../modules/edit_jadwal/bindings/edit_jadwal_binding.dart';
 import '../modules/edit_jadwal/views/edit_jadwal_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -107,6 +111,16 @@ class AppPages {
       name: _Paths.DETAIL_JADWAL,
       page: () => DetailJadwalView(),
       binding: DetailJadwalBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_FOOD,
+      page: () => const DetailFoodView(),
+      binding: DetailFoodBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_WATER,
+      page: () => const DetailWaterView(),
+      binding: DetailWaterBinding(),
     ),
   ];
 }
