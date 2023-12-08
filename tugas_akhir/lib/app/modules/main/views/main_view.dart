@@ -140,12 +140,12 @@ class MainView extends GetView<MainController> {
                     ],
                   ),
                   const SizedBox(height: 50),
-                  // Stok Pakan Card
+                  // Stok Pakan dan minum Card
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        "Stok Pakan",
+                        "Stok Pakan Mingguan",
                         style: TextStyle(
                           fontFamily: 'poppins',
                           fontWeight: FontWeight.w600,
@@ -159,7 +159,201 @@ class MainView extends GetView<MainController> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 20),
+                  // Card Makanan
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      children: [
+                        // Stok Pakan
+                        Expanded(
+                          child: Container(
+                            height: 84,
+                            decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(bottom: 6),
+                                  child: const Text(
+                                    'Total Food / Day',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 14),
+                                  ),
+                                ),
+                                const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      '120 Gr',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontFamily: 'poppins',
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.bar_chart_rounded,
+                                      color: Colors.white,
+                                      size: 30,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        // Output
+                        Expanded(
+                          child: Container(
+                            height: 84,
+                            decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(bottom: 6),
+                                  child: const Text(
+                                    'Total Output',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 14),
+                                  ),
+                                ),
+                                const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      '1.0 Kg',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontFamily: 'poppins',
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.bar_chart_rounded,
+                                      color: Colors.white,
+                                      size: 30,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  // Card Minuman
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: Row(
+                      children: [
+                        // Stok Minum
+                        Expanded(
+                          child: Container(
+                            height: 84,
+                            decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(bottom: 6),
+                                  child: const Text(
+                                    'Total Water / Day',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 14),
+                                  ),
+                                ),
+                                const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      '120 ml',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontFamily: 'poppins',
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.bar_chart_rounded,
+                                      color: Colors.white,
+                                      size: 30,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        // Output Minuman
+                        Expanded(
+                          child: Container(
+                            height: 84,
+                            decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(bottom: 6),
+                                  child: const Text(
+                                    'Total Output',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 15),
+                                  ),
+                                ),
+                                const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      '1 liter',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontFamily: 'poppins',
+                                        fontWeight: FontWeight.w700,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Icon(
+                                      Icons.bar_chart_rounded,
+                                      color: Colors.white,
+                                      size: 30,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                   // Jadwal Card
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -173,12 +367,13 @@ class MainView extends GetView<MainController> {
                         ),
                       ),
                       MainTile(
-                        title: "lihat Jadwal",
+                        title: "Lihat Jadwal",
                         icon: SvgPicture.asset('assets/icons/jadwal.svg'),
                         onTap: () => Get.toNamed(Routes.DETAIL_JADWAL),
                       ),
                     ],
-                  )
+                  ),
+                  const SizedBox(height: 20),
                 ],
               );
             case ConnectionState.waiting:

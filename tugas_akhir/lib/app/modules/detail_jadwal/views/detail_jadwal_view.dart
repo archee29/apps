@@ -21,30 +21,31 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
     return Scaffold(
         bottomNavigationBar: const CustomBottomNavigationBar(),
         extendBody: true,
-        appBar: AppBar(
-          title: Text(
-            'Detail Jadwal',
-            style: TextStyle(
-              color: AppColors.secondary,
-              fontSize: 14,
-            ),
-          ),
-          leading: IconButton(
-            onPressed: () => Get.back(),
-            icon: SvgPicture.asset('assets/icons/arrow-left.svg'),
-          ),
-          backgroundColor: Colors.white,
-          elevation: 0,
-          centerTitle: true,
-          bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(1),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 1,
-              color: AppColors.secondaryExtraSoft,
-            ),
-          ),
-        ),
+        // appBar: AppBar(
+        //   title: Text(
+        //     'Detail Jadwal',
+        //     style: TextStyle(
+        //       color: AppColors.secondary,
+        //       fontSize: 14,
+        //     ),
+        //   ),
+        //   leading: IconButton(
+        //     onPressed: () => Get.back(),
+        //     icon: SvgPicture.asset('assets/icons/arrow-left.svg'),
+        //   ),
+        //   backgroundColor: Colors.white,
+        //   elevation: 0,
+        //   centerTitle: true,
+        //   bottom: PreferredSize(
+        //     preferredSize: const Size.fromHeight(1),
+        //     child: Container(
+        //       width: MediaQuery.of(context).size.width,
+        //       height: 1,
+        //       color: AppColors.secondaryExtraSoft,
+        //     ),
+        //   ),
+        // ),
+
         body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
           stream: controller.streamUser(),
           builder: ((context, snapshot) {
@@ -98,113 +99,112 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
                                 ),
                               ],
                             ),
-                            StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                                stream: controller.streamLastSchedule(),
-                                builder: (context, snapshot) {
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.waiting:
-                                      return const Center(
-                                          child: CircularProgressIndicator());
-                                    case ConnectionState.active:
-                                    case ConnectionState.done:
-                                      List<
-                                              QueryDocumentSnapshot<
-                                                  Map<String, dynamic>>>
-                                          listSchedule = snapshot.data!.docs;
-                                      return ListView.separated(
-                                        itemCount: listSchedule.length,
-                                        shrinkWrap: true,
-                                        physics: const BouncingScrollPhysics(),
-                                        separatorBuilder: (context, index) =>
-                                            const SizedBox(height: 16),
-                                        itemBuilder: (context, index) {
-                                          Map<String, dynamic> scheduleData =
-                                              listSchedule[index].data();
-                                          return ScheduleTile(
-                                              scheduleData: scheduleData);
-                                        },
-                                      );
-                                    default:
-                                      return const SizedBox();
-                                  }
-                                }),
-                            const SizedBox(width: 24),
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              margin: const EdgeInsets.only(bottom: 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                    child: ElevatedButton.icon(
-                                      onPressed: () {
-                                        Get.toNamed(Routes.DETAIL_FOOD);
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor: AppColors.primary,
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 18),
-                                          elevation: 0,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            side: const BorderSide(
-                                              width: 1,
-                                              color: Colors.white,
-                                            ),
-                                          )),
-                                      icon: SvgPicture.asset(
-                                          'assets/icons/dry_food.svg'),
-                                      label: const Text(
-                                        "Dry Food",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12,
-                                          fontFamily: 'poppins',
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  Expanded(
-                                    child: ElevatedButton.icon(
-                                      onPressed: () {
-                                        Get.toNamed(Routes.DETAIL_WATER);
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                          backgroundColor:
-                                              AppColors.primaryExtraSoft,
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 18),
-                                          elevation: 0,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            side: const BorderSide(
-                                              width: 1,
-                                              color: Color(0xfffff39b0),
-                                            ),
-                                          )),
-                                      icon: SvgPicture.asset(
-                                          'assets/icons/water.svg'),
-                                      label: const Text(
-                                        "Water",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 12,
-                                          fontFamily: 'poppins',
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
                           ],
                         ),
+                      ),
+                      // Data Scheduled
+                      StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                          stream: controller.streamLastSchedule(),
+                          builder: (context, snapshot) {
+                            switch (snapshot.connectionState) {
+                              case ConnectionState.waiting:
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              case ConnectionState.active:
+                              case ConnectionState.done:
+                                List<
+                                        QueryDocumentSnapshot<
+                                            Map<String, dynamic>>>
+                                    listSchedule = snapshot.data!.docs;
+                                return ListView.separated(
+                                  itemCount: listSchedule.length,
+                                  shrinkWrap: true,
+                                  physics: const BouncingScrollPhysics(),
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(height: 16),
+                                  itemBuilder: (context, index) {
+                                    Map<String, dynamic> scheduleData =
+                                        listSchedule[index].data();
+                                    return ScheduleTile(
+                                        scheduleData: scheduleData);
+                                  },
+                                );
+                              default:
+                                return const SizedBox();
+                            }
+                          }),
+                      const SizedBox(width: 24),
+                      // Button
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Dry Food Button
+                          SizedBox(
+                            width: 150,
+                            height: 60,
+                            child: ElevatedButton.icon(
+                              onPressed: () {
+                                Get.toNamed(Routes.DETAIL_FOOD);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.primary,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 18),
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    side: const BorderSide(
+                                      width: 1,
+                                      color: Colors.white,
+                                    ),
+                                  )),
+                              icon: SvgPicture.asset(
+                                  'assets/icons/dry_food2.svg'),
+                              label: const Text(
+                                "Dry Food",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                  fontFamily: 'poppins',
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          // Water Button
+                          SizedBox(
+                            width: 150,
+                            height: 60,
+                            child: ElevatedButton.icon(
+                              onPressed: () {
+                                Get.toNamed(Routes.DETAIL_WATER);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 18),
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    side: const BorderSide(
+                                      width: 1,
+                                      color: Color(0xfffff39b0),
+                                    ),
+                                  )),
+                              icon: SvgPicture.asset('assets/icons/water2.svg'),
+                              label: const Text(
+                                "Water",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                  fontFamily: 'poppins',
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   );
