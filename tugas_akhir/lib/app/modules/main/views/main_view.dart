@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:table_calendar/table_calendar.dart';
 import 'package:tugas_akhir/app/controllers/page_index_controller.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
@@ -139,7 +141,38 @@ class MainView extends GetView<MainController> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 50),
+
+                  const SizedBox(height: 20),
+                  Card(
+                    clipBehavior: Clip.antiAlias,
+                    margin: const EdgeInsets.all(8.0),
+                    child: TableCalendar(
+                      focusedDay: DateTime.now(),
+                      firstDay: DateTime(1950),
+                      lastDay: DateTime(2100),
+                      headerStyle: HeaderStyle(
+                        decoration: BoxDecoration(color: AppColors.primary),
+                        headerMargin: const EdgeInsets.only(bottom: 8.0),
+                        titleTextStyle: const TextStyle(color: Colors.white),
+                        formatButtonDecoration: BoxDecoration(
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        formatButtonTextStyle:
+                            const TextStyle(color: Colors.white),
+                        leftChevronIcon: const Icon(
+                          Icons.chevron_left,
+                          color: Colors.white,
+                        ),
+                        rightChevronIcon: const Icon(
+                          Icons.chevron_right,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 20),
                   // Stok Pakan dan minum Card
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
