@@ -2,9 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:table_calendar/table_calendar.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_input.dart';
+import 'package:tugas_akhir/app/widgets/feeder/schedule_widget.dart';
 
 import '../controllers/edit_jadwal_controller.dart';
 
@@ -43,21 +45,46 @@ class EditJadwalView extends GetView<EditJadwalController> {
         padding: const EdgeInsets.all(20),
         children: [
           // Calendar
-          // Input Kalender
-          CustomInput(
-            controller: controller.dateController,
-            label: "Kalendar",
-            hint: "Masukkan Kalendar",
-            suffixIcon: IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset('assets/icons/judul.svg'),
+          Card(
+            clipBehavior: Clip.antiAlias,
+            margin: const EdgeInsets.all(8.0),
+            child: TableCalendar(
+              focusedDay: DateTime.now(),
+              firstDay: DateTime(1950),
+              lastDay: DateTime(2100),
+              headerStyle: HeaderStyle(
+                decoration: BoxDecoration(color: AppColors.primary),
+                headerMargin: const EdgeInsets.only(bottom: 8.0),
+                titleTextStyle: const TextStyle(color: Colors.white),
+                formatButtonDecoration: BoxDecoration(
+                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                formatButtonTextStyle: const TextStyle(color: Colors.white),
+                leftChevronIcon: const Icon(
+                  Icons.chevron_left,
+                  color: Colors.white,
+                ),
+                rightChevronIcon: const Icon(
+                  Icons.chevron_right,
+                  color: Colors.white,
+                ),
+              ),
             ),
           ),
+
+          // Input Kalender
+          CustomScheduleInput(
+            controller: controller.dateController,
+            label: "Kalendar",
+            hint: "Masukkan Jadwal Makan dan Minum",
+          ),
+
           // Input Judul
           CustomInput(
             controller: controller.titleController,
             label: "Judul",
-            hint: "Masukkan Judul",
+            hint: "Edit Judul",
             suffixIcon: IconButton(
               onPressed: () {},
               icon: SvgPicture.asset('assets/icons/judul.svg'),
@@ -67,7 +94,7 @@ class EditJadwalView extends GetView<EditJadwalController> {
           CustomInput(
             controller: controller.deskripsiController,
             label: "Deskripsi",
-            hint: "MasukkanDeskripsi",
+            hint: "Edit Deskripsi",
             suffixIcon: IconButton(
               onPressed: () {},
               icon: SvgPicture.asset('assets/icons/deskripsi.svg'),
@@ -77,7 +104,7 @@ class EditJadwalView extends GetView<EditJadwalController> {
           CustomInput(
             controller: controller.makananController,
             label: "Makanan",
-            hint: "Makanan",
+            hint: "Edit Jumlah Makanan",
             suffixIcon: IconButton(
               onPressed: () {},
               icon: SvgPicture.asset('assets/icons/makanan.svg'),
@@ -87,7 +114,7 @@ class EditJadwalView extends GetView<EditJadwalController> {
           CustomInput(
             controller: controller.minumanController,
             label: "Minuman",
-            hint: "Minuman",
+            hint: "Edit Jumlah Minuman",
             suffixIcon: IconButton(
               onPressed: () {},
               icon: SvgPicture.asset('assets/icons/minuman.svg'),

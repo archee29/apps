@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:table_calendar/table_calendar.dart';
 // import 'package:intl/intl.dart';
 // import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 // import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_input.dart';
+import 'package:tugas_akhir/app/widgets/feeder/schedule_widget.dart';
 // import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_schedule.dart';
 
 import '../controllers/tambah_jadwal_controller.dart';
@@ -47,94 +49,40 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(20),
         children: <Widget>[
-          //  FormBuilderDateTimePicker(
-          //   name: "date",
-          //   initialValue: DateTime.now(),
-          //   fieldHintText: "Tambahkan Tanggal",
-          //   inputType: InputType.date,
-          //   format: DateFormat('EEEE, dd MMMM, yyyy'),
-          //   decoration: const InputDecoration(
-          //     border: InputBorder.none,
-          //     prefixIcon: Icon(Icons.calendar_month_outlined),
-          //   ),
-          // ),
-
-          // SizedBox(
-          //   width: MediaQuery.of(context).size.width,
-          //   child: ElevatedButton.icon(
-          //     onPressed: () {
-          //       Get.dialog(
-          //         Dialog(
-          //           child: SizedBox(
-          //             height: 372,
-          //             child: SfDateRangePicker(
-          //               headerHeight: 50,
-          //               headerStyle: const DateRangePickerHeaderStyle(
-          //                   textAlign: TextAlign.center),
-          //               monthViewSettings:
-          //                   const DateRangePickerMonthViewSettings(
-          //                       firstDayOfWeek: 1),
-          //               selectionMode: DateRangePickerSelectionMode.single,
-          //               rangeSelectionColor: AppColors.primary,
-          //               showNavigationArrow: true,
-          //               viewSpacing: 10,
-          //               showActionButtons: true,
-          //               onCancel: () => Get.back(),
-          //               // Belum selesai, selesaikan controllernya dulu
-          //               onSubmit: (picked) {
-          //                 if (picked != null) {
-          //                   controller.pickDate();
-          //                 }
-          //               },
-          //             ),
-          //           ),
-          //         ),
-          //       );
-          //     },
-          //     style: ElevatedButton.styleFrom(
-          //       backgroundColor: AppColors.primary,
-          //       padding: const EdgeInsets.symmetric(vertical: 18),
-          //       elevation: 0,
-          //       shape: RoundedRectangleBorder(
-          //         borderRadius: BorderRadius.circular(8),
-          //         side: const BorderSide(width: 1, color: Colors.white),
-          //       ),
-          //       shadowColor: const Color(0x3F000000),
-          //     ),
-          //     icon: SvgPicture.asset('assets/icons/calendar.svg'),
-          //     label: const Text(
-          //       "Kalender",
-          //       style: TextStyle(
-          //         color: Colors.white,
-          //         fontWeight: FontWeight.w600,
-          //         fontSize: 12,
-          //         fontFamily: 'poppins',
-          //       ),
-          //     ),
-          //   ),
-          // ),
-
-          // const SizedBox(height: 20),
-
-          CustomInput(
-            controller: controller.dateController,
-            label: "Masukkan Jadwal",
-            hint: "Kalendar",
+          // Calendar
+          Card(
+            clipBehavior: Clip.antiAlias,
+            margin: const EdgeInsets.all(8.0),
+            child: TableCalendar(
+              focusedDay: DateTime.now(),
+              firstDay: DateTime(1950),
+              lastDay: DateTime(2100),
+              headerStyle: HeaderStyle(
+                decoration: BoxDecoration(color: AppColors.primary),
+                headerMargin: const EdgeInsets.only(bottom: 8.0),
+                titleTextStyle: const TextStyle(color: Colors.white),
+                formatButtonDecoration: BoxDecoration(
+                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                formatButtonTextStyle: const TextStyle(color: Colors.white),
+                leftChevronIcon: const Icon(
+                  Icons.chevron_left,
+                  color: Colors.white,
+                ),
+                rightChevronIcon: const Icon(
+                  Icons.chevron_right,
+                  color: Colors.white,
+                ),
+              ),
+            ),
           ),
-
-          // const CustomSchedule(
-          //   label: "Kalendar",
-          //   hint: "Masukkan Data Kalendar",
-          // ),
-
-          // CustomSchedule(
-          //   controller: controller.dateController,
-          //   label: "Kalendar",
-          //   hint: "Masukkan Data Kalendar",
-          //   icon: SvgPicture.asset('assets/icons/calendar.svg'),
-          // ),
-
-          const SizedBox(height: 20),
+          // Input Schedule
+          CustomScheduleInput(
+            controller: controller.dateController,
+            label: "Kalendar",
+            hint: "Masukkan Jadwal Makan dan Minum",
+          ),
           // Input Judul
           CustomInput(
             controller: controller.titleController,
@@ -145,40 +93,36 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
               icon: SvgPicture.asset('assets/icons/judul.svg'),
             ),
           ),
-
           // Input Deskripsi
           CustomInput(
             controller: controller.deskripsiController,
             label: "Deskripsi",
-            hint: "MasukkanDeskripsi",
+            hint: "Masukkan Deskripsi",
             suffixIcon: IconButton(
               onPressed: () {},
               icon: SvgPicture.asset('assets/icons/deskripsi.svg'),
             ),
           ),
-
           // Input Makanan
           CustomInput(
             controller: controller.makananController,
             label: "Makanan",
-            hint: "Makanan",
+            hint: "Masukkan Jumlah Makanan",
             suffixIcon: IconButton(
               onPressed: () {},
               icon: SvgPicture.asset('assets/icons/makanan.svg'),
             ),
           ),
-
           // Input Minuman
           CustomInput(
             controller: controller.minumanController,
             label: "Minuman",
-            hint: "Minuman",
+            hint: "Masukkan Jumlah Minuman",
             suffixIcon: IconButton(
               onPressed: () {},
               icon: SvgPicture.asset('assets/icons/minuman.svg'),
             ),
           ),
-
           const SizedBox(height: 20),
           // Button
           Row(
