@@ -1,36 +1,6 @@
-// import 'package:flutter/material.dart';
-// import 'package:tugas_akhir/app/model/feeder.dart';
-
-// class FeederSchedule extends StatelessWidget {
-//   final Feeder schedule;
-//   final Function() onDelete;
-//   final Function()? onTap;
-//   const FeederSchedule({
-//     Key? key,
-//     required this.schedule,
-//     required this.onDelete,
-//     this.onTap,
-//   }) : super(key: key);
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListTile(
-//       title: Text(
-//         schedule.title,
-//       ),
-//       subtitle: Text(
-//         schedule.date.toString(),
-//       ),
-//       onTap: onTap,
-//       trailing: IconButton(
-//         icon: const Icon(Icons.delete),
-//         onPressed: onDelete,
-//       ),
-//     );
-//   }
-// }
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+// import 'package:intl/intl.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 
 class CustomScheduleInput extends StatefulWidget {
@@ -47,7 +17,7 @@ class CustomScheduleInput extends StatefulWidget {
     required this.controller,
     required this.label,
     required this.hint,
-    this.disabled = true,
+    this.disabled = false,
     this.margin = const EdgeInsets.only(bottom: 16),
     this.obsecureText = false,
     this.suffixIcon,
@@ -59,6 +29,8 @@ class CustomScheduleInput extends StatefulWidget {
 
 class _CustomScheduleInputState extends State<CustomScheduleInput> {
   TextEditingController dateInput = TextEditingController();
+  DateTime? pickedDate;
+  Timestamp? scheduleTimeStamp;
 
   @override
   void initState() {
@@ -83,19 +55,20 @@ class _CustomScheduleInputState extends State<CustomScheduleInput> {
         ),
         child: TextField(
           onTap: () async {
-            DateTime? pickedDate = await showDatePicker(
+            pickedDate = await showDatePicker(
               context: context,
               initialDate: DateTime.now(),
-              firstDate: DateTime(1950),
+              firstDate: DateTime.now().subtract(const Duration(days: 0)),
               lastDate: DateTime(2100),
             );
             if (pickedDate != null) {
-              String formattedDate =
-                  DateFormat('yyyy-MM-dd').format(pickedDate);
               setState(() {
-                dateInput.text = formattedDate;
+                dateInput.text =
+                    '${pickedDate!.year} - ${pickedDate!.month} - ${pickedDate!.day}';
+                scheduleTimeStamp = Timestamp.fromMicrosecondsSinceEpoch(
+                    pickedDate!.microsecondsSinceEpoch);
               });
-            } else {}
+            }
           },
           readOnly: widget.disabled,
           obscureText: widget.obsecureText,
@@ -104,7 +77,7 @@ class _CustomScheduleInputState extends State<CustomScheduleInput> {
             fontFamily: 'poppins',
           ),
           maxLines: 1,
-          controller: dateInput,
+          controller: widget.controller,
           decoration: InputDecoration(
             suffixIcon: widget.suffixIcon ?? const SizedBox(),
             label: Text(

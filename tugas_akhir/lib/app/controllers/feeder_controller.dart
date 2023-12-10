@@ -33,7 +33,6 @@ class FeederController extends GetxController {
     } else {
       isLoading.value = false;
       Get.snackbar("Terjadi Kesalahan", determinePosition["message"]);
-      // print(determinePosition["error"]);
     }
   }
 

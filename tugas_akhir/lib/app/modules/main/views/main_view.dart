@@ -406,6 +406,29 @@ class MainView extends GetView<MainController> {
                       ),
                     ],
                   ),
+                  StreamBuilder<QuerySnapshot<Object?>>(
+                    stream: controller.streamData(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.active) {
+                        var listSchedule = snapshot.data!.docs;
+                        return ListView.builder(
+                          itemBuilder: (context, index) => ListTile(
+                            title: Text(
+                              "${(listSchedule[index].data() as Map<String, dynamic>)["schedule"]}",
+                            ),
+                            onTap: () => Get.toNamed(Routes.EDIT_JADWAL,
+                                arguments: listSchedule[index].id),
+                            trailing: IconButton(
+                              onPressed: () => controller
+                                  .deleteSchedule(listSchedule[index].id),
+                              icon: SvgPicture.asset('assets/icons/close.svg'),
+                            ),
+                          ),
+                        );
+                      }
+                      return const Center(child: CircularProgressIndicator());
+                    },
+                  ),
                   const SizedBox(height: 20),
                 ],
               );

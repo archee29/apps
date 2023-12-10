@@ -89,7 +89,6 @@ class SignupController extends GetxController {
             "created_at": DateTime.now().toIso8601String(),
           });
           await userCredential.user!.sendEmailVerification();
-
           Get.back();
           Get.back();
           CustomNotification.successNotification(

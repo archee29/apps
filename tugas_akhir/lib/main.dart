@@ -6,7 +6,7 @@ import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/controllers/page_index_controller.dart';
 import 'package:tugas_akhir/app/controllers/feeder_controller.dart';
 import 'package:tugas_akhir/app/controllers/schedule_controller.dart';
-import 'package:tugas_akhir/app/modules/tambah_jadwal/controllers/tambah_jadwal_controller.dart';
+// import 'package:tugas_akhir/app/modules/tambah_jadwal/controllers/tambah_jadwal_controller.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -17,7 +17,7 @@ Future<void> main() async {
   Get.put(FeederController(), permanent: true);
   Get.put(ScheduleController(), permanent: true);
   Get.put(PageIndexController(), permanent: true);
-  Get.put(TambahJadwalController(), permanent: true);
+  // Get.put(TambahJadwalController(), permanent: true);
   runApp(
     StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),

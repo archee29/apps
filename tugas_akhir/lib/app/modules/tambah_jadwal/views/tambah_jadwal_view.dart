@@ -167,7 +167,7 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
                   () => ElevatedButton.icon(
                     onPressed: () {
                       if (controller.isLoading.isFalse) {
-                        controller.schedule();
+                        controller.addSchedule();
                       }
                     },
                     style: ElevatedButton.styleFrom(
