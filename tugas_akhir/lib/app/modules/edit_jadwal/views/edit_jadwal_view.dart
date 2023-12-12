@@ -1,4 +1,3 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -44,6 +43,12 @@ class EditJadwalView extends GetView<EditJadwalController> {
         future: controller.getSchedule(Get.arguments),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
+            var data = snapshot.data!.data() as Map<String, dynamic>;
+            controller.dateController.text = data["tanggal"];
+            controller.titleController.text = data["title"];
+            controller.deskripsiController.text = data["deskripsi"];
+            controller.makananController.text = data["makanan"];
+            controller.minumanController.text = data["minuman"];
             return ListView(
               shrinkWrap: true,
               physics: const BouncingScrollPhysics(),

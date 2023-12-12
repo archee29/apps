@@ -2,21 +2,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
-// import 'package:tugas_akhir/app/widgets/dialog/custom_alert_dialog.dart';
 import 'package:tugas_akhir/app/widgets/dialog/custom_notification.dart';
-import 'package:tugas_akhir/data_pengguna.dart';
 
 class EditJadwalController extends GetxController {
-  // @override
-  // onClose() {
-  //   // idSchedule.dispose();
-  //   titleController.dispose();
-  //   deskripsiController.dispose();
-  //   makananController.dispose();
-  //   minumanController.dispose();
-  //   adminPasswordController.dispose();
-  // }
+  @override
+  onClose() {
+    titleController.dispose();
+    deskripsiController.dispose();
+    makananController.dispose();
+    minumanController.dispose();
+    dateController.dispose();
+  }
 
   TextEditingController dateController = TextEditingController();
   TextEditingController titleController = TextEditingController();
@@ -65,8 +61,6 @@ class EditJadwalController extends GetxController {
       }
     } catch (e) {
       CustomNotification.errorNotification("Terjadi Kesalahan", "$e");
-    } finally {
-      update();
     }
   }
 }

@@ -32,15 +32,33 @@ class MainController extends GetxController {
     return schedule.get();
   }
 
-  Stream<DocumentSnapshot<Map<String, dynamic>>> streamSchedule() async* {
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamLastSchedule() async* {
     String uid = auth.currentUser!.uid;
-    yield* firestore.collection("schedule").doc(uid).snapshots();
+    yield* firestore
+        .collection("user")
+        .doc(uid)
+        .collection("schedule")
+        .orderBy("date", descending: true)
+        .limitToLast(5)
+        .snapshots();
   }
 
-  Stream<QuerySnapshot<Object?>> streamData() {
-    CollectionReference schedule = firestore.collection("schedule");
-    return schedule.orderBy("time", descending: true).snapshots();
+  Stream<DocumentSnapshot<Map<String, dynamic>>> streamSchedule() async* {
+    String uid = auth.currentUser!.uid;
+    String todayDocId =
+        DateFormat.yMd().format(DateTime.now()).replaceAll("/", "-");
+    yield* firestore
+        .collection("user")
+        .doc(uid)
+        .collection("schedule")
+        .doc(todayDocId)
+        .snapshots();
   }
+
+  // Stream<QuerySnapshot<Object?>> streamData() {
+  //   CollectionReference schedule = firestore.collection("schedule");
+  //   return schedule.orderBy("time", descending: true).snapshots();
+  // }
 
   Future<void> deleteSchedule(String docId) async {
     DocumentReference docRef = firestore.collection("schedule").doc(docId);

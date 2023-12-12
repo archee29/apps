@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
+// import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:tugas_akhir/app/controllers/page_index_controller.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_bottom_navbar.dart';
+// import 'package:tugas_akhir/app/widgets/card/schedule_tile.dart';
 import '../controllers/main_controller.dart';
 
 class MainView extends GetView<MainController> {
   final pageIndexController = Get.find<PageIndexController>();
+
   MainView({super.key});
 
   @override
@@ -406,29 +409,58 @@ class MainView extends GetView<MainController> {
                       ),
                     ],
                   ),
-                  StreamBuilder<QuerySnapshot<Object?>>(
-                    stream: controller.streamData(),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.active) {
-                        var listSchedule = snapshot.data!.docs;
-                        return ListView.builder(
-                          itemBuilder: (context, index) => ListTile(
-                            title: Text(
-                              "${(listSchedule[index].data() as Map<String, dynamic>)["schedule"]}",
-                            ),
-                            onTap: () => Get.toNamed(Routes.EDIT_JADWAL,
-                                arguments: listSchedule[index].id),
-                            trailing: IconButton(
-                              onPressed: () => controller
-                                  .deleteSchedule(listSchedule[index].id),
-                              icon: SvgPicture.asset('assets/icons/close.svg'),
-                            ),
-                          ),
-                        );
-                      }
-                      return const Center(child: CircularProgressIndicator());
-                    },
-                  ),
+
+                  // StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                  //   stream: controller.streamLastSchedule(),
+                  //   builder: (context, snapshot) {
+                  //     switch (snapshot.connectionState) {
+                  //       case ConnectionState.waiting:
+                  //         return const Center(
+                  //             child: CircularProgressIndicator());
+                  //       case ConnectionState.active:
+                  //       case ConnectionState.done:
+                  //         List<QueryDocumentSnapshot<Map<String, dynamic>>>
+                  //             listSchedule = snapshot.data!.docs;
+                  //         return ListView.separated(
+                  //           physics: const BouncingScrollPhysics(),
+                  //           itemCount: listSchedule.length,
+                  //           separatorBuilder: (context, index) =>
+                  //               const SizedBox(height: 16),
+                  //           itemBuilder: (context, index) {
+                  //             Map<String, dynamic> scheduleData =
+                  //                 listSchedule[index].data();
+                  //             return ScheduleTile(scheduleData: scheduleData);
+                  //           },
+                  //         );
+                  //       default:
+                  //         return const SizedBox();
+                  //     }
+                  //   },
+                  // ),
+
+                  // StreamBuilder<QuerySnapshot<Object?>>(
+                  //   stream: controller.streamData(),
+                  //   builder: (context, snapshot) {
+                  //     if (snapshot.connectionState == ConnectionState.active) {
+                  //       var listSchedule = snapshot.data!.docs;
+                  //       return ListView.builder(
+                  //         itemBuilder: (context, index) => ListTile(
+                  //           title: Text(
+                  //             "${(listSchedule[index].data() as Map<String, dynamic>)["schedule"]}",
+                  //           ),
+                  //           onTap: () => Get.toNamed(Routes.EDIT_JADWAL,
+                  //               arguments: listSchedule[index].id),
+                  //           trailing: IconButton(
+                  //             onPressed: () => controller
+                  //                 .deleteSchedule(listSchedule[index].id),
+                  //             icon: SvgPicture.asset('assets/icons/close.svg'),
+                  //           ),
+                  //         ),
+                  //       );
+                  //     }
+                  //     return const Center(child: CircularProgressIndicator());
+                  //   },
+                  // ),
                   const SizedBox(height: 20),
                 ],
               );
@@ -478,5 +510,12 @@ class MainTile extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class ScheduleDataSource extends DataGridSource {
+  @override
+  DataGridRowAdapter? buildRow(DataGridRow row) {
+    throw UnimplementedError();
   }
 }

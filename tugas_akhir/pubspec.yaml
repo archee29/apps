@@ -34,6 +34,7 @@ dependencies:
   syncfusion_flutter_datepicker: ^20.1.51
   syncfusion_flutter_calendar:
   flutter_form_builder:
+  syncfusion_flutter_datagrid: ^20.1.51
   table_calendar: ^3.0.9
 
 
