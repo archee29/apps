@@ -1,27 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
-import 'package:tugas_akhir/app/routes/app_pages.dart';
-import 'package:tugas_akhir/app/styles/app_colors.dart';
+import 'package:tugas_akhir/app/model/schedule.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-class ScheduleTile extends StatefulWidget {
-  const ScheduleTile({super.key});
-
-  @override
-  State<ScheduleTile> createState() => _ScheduleTileState();
-}
-
-class _ScheduleTileState extends State<ScheduleTile> {
-  late final Map<String, dynamic> scheduleData;
-  final getDataSchedule =
-      FirebaseFirestore.instance.collection("schedule").snapshots();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
 
 // class ScheduleTile extends StatelessWidget {
 //   final Map<String, dynamic> scheduleData;
@@ -51,3 +31,244 @@ class _ScheduleTileState extends State<ScheduleTile> {
 //     );
 //   }
 // }
+
+// ignore: must_be_immutable
+class ScheduleDataTable extends StatelessWidget {
+  final Map<String, dynamic> scheduleData;
+  ScheduleDataTable({super.key, required this.scheduleData});
+
+  late ScheduleDataSource scheduleDataSource;
+
+  final getDataFromFirestore =
+      FirebaseFirestore.instance.collection("schedule").snapshots();
+
+  Widget _buildDataGrid() {
+    return StreamBuilder(
+      stream: getDataFromFirestore,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasData) {
+          if (scheduleData.isNotEmpty) {
+            getDataGridFromDatabase(DocumentChange<Object?> data) {
+              return DataGridRow(cells: [
+                DataGridCell<String>(
+                    columnName: 'tanggal', value: data.doc['tanggal']),
+                DataGridCell<String>(
+                    columnName: 'title', value: data.doc['title']),
+                DataGridCell<String>(
+                    columnName: 'deskripsi', value: data.doc['deskripsi']),
+                DataGridCell<String>(
+                    columnName: 'makanan', value: data.doc['makanan']),
+                DataGridCell<String>(
+                    columnName: 'minuman', value: data.doc['minuman']),
+              ]);
+            }
+
+            for (var data in snapshot.data!.docChanges) {
+              if (data.type == DocumentChangeType.modified) {
+                if (data.oldIndex == data.newIndex) {
+                  scheduleDataSource.dataGridRows[data.oldIndex] =
+                      getDataGridFromDatabase(data);
+                }
+                scheduleDataSource.updateDataGridSource();
+              } else if (data.type == DocumentChangeType.added) {
+                scheduleDataSource.dataGridRows
+                    .add(getDataGridFromDatabase(data));
+                scheduleDataSource.updateDataGridSource();
+              } else if (data.type == DocumentChangeType.removed) {
+                scheduleDataSource.dataGridRows.removeAt(data.oldIndex);
+                scheduleDataSource.updateDataGridSource();
+              }
+            }
+          } else {
+            for (var data in snapshot.data!.docs) {
+              scheduleData.add(Schedule(
+                tanggal: data['tanggal'],
+                title: data['title'],
+                deskripsi: data['deskripsi'],
+                makanan: data['makanan'],
+                minuman: data['minuman'],
+              ));
+            }
+            scheduleDataSource =
+                ScheduleDataSource(scheduleData as List<Schedule>);
+          }
+          return SfDataGrid(
+            source: scheduleDataSource,
+            columns: getColumns,
+            columnWidthMode: ColumnWidthMode.fill,
+          );
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _buildDataGrid(),
+    );
+  }
+}
+
+// class ScheduleDataGrid extends StatefulWidget {
+//   final Map<String, dynamic> scheduleDataSource;
+//   const ScheduleDataGrid({super.key, required this.scheduleDataSource});
+
+//   @override
+//   State<ScheduleDataGrid> createState() => _ScheduleDataGridState();
+// }
+
+// class _ScheduleDataGridState extends State<ScheduleDataGrid> {
+//   late ScheduleDataSource scheduleDataSource;
+//   List<Schedule> scheduleData = [];
+//   final getDataFromFirestore =
+//       FirebaseFirestore.instance.collection("schedule").snapshots();
+
+//   Widget _buildDataGrid() {
+//     return StreamBuilder(
+//       stream: getDataFromFirestore,
+//       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+//         if (snapshot.hasData) {
+//           if (scheduleData.isNotEmpty) {
+//             getDataGridFromDatabase(DocumentChange<Object?> data) {
+//               return DataGridRow(cells: [
+//                 DataGridCell<String>(
+//                     columnName: 'tanggal', value: data.doc['tanggal']),
+//                 DataGridCell<String>(
+//                     columnName: 'title', value: data.doc['title']),
+//                 DataGridCell<String>(
+//                     columnName: 'deskripsi', value: data.doc['deskripsi']),
+//                 DataGridCell<String>(
+//                     columnName: 'makanan', value: data.doc['makanan']),
+//                 DataGridCell<String>(
+//                     columnName: 'minuman', value: data.doc['minuman']),
+//               ]);
+//             }
+
+//             for (var data in snapshot.data!.docChanges) {
+//               if (data.type == DocumentChangeType.modified) {
+//                 if (data.oldIndex == data.newIndex) {
+//                   scheduleDataSource.dataGridRows[data.oldIndex] =
+//                       getDataGridFromDatabase(data);
+//                 }
+//                 scheduleDataSource.updateDataGridSource();
+//               } else if (data.type == DocumentChangeType.added) {
+//                 scheduleDataSource.dataGridRows
+//                     .add(getDataGridFromDatabase(data));
+//                 scheduleDataSource.updateDataGridSource();
+//               } else if (data.type == DocumentChangeType.removed) {
+//                 scheduleDataSource.dataGridRows.removeAt(data.oldIndex);
+//                 scheduleDataSource.updateDataGridSource();
+//               }
+//             }
+//           } else {
+//             for (var data in snapshot.data!.docs) {
+//               scheduleData.add(Schedule(
+//                 tanggal: data['tanggal'],
+//                 title: data['title'],
+//                 deskripsi: data['deskripsi'],
+//                 makanan: data['makanan'],
+//                 minuman: data['minuman'],
+//               ));
+//             }
+//             scheduleDataSource = ScheduleDataSource(scheduleData);
+//           }
+//           return SfDataGrid(
+//             source: scheduleDataSource,
+//             columns: getColumns,
+//             columnWidthMode: ColumnWidthMode.fill,
+//           );
+//         } else {
+//           return const Center(child: CircularProgressIndicator());
+//         }
+//       },
+//     );
+//   }
+
+//   @override
+//   void initState() {
+//     super.initState();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: _buildDataGrid(),
+//     );
+//   }
+// }
+
+class ScheduleDataSource extends DataGridSource {
+  ScheduleDataSource(this.scheduleData) {
+    _buildDataRow();
+  }
+  List<DataGridRow> dataGridRows = [];
+  List<Schedule> scheduleData;
+  void _buildDataRow() {
+    dataGridRows = scheduleData
+        .map<DataGridRow>((e) => DataGridRow(cells: [
+              DataGridCell<String>(columnName: 'tanggal', value: e.tanggal),
+              DataGridCell<String>(columnName: 'title', value: e.title),
+              DataGridCell<String>(columnName: 'deskripsi', value: e.deskripsi),
+              DataGridCell<String>(columnName: 'makanan', value: e.makanan),
+              DataGridCell<String>(columnName: 'minuman', value: e.minuman),
+            ]))
+        .toList();
+  }
+
+  @override
+  List<DataGridRow> get rows => dataGridRows;
+
+  @override
+  DataGridRowAdapter buildRow(DataGridRow row) {
+    return DataGridRowAdapter(
+        cells: row.getCells().map<Widget>((e) {
+      return Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(8.0),
+        child: Text(e.value.toString()),
+      );
+    }).toList());
+  }
+
+  void updateDataGridSource() {
+    notifyListeners();
+  }
+}
+
+List<GridColumn> get getColumns {
+  return <GridColumn>[
+    GridColumn(
+        columnName: 'tanggal',
+        label: Container(
+            padding: const EdgeInsets.all(16.0),
+            alignment: Alignment.center,
+            child: const Text('Tanggal'))),
+    GridColumn(
+        columnName: 'title',
+        label: Container(
+            padding: const EdgeInsets.all(8.0),
+            alignment: Alignment.center,
+            child: const Text('Title'))),
+    GridColumn(
+        columnName: 'deskripsi',
+        label: Container(
+            padding: const EdgeInsets.all(8.0),
+            alignment: Alignment.center,
+            child: const Text('Deskripsi'))),
+    GridColumn(
+        columnName: 'makanan',
+        label: Container(
+            padding: const EdgeInsets.all(8.0),
+            alignment: Alignment.center,
+            child: const Text('Makanan'))),
+    GridColumn(
+        columnName: 'minuman',
+        label: Container(
+            padding: const EdgeInsets.all(8.0),
+            alignment: Alignment.center,
+            child: const Text('Minuman'))),
+  ];
+}
