@@ -125,7 +125,7 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
                                   itemBuilder: (context, index) {
                                     Map<String, dynamic> scheduleData =
                                         listSchedule[index].data();
-                                    return ScheduleTile(
+                                    return ScheduleDataTable(
                                         scheduleData: scheduleData);
                                   },
                                 );

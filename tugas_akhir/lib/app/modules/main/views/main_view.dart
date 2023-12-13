@@ -9,6 +9,7 @@ import 'package:tugas_akhir/app/controllers/page_index_controller.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_bottom_navbar.dart';
+import 'package:tugas_akhir/app/widgets/card/schedule_tile.dart';
 // import 'package:tugas_akhir/app/widgets/card/schedule_tile.dart';
 import '../controllers/main_controller.dart';
 
@@ -410,33 +411,34 @@ class MainView extends GetView<MainController> {
                     ],
                   ),
 
-                  // StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                  //   stream: controller.streamLastSchedule(),
-                  //   builder: (context, snapshot) {
-                  //     switch (snapshot.connectionState) {
-                  //       case ConnectionState.waiting:
-                  //         return const Center(
-                  //             child: CircularProgressIndicator());
-                  //       case ConnectionState.active:
-                  //       case ConnectionState.done:
-                  //         List<QueryDocumentSnapshot<Map<String, dynamic>>>
-                  //             listSchedule = snapshot.data!.docs;
-                  //         return ListView.separated(
-                  //           physics: const BouncingScrollPhysics(),
-                  //           itemCount: listSchedule.length,
-                  //           separatorBuilder: (context, index) =>
-                  //               const SizedBox(height: 16),
-                  //           itemBuilder: (context, index) {
-                  //             Map<String, dynamic> scheduleData =
-                  //                 listSchedule[index].data();
-                  //             return ScheduleTile(scheduleData: scheduleData);
-                  //           },
-                  //         );
-                  //       default:
-                  //         return const SizedBox();
-                  //     }
-                  //   },
-                  // ),
+                  StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                    stream: controller.streamLastSchedule(),
+                    builder: (context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        case ConnectionState.active:
+                        case ConnectionState.done:
+                          List<QueryDocumentSnapshot<Map<String, dynamic>>>
+                              listSchedule = snapshot.data!.docs;
+                          return ListView.separated(
+                            physics: const BouncingScrollPhysics(),
+                            itemCount: listSchedule.length,
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(height: 16),
+                            itemBuilder: (context, index) {
+                              Map<String, dynamic> scheduleData =
+                                  listSchedule[index].data();
+                              return ScheduleDataTable(
+                                  scheduleData: scheduleData);
+                            },
+                          );
+                        default:
+                          return const SizedBox();
+                      }
+                    },
+                  ),
 
                   // StreamBuilder<QuerySnapshot<Object?>>(
                   //   stream: controller.streamData(),
@@ -510,12 +512,5 @@ class MainTile extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class ScheduleDataSource extends DataGridSource {
-  @override
-  DataGridRowAdapter? buildRow(DataGridRow row) {
-    throw UnimplementedError();
   }
 }
