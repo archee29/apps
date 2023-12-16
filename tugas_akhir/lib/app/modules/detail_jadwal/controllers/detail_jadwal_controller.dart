@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+import 'package:tugas_akhir/app/widgets/dialog/custom_alert_dialog.dart';
+import 'package:tugas_akhir/app/widgets/dialog/custom_notification.dart';
 
 class DetailJadwalController extends GetxController {
   RxBool isLoading = false.obs;
@@ -34,5 +36,22 @@ class DetailJadwalController extends GetxController {
         .collection("schedule")
         .doc(todayocId)
         .snapshots();
+  }
+
+  Future<void> deleteSchedule(String docId) async {
+    DocumentReference docRef = firestore.collection("schedule").doc(docId);
+    try {
+      CustomAlertDialog.showFeederAlert(
+        title: "Hapus Data",
+        message: "Yakin Menghapus Data Ini?",
+        onConfirm: () async {
+          await docRef.delete();
+          Get.back();
+        },
+        onCancel: () => Get.back(),
+      );
+    } catch (e) {
+      CustomNotification.errorNotification("Terjadi Kesalahan", "$e");
+    }
   }
 }

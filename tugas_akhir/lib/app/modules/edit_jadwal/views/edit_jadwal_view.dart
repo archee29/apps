@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
@@ -84,11 +85,26 @@ class EditJadwalView extends GetView<EditJadwalController> {
                   ),
                 ),
 
-                // Input Kalender
+                // Kalender
                 CustomScheduleInput(
                   controller: controller.dateController,
-                  label: "Kalendar",
-                  hint: "Masukkan Jadwal Makan dan Minum",
+                  label: "Kalender",
+                  hint: DateFormat("dd-MM-yyyy")
+                      .format(controller.selectedDate.value)
+                      .toString(),
+                  onTap: () {
+                    controller.chooseDate();
+                  },
+                ),
+                // Time
+                CustomScheduleInput(
+                  controller: controller.timeController,
+                  label: "Waktu",
+                  hint:
+                      "${controller.selectedTime.value.hour}:${controller.selectedTime.value.minute}",
+                  onTap: () {
+                    controller.chooseTime();
+                  },
                 ),
 
                 // Input Judul

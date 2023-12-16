@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 // import 'package:intl/intl.dart';
 // import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -50,39 +51,63 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
         padding: const EdgeInsets.all(20),
         children: <Widget>[
           // Calendar
-          Card(
-            clipBehavior: Clip.antiAlias,
-            margin: const EdgeInsets.all(8.0),
-            child: TableCalendar(
-              focusedDay: DateTime.now(),
-              firstDay: DateTime(1950),
-              lastDay: DateTime(2100),
-              headerStyle: HeaderStyle(
-                decoration: BoxDecoration(color: AppColors.primary),
-                headerMargin: const EdgeInsets.only(bottom: 8.0),
-                titleTextStyle: const TextStyle(color: Colors.white),
-                formatButtonDecoration: BoxDecoration(
-                  border: Border.all(color: Colors.white),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                formatButtonTextStyle: const TextStyle(color: Colors.white),
-                leftChevronIcon: const Icon(
-                  Icons.chevron_left,
-                  color: Colors.white,
-                ),
-                rightChevronIcon: const Icon(
-                  Icons.chevron_right,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
+          // Card(
+          //   clipBehavior: Clip.antiAlias,
+          //   margin: const EdgeInsets.all(8.0),
+          //   child: TableCalendar(
+          //     focusedDay: DateTime.now(),
+          //     firstDay: DateTime(1950),
+          //     lastDay: DateTime(2100),
+          //     headerStyle: HeaderStyle(
+          //       decoration: BoxDecoration(color: AppColors.primary),
+          //       headerMargin: const EdgeInsets.only(bottom: 8.0),
+          //       titleTextStyle: const TextStyle(color: Colors.white),
+          //       formatButtonDecoration: BoxDecoration(
+          //         border: Border.all(color: Colors.white),
+          //         borderRadius: BorderRadius.circular(8),
+          //       ),
+          //       formatButtonTextStyle: const TextStyle(color: Colors.white),
+          //       leftChevronIcon: const Icon(
+          //         Icons.chevron_left,
+          //         color: Colors.white,
+          //       ),
+          //       rightChevronIcon: const Icon(
+          //         Icons.chevron_right,
+          //         color: Colors.white,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+
           // Input Schedule
+          // CustomScheduleInput(
+          //   controller: controller.dateController,
+          //   label: "Kalendar",
+          //   hint: "Masukkan Jadwal Makan dan Minum",
+          // ),
+
+          // Kalender
           CustomScheduleInput(
             controller: controller.dateController,
-            label: "Kalendar",
-            hint: "Masukkan Jadwal Makan dan Minum",
+            label: "Kalender",
+            hint: DateFormat("dd-MM-yyyy")
+                .format(controller.selectedDate.value)
+                .toString(),
+            onTap: () {
+              controller.chooseDate();
+            },
           ),
+          // Time
+          CustomScheduleInput(
+            controller: controller.timeController,
+            label: "Waktu",
+            hint:
+                "${controller.selectedTime.value.hour}:${controller.selectedTime.value.minute}",
+            onTap: () {
+              controller.chooseTime();
+            },
+          ),
+
           // Input Judul
           CustomInput(
             controller: controller.titleController,

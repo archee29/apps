@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-// import 'package:intl/intl.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 
 class CustomScheduleInput extends StatefulWidget {
@@ -11,12 +9,14 @@ class CustomScheduleInput extends StatefulWidget {
   final EdgeInsetsGeometry margin;
   final bool obsecureText;
   final Widget? suffixIcon;
+  final void Function() onTap;
 
   const CustomScheduleInput({
     super.key,
     required this.controller,
     required this.label,
     required this.hint,
+    required this.onTap,
     this.disabled = false,
     this.margin = const EdgeInsets.only(bottom: 16),
     this.obsecureText = false,
@@ -28,13 +28,10 @@ class CustomScheduleInput extends StatefulWidget {
 }
 
 class _CustomScheduleInputState extends State<CustomScheduleInput> {
-  TextEditingController dateInput = TextEditingController();
-  DateTime? pickedDate;
-  Timestamp? scheduleTimeStamp;
+  DateTime pickedDate = DateTime.now();
 
   @override
   void initState() {
-    dateInput.text = "";
     super.initState();
   }
 
@@ -54,22 +51,23 @@ class _CustomScheduleInputState extends State<CustomScheduleInput> {
           border: Border.all(width: 1, color: AppColors.secondaryExtraSoft),
         ),
         child: TextField(
-          onTap: () async {
-            pickedDate = await showDatePicker(
-              context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime.now().subtract(const Duration(days: 0)),
-              lastDate: DateTime(2100),
-            );
-            if (pickedDate != null) {
-              setState(() {
-                dateInput.text =
-                    '${pickedDate!.year} - ${pickedDate!.month} - ${pickedDate!.day}';
-                scheduleTimeStamp = Timestamp.fromMicrosecondsSinceEpoch(
-                    pickedDate!.microsecondsSinceEpoch);
-              });
-            }
-          },
+          onTap: widget.onTap,
+          // onTap: () async {
+          //   showDatePicker(
+          //     context: context,
+          //     initialDate: DateTime.now(),
+          //     firstDate: DateTime.now().subtract(const Duration(days: 0)),
+          //     lastDate: DateTime(2100),
+          //   ).then((value) {
+          //     if (value == null) {
+          //       Get.back();
+          //     } else {
+          //       setState(() {
+          //         pickedDate = value;
+          //       });
+          //     }
+          //   });
+          // },
           readOnly: widget.disabled,
           obscureText: widget.obsecureText,
           style: const TextStyle(

@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:tugas_akhir/app/controllers/page_index_controller.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_bottom_navbar.dart';
 import 'package:tugas_akhir/app/widgets/card/schedule_tile.dart';
-// import 'package:tugas_akhir/app/widgets/card/schedule_tile.dart';
 import '../controllers/main_controller.dart';
 
 class MainView extends GetView<MainController> {
@@ -413,7 +410,7 @@ class MainView extends GetView<MainController> {
 
                   StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                     stream: controller.streamLastSchedule(),
-                    builder: (context, snapshot) {
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
                           return const Center(
@@ -423,15 +420,16 @@ class MainView extends GetView<MainController> {
                           List<QueryDocumentSnapshot<Map<String, dynamic>>>
                               listSchedule = snapshot.data!.docs;
                           return ListView.separated(
-                            physics: const BouncingScrollPhysics(),
                             itemCount: listSchedule.length,
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
                             separatorBuilder: (context, index) =>
                                 const SizedBox(height: 16),
                             itemBuilder: (context, index) {
                               Map<String, dynamic> scheduleData =
                                   listSchedule[index].data();
-                              return ScheduleDataTable(
-                                  scheduleData: scheduleData);
+                              return ScheduleDataGrid(
+                                  scheduleDataSource: scheduleData);
                             },
                           );
                         default:
@@ -439,6 +437,49 @@ class MainView extends GetView<MainController> {
                       }
                     },
                   ),
+
+                  // StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                  //   stream: controller.streamLastSchedule(),
+                  //   builder: (context, snapshot) {
+                  //     switch (snapshot.connectionState) {
+                  //       case ConnectionState.waiting:
+                  //         return const Center(
+                  //             child: CircularProgressIndicator());
+                  //       case ConnectionState.active:
+                  //       case ConnectionState.done:
+                  //         List<QueryDocumentSnapshot<Map<String, dynamic>>>
+                  //             listSchedule = snapshot.data!.docs;
+                  //         return ListView.builder(
+                  //           physics: const BouncingScrollPhysics(),
+                  //           itemCount: listSchedule.length,
+                  //           itemBuilder: (context, index) {
+                  //             return Card(
+                  //               child: Column(
+                  //                 children: [
+                  //                   ListTile(
+                  //                     title: Text(
+                  //                         "${(listSchedule[index].data())["schedule"]}"),
+                  //                     onTap: () => Get.toNamed(
+                  //                         Routes.EDIT_JADWAL,
+                  //                         arguments: listSchedule[index].id),
+                  //                     trailing: IconButton(
+                  //                       onPressed: () =>
+                  //                           controller.deleteSchedule(
+                  //                               listSchedule[index].id),
+                  //                       icon: SvgPicture.asset(
+                  //                           'assets/icons/close.svg'),
+                  //                     ),
+                  //                   ),
+                  //                 ],
+                  //               ),
+                  //             );
+                  //           },
+                  //         );
+                  //       default:
+                  //         return const SizedBox();
+                  //     }
+                  //   },
+                  // ),
 
                   // StreamBuilder<QuerySnapshot<Object?>>(
                   //   stream: controller.streamData(),

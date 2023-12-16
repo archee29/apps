@@ -12,9 +12,11 @@ class EditJadwalController extends GetxController {
     makananController.dispose();
     minumanController.dispose();
     dateController.dispose();
+    timeController.dispose();
   }
 
   TextEditingController dateController = TextEditingController();
+  TextEditingController timeController = TextEditingController();
   TextEditingController titleController = TextEditingController();
   TextEditingController deskripsiController = TextEditingController();
   TextEditingController makananController = TextEditingController();
@@ -22,6 +24,8 @@ class EditJadwalController extends GetxController {
 
   RxBool isLoading = false.obs;
   RxBool isLoadingCreateSchedule = false.obs;
+  var selectedDate = DateTime.now().obs;
+  var selectedTime = TimeOfDay.now().obs;
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -61,6 +65,45 @@ class EditJadwalController extends GetxController {
       }
     } catch (e) {
       CustomNotification.errorNotification("Terjadi Kesalahan", "$e");
+    }
+  }
+
+  chooseDate() async {
+    DateTime? pickedDate = await showDatePicker(
+      context: Get.context!,
+      initialDate: selectedDate.value,
+      firstDate: DateTime.now().subtract(const Duration(days: 0)),
+      lastDate: DateTime(2100),
+      helpText: 'Silahkan Masukkan Tanggal Makan dan Minum',
+      cancelText: 'Cancel',
+      confirmText: 'Ok',
+      errorFormatText: 'Format Tangal Salah',
+      errorInvalidText: 'Masukkan Format Tanggal (Bulan/Tanggal/Tahun)',
+      fieldLabelText: 'Input Tanggal',
+      fieldHintText: 'Bulan/Tanggal/Tahun',
+    );
+    if (pickedDate != null && pickedDate != selectedDate.value) {
+      selectedDate.value = pickedDate;
+    }
+  }
+
+  chooseTime() async {
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: Get.context!,
+      initialTime: selectedTime.value,
+      builder: (context, child) {
+        return Theme(data: ThemeData.dark(), child: child!);
+      },
+      initialEntryMode: TimePickerEntryMode.input,
+      helpText: 'Silahkan Masukkan Waktu Makan dan Minum',
+      cancelText: 'Cancel',
+      confirmText: 'Ok',
+      errorInvalidText: 'Format Waktu Salah',
+      hourLabelText: 'Jam',
+      minuteLabelText: 'Menit',
+    );
+    if (pickedTime != null && pickedTime != selectedTime.value) {
+      selectedTime.value = pickedTime;
     }
   }
 }
