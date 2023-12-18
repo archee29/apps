@@ -2,16 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:table_calendar/table_calendar.dart';
-// import 'package:intl/intl.dart';
-// import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
-// import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_input.dart';
 import 'package:tugas_akhir/app/widgets/feeder/schedule_widget.dart';
-// import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_schedule.dart';
-
 import '../controllers/tambah_jadwal_controller.dart';
 
 class TambahJadwalView extends GetView<TambahJadwalController> {
@@ -49,7 +43,7 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
         shrinkWrap: true,
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(20),
-        children: <Widget>[
+        children: [
           // Calendar
           // Card(
           //   clipBehavior: Clip.antiAlias,
@@ -79,13 +73,6 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
           //   ),
           // ),
 
-          // Input Schedule
-          // CustomScheduleInput(
-          //   controller: controller.dateController,
-          //   label: "Kalendar",
-          //   hint: "Masukkan Jadwal Makan dan Minum",
-          // ),
-
           // Kalender
           CustomScheduleInput(
             controller: controller.dateController,
@@ -97,6 +84,7 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
               controller.chooseDate();
             },
           ),
+
           // Time
           CustomScheduleInput(
             controller: controller.timeController,

@@ -17,7 +17,7 @@ class CustomScheduleInput extends StatefulWidget {
     required this.label,
     required this.hint,
     required this.onTap,
-    this.disabled = false,
+    this.disabled = true,
     this.margin = const EdgeInsets.only(bottom: 16),
     this.obsecureText = false,
     this.suffixIcon,
@@ -28,8 +28,6 @@ class CustomScheduleInput extends StatefulWidget {
 }
 
 class _CustomScheduleInputState extends State<CustomScheduleInput> {
-  DateTime pickedDate = DateTime.now();
-
   @override
   void initState() {
     super.initState();
@@ -52,22 +50,6 @@ class _CustomScheduleInputState extends State<CustomScheduleInput> {
         ),
         child: TextField(
           onTap: widget.onTap,
-          // onTap: () async {
-          //   showDatePicker(
-          //     context: context,
-          //     initialDate: DateTime.now(),
-          //     firstDate: DateTime.now().subtract(const Duration(days: 0)),
-          //     lastDate: DateTime(2100),
-          //   ).then((value) {
-          //     if (value == null) {
-          //       Get.back();
-          //     } else {
-          //       setState(() {
-          //         pickedDate = value;
-          //       });
-          //     }
-          //   });
-          // },
           readOnly: widget.disabled,
           obscureText: widget.obsecureText,
           style: const TextStyle(

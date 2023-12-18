@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:tugas_akhir/app/model/schedule.dart';
-import 'package:tugas_akhir/app/routes/app_pages.dart';
-import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:tugas_akhir/app/modules/main/controllers/main_controller.dart';
 
 // class ScheduleTile extends StatelessWidget {

@@ -1,20 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get.dart';
-import 'package:tugas_akhir/app/widgets/card/schedule_card.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_bottom_navbar.dart';
 import 'package:tugas_akhir/app/widgets/card/schedule_tile.dart';
 
 import '../controllers/detail_jadwal_controller.dart';
 
 class DetailJadwalView extends GetView<DetailJadwalController> {
-  DetailJadwalView({Key? key}) : super(key: key);
+  const DetailJadwalView({Key? key}) : super(key: key);
   // final CalendarController _calendarController = CalendarController();
   @override
   Widget build(BuildContext context) {
@@ -104,26 +100,26 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
                       ),
                       // Data Scheduled
 
-                      StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                        stream: controller.streamLastSchedule(),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (snapshot.hasData) {
-                            List<QueryDocumentSnapshot<Map<String, dynamic>>>
-                                listSchedule = snapshot.data!.docs;
-                            return ListView.builder(
-                              itemCount: listSchedule.length,
-                              itemBuilder: (context, index) {
-                                Map<String, dynamic> scheduleData =
-                                    listSchedule[index].data();
-                                return ScheduleDataGrid(
-                                    scheduleDataSource: scheduleData);
-                              },
-                            );
-                          }
-                          return const CircularProgressIndicator();
-                        },
-                      ),
+                      // StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      //   stream: controller.streamLastSchedule(),
+                      //   builder:
+                      //       (BuildContext context, AsyncSnapshot snapshot) {
+                      //     if (snapshot.hasData) {
+                      //       List<QueryDocumentSnapshot<Map<String, dynamic>>>
+                      //           listSchedule = snapshot.data!.docs;
+                      //       return ListView.builder(
+                      //         itemCount: listSchedule.length,
+                      //         itemBuilder: (context, index) {
+                      //           Map<String, dynamic> scheduleData =
+                      //               listSchedule[index].data();
+                      //           return ScheduleDataGrid(
+                      //               scheduleDataSource: scheduleData);
+                      //         },
+                      //       );
+                      //     }
+                      //     return const CircularProgressIndicator();
+                      //   },
+                      // ),
 
                       // StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                       //     stream: controller.streamLastSchedule(),
