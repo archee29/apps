@@ -408,6 +408,42 @@ class MainView extends GetView<MainController> {
                     ],
                   ),
 
+                  StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                    stream: controller.streamLastSchedule(),
+                    builder: (context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        case ConnectionState.active:
+                        case ConnectionState.done:
+                          List<QueryDocumentSnapshot<Map<String, dynamic>>>
+                              listSchedule = snapshot.data!.docs;
+                          if (snapshot.hasData) {
+                            return ListView.separated(
+                                shrinkWrap: true,
+                                physics: const BouncingScrollPhysics(),
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(height: 16),
+                                itemCount: listSchedule.length,
+                                itemBuilder: (context, index) {
+                                  Map<String, dynamic> scheduleData =
+                                      listSchedule[index].data();
+                                  return ScheduleTile(
+                                      scheduleData: scheduleData);
+                                });
+                          } else if (snapshot.hasError) {
+                            return Text("${snapshot.error}");
+                          } else {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          }
+                        default:
+                          return const SizedBox();
+                      }
+                    },
+                  ),
+
                   // StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                   //   stream: controller.streamLastSchedule(),
                   //   builder: (BuildContext context, AsyncSnapshot snapshot) {

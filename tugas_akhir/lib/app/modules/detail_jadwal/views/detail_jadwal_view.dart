@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:tugas_akhir/app/controllers/page_index_controller.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,38 +11,14 @@ import 'package:tugas_akhir/app/widgets/card/schedule_tile.dart';
 import '../controllers/detail_jadwal_controller.dart';
 
 class DetailJadwalView extends GetView<DetailJadwalController> {
-  const DetailJadwalView({Key? key}) : super(key: key);
+  final pageIndexController = Get.find<PageIndexController>();
+  DetailJadwalView({super.key});
   // final CalendarController _calendarController = CalendarController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: const CustomBottomNavigationBar(),
         extendBody: true,
-        // appBar: AppBar(
-        //   title: Text(
-        //     'Detail Jadwal',
-        //     style: TextStyle(
-        //       color: AppColors.secondary,
-        //       fontSize: 14,
-        //     ),
-        //   ),
-        //   leading: IconButton(
-        //     onPressed: () => Get.back(),
-        //     icon: SvgPicture.asset('assets/icons/arrow-left.svg'),
-        //   ),
-        //   backgroundColor: Colors.white,
-        //   elevation: 0,
-        //   centerTitle: true,
-        //   bottom: PreferredSize(
-        //     preferredSize: const Size.fromHeight(1),
-        //     child: Container(
-        //       width: MediaQuery.of(context).size.width,
-        //       height: 1,
-        //       color: AppColors.secondaryExtraSoft,
-        //     ),
-        //   ),
-        // ),
-
         body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
           stream: controller.streamUser(),
           builder: ((context, snapshot) {
@@ -99,102 +76,41 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
                         ),
                       ),
                       // Data Scheduled
-
-                      // StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                      //   stream: controller.streamLastSchedule(),
-                      //   builder:
-                      //       (BuildContext context, AsyncSnapshot snapshot) {
-                      //     if (snapshot.hasData) {
-                      //       List<QueryDocumentSnapshot<Map<String, dynamic>>>
-                      //           listSchedule = snapshot.data!.docs;
-                      //       return ListView.builder(
-                      //         itemCount: listSchedule.length,
-                      //         itemBuilder: (context, index) {
-                      //           Map<String, dynamic> scheduleData =
-                      //               listSchedule[index].data();
-                      //           return ScheduleDataGrid(
-                      //               scheduleDataSource: scheduleData);
-                      //         },
-                      //       );
-                      //     }
-                      //     return const CircularProgressIndicator();
-                      //   },
-                      // ),
-
-                      // StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                      //     stream: controller.streamLastSchedule(),
-                      //     builder: (context, snapshot) {
-                      //       switch (snapshot.connectionState) {
-                      //         case ConnectionState.waiting:
-                      //           return const Center(
-                      //               child: CircularProgressIndicator());
-                      //         case ConnectionState.active:
-                      //         case ConnectionState.done:
-                      //           List<
-                      //                   QueryDocumentSnapshot<
-                      //                       Map<String, dynamic>>>
-                      //               listSchedule = snapshot.data!.docs;
-                      //           return ListView.separated(
-                      //             itemCount: listSchedule.length,
-                      //             shrinkWrap: true,
-                      //             physics: const BouncingScrollPhysics(),
-                      //             separatorBuilder: (context, index) =>
-                      //                 const SizedBox(height: 16),
-                      //             itemBuilder: (context, index) {
-                      //               Map<String, dynamic> scheduleData =
-                      //                   listSchedule[index].data();
-                      //               return ScheduleDataGrid(
-                      //                   scheduleDataSource: scheduleData);
-                      //             },
-                      //           );
-                      //         default:
-                      //           return const SizedBox();
-                      //       }
-                      //     }),
-
-                      // StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                      //   stream: controller.streamLastSchedule(),
-                      //   builder: (context, snapshot) {
-                      //     switch (snapshot.connectionState) {
-                      //       case ConnectionState.waiting:
-                      //         return const Center(
-                      //             child: CircularProgressIndicator());
-                      //       case ConnectionState.active:
-                      //       case ConnectionState.done:
-                      //         List<QueryDocumentSnapshot<Map<String, dynamic>>>
-                      //             listSchedule = snapshot.data!.docs;
-                      //         return ListView.builder(
-                      //           physics: const BouncingScrollPhysics(),
-                      //           itemCount: listSchedule.length,
-                      //           itemBuilder: (context, index) {
-                      //             return Card(
-                      //               child: Column(
-                      //                 children: [
-                      //                   ListTile(
-                      //                     title: Text(
-                      //                         "${(listSchedule[index].data())["schedule"]}"),
-                      //                     onTap: () => Get.toNamed(
-                      //                         Routes.EDIT_JADWAL,
-                      //                         arguments:
-                      //                             listSchedule[index].id),
-                      //                     trailing: IconButton(
-                      //                       onPressed: () =>
-                      //                           controller.deleteSchedule(
-                      //                               listSchedule[index].id),
-                      //                       icon: SvgPicture.asset(
-                      //                           'assets/icons/close.svg'),
-                      //                     ),
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //             );
-                      //           },
-                      //         );
-                      //       default:
-                      //         return const SizedBox();
-                      //     }
-                      //   },
-                      // ),
+                      StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                        stream: controller.streamLastSchedule(),
+                        builder: (context, snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            case ConnectionState.active:
+                            case ConnectionState.done:
+                              List<QueryDocumentSnapshot<Map<String, dynamic>>>
+                                  listSchedule = snapshot.data!.docs;
+                              if (snapshot.hasData) {
+                                return ListView.separated(
+                                    shrinkWrap: true,
+                                    physics: const BouncingScrollPhysics(),
+                                    separatorBuilder: (context, index) =>
+                                        const SizedBox(height: 16),
+                                    itemCount: listSchedule.length,
+                                    itemBuilder: (context, index) {
+                                      Map<String, dynamic> scheduleData =
+                                          listSchedule[index].data();
+                                      return ScheduleTile(
+                                          scheduleData: scheduleData);
+                                    });
+                              } else if (snapshot.hasError) {
+                                return Text("${snapshot.error}");
+                              } else {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                            default:
+                              return const SizedBox();
+                          }
+                        },
+                      ),
 
                       const SizedBox(width: 24),
                       // Button

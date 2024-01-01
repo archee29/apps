@@ -43,6 +43,17 @@ class MainController extends GetxController {
         .snapshots();
   }
 
+  // Future<void> buildStream(AsyncSnapshot snapShot) async {
+  //   if (snapShot.hasError ||
+  //       snapShot.data == null ||
+  //       snapShot.data.docs.length == 0) {
+  //     return Future<void>.value();
+  //   }
+  //   await Future.forEach(snapShot.data.docs, (element) {
+  //     final Schedule data = Schedule.fromSnapshot(element);
+  //   });
+  // }
+
   Stream<DocumentSnapshot<Map<String, dynamic>>> streamSchedule() async* {
     String uid = auth.currentUser!.uid;
     String todayDocId =
