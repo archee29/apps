@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
@@ -19,7 +21,7 @@ class FeederCard extends StatelessWidget {
       padding: const EdgeInsets.only(left: 24, top: 24, right: 24, bottom: 16),
       decoration: BoxDecoration(
         color: AppColors.primary,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(16),
         image: const DecorationImage(
           image: AssetImage('assets/images/pattern-1.png'),
           fit: BoxFit.cover,
@@ -29,7 +31,7 @@ class FeederCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            userData["job"],
+            "Halo, " + userData["name"],
             style: const TextStyle(
               color: Colors.white,
               fontFamily: 'poppins',
@@ -38,17 +40,18 @@ class FeederCard extends StatelessWidget {
           ),
           Container(
             margin: const EdgeInsets.only(top: 4, bottom: 12),
-            child: Text(
-              userData["user_id"],
-              style: const TextStyle(
+            child: const Text(
+              "Cek Kondisi Pakan Hari ini.\nPastikan Stok Pakan Cukup, Untuk Hari Ini!",
+              //userData["user_id"],
+              style: TextStyle(
                 color: Colors.white,
                 fontFamily: 'poppins',
-                fontSize: 18,
+                fontSize: 12,
                 fontWeight: FontWeight.w700,
-                letterSpacing: 2,
               ),
             ),
           ),
+          // Container untuk feeder
           Container(
             width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),

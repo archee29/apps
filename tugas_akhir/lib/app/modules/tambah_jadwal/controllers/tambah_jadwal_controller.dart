@@ -57,6 +57,7 @@ class TambahJadwalController extends GetxController {
           minumanController.text.isNotEmpty) {
         isLoading.value = true;
         Map<String, dynamic> data = {
+          "date": DateTime.now().toIso8601String(),
           "tanggal": dateController.text,
           "waktu": timeController.text,
           "title": titleController.text,

@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_bottom_navbar.dart';
+import 'package:tugas_akhir/app/widgets/card/daily_card.dart';
 import 'package:tugas_akhir/app/widgets/card/feeder_card.dart';
 import 'package:tugas_akhir/app/widgets/card/feeder_tile.dart';
 
@@ -77,7 +79,7 @@ class HomeView extends GetView<HomeController> {
                         ],
                       ),
                     ),
-                    // Menampilkan Card Feeder
+                    // Menampilkan Card Welcome Feeder
                     StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                         stream: controller.streamTodayFeeder(),
                         builder: (context, snapshot) {
@@ -96,6 +98,195 @@ class HomeView extends GetView<HomeController> {
                               return const SizedBox();
                           }
                         }),
+
+                    // StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                    //     stream: controller.streamTodayFeeder(),
+                    //     builder: (context, snapshot) {
+                    //       switch (snapshot.connectionState) {
+                    //         case ConnectionState.waiting:
+                    //           return const Center(
+                    //               child: CircularProgressIndicator());
+                    //         case ConnectionState.active:
+                    //         case ConnectionState.done:
+                    //           var todayFeederData = snapshot.data?.data();
+                    //           return DailyCard(
+                    //             userData: user,
+                    //             todayFeederData: todayFeederData,
+                    //           );
+                    //         default:
+                    //           return const SizedBox();
+                    //       }
+                    //     }),
+
+                    // Daily Card
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          width: 3,
+                          color: AppColors.primaryExtraSoft,
+                        ),
+                      ),
+                      padding: const EdgeInsets.only(
+                          left: 24, top: 20, right: 29, bottom: 20),
+                      child: Column(
+                        children: [
+                          // Deskripsi 1 Info  Feeder
+                          const Row(
+                            children: [
+                              // Tabung Pakan
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Daily Feed (Kg)",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6),
+                                  Text(
+                                    "1.200 Gr",
+                                    style: TextStyle(
+                                      color: Colors.pink,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(width: 20),
+                              // Output
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Total Feed (Kg)",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6),
+                                  Text(
+                                    "120 Gram",
+                                    style: TextStyle(
+                                      color: Colors.pink,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          // Deskripsi 2 Info Feeder
+                          const Row(
+                            children: [
+                              // Jenis Makanan
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Daily Water (mL)",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6),
+                                  Text(
+                                    "300 mL",
+                                    style: TextStyle(
+                                      color: Colors.pink,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(width: 20),
+                              // Tabung Minum
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Total Water (L)",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6),
+                                  Text(
+                                    "1 Liter",
+                                    style: TextStyle(
+                                      color: Colors.pink,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 22),
+                          // Button Detail Feeder
+                          Row(
+                            children: [
+                              // Button Setting
+                              SizedBox(
+                                child: ElevatedButton.icon(
+                                  onPressed: () {
+                                    Get.toNamed(Routes.SETTING);
+                                  },
+                                  icon: SvgPicture.asset(
+                                      "assets/icon/cancel_button.svg"),
+                                  label: const Text(
+                                    "Settings",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                      fontFamily: 'poppins',
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(width: 15),
+                              // Button Edit
+                              SizedBox(
+                                child: ElevatedButton.icon(
+                                  onPressed: () {
+                                    Get.toNamed(Routes.DETAIL_JADWAL);
+                                  },
+                                  icon: SvgPicture.asset(
+                                      "assets/icon/cancel_button.svg"),
+                                  label: const Text(
+                                    "Edit",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                      fontFamily: 'poppins',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
                     // Menampilkan Alamat Feeder
                     Container(
                       margin:
@@ -174,45 +365,276 @@ class HomeView extends GetView<HomeController> {
                       ),
                     ),
                     // Welcome Card
+                    // Container(
+                    //   width: MediaQuery.of(context).size.width,
+                    //   padding: const EdgeInsets.only(
+                    //       left: 24, top: 24, right: 24, bottom: 16),
+                    //   decoration: BoxDecoration(
+                    //     color: AppColors.primary,
+                    //     borderRadius: BorderRadius.circular(8),
+                    //   ),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       const Text(
+                    //         "Halo, Admin !",
+                    //         style: TextStyle(
+                    //           color: Colors.white,
+                    //           fontFamily: 'poppins',
+                    //           fontSize: 16,
+                    //           fontWeight: FontWeight.w700,
+                    //           letterSpacing: 2,
+                    //         ),
+                    //       ),
+                    //       Container(
+                    //         margin: const EdgeInsets.only(top: 4, bottom: 12),
+                    //         child: const Text(
+                    //           "Cek Kondisi Pakan Hari ini.\nPastikan Stok Pakan Cukup, Untuk Hari Ini!",
+                    //           style: TextStyle(
+                    //             color: Colors.white,
+                    //             fontFamily: 'poppins',
+                    //             fontSize: 14,
+                    //             fontWeight: FontWeight.w500,
+                    //             // letterSpacing: 2,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       Container()
+                    //     ],
+                    //   ),
+                    // ),
+                    // Menampilkan Feeder History
+
+                    // Menampilkan Card Info Feeder
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.only(
-                          left: 24, top: 24, right: 24, bottom: 16),
                       decoration: BoxDecoration(
-                        color: AppColors.primary,
                         borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          width: 3,
+                          color: AppColors.primaryExtraSoft,
+                        ),
                       ),
+                      padding: const EdgeInsets.only(
+                          left: 24, top: 20, right: 29, bottom: 20),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            "Halo, Admin !",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'poppins',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              letterSpacing: 2,
-                            ),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 4, bottom: 12),
-                            child: const Text(
-                              "Cek Kondisi Pakan Hari ini.\nPastikan Stok Pakan Cukup, Untuk Hari Ini!",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'poppins',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                // letterSpacing: 2,
+                          // Header Info Feeder
+                          Row(
+                            children: [
+                              Row(
+                                children: [
+                                  const Text(
+                                    "Info Feeder",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.pink,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 20),
+                                  Row(
+                                    children: [
+                                      // Button Setting
+                                      SizedBox(
+                                        child: ElevatedButton.icon(
+                                          onPressed: () {
+                                            Get.toNamed(Routes.SETTING);
+                                          },
+                                          icon: SvgPicture.asset(
+                                              "assets/icon/cancel_button.svg"),
+                                          label: const Text(
+                                            "Settings",
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 12,
+                                              fontFamily: 'poppins',
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
+                                      const SizedBox(width: 15),
+                                      // Button Edit
+                                      SizedBox(
+                                        child: ElevatedButton.icon(
+                                          onPressed: () {
+                                            Get.toNamed(Routes.DETAIL_JADWAL);
+                                          },
+                                          icon: SvgPicture.asset(
+                                              "assets/icon/cancel_button.svg"),
+                                          label: const Text(
+                                            "Edit",
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 12,
+                                              fontFamily: 'poppins',
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                            ),
+                            ],
                           ),
-                          Container()
+                          const Divider(
+                            color: Colors.black,
+                          ),
+                          const SizedBox(height: 15),
+                          // Deskripsi 1 Info  Feeder
+                          const Row(
+                            children: [
+                              // Nama Kandang
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Nama Kandang",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6),
+                                  Text(
+                                    "Kandang Kucing",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(width: 20),
+                              // Tabung Pakan
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Tabung Pakan",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6),
+                                  Text(
+                                    "1 Kg",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(width: 20),
+                              // Output
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Output",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6),
+                                  Text(
+                                    "120 Gram",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 30),
+                          // Deskripsi 2 Info Feeder
+                          const Row(
+                            children: [
+                              // Jenis Makanan
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Jenis Makanan",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6),
+                                  Text(
+                                    "Makanan Kering",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(width: 20),
+                              // Tabung Minum
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Tabung Minum",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6),
+                                  Text(
+                                    "1 Liter",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(width: 20),
+                              // Output
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Output",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  SizedBox(height: 6),
+                                  Text(
+                                    "300 mL",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
-                    // Menampilkan Feeder History
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -261,6 +683,7 @@ class HomeView extends GetView<HomeController> {
                         }
                       },
                     ),
+
                     // Menu Card
                     // Container(
                     //   width: MediaQuery.of(context).size.width,
@@ -321,7 +744,6 @@ class HomeView extends GetView<HomeController> {
                     //                 ],
                     //               ),
                     //             ),
-
                     // Expanded(
                     //             //   child: Column(
                     //             //     children: [

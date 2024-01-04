@@ -1,5 +1,3 @@
-// import 'package:tugas_akhir/app/styles/app_colors.dart';
-// import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 class ScheduleCard extends StatelessWidget {

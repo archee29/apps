@@ -6,6 +6,8 @@ import 'package:tugas_akhir/app/widgets/dialog/custom_alert_dialog.dart';
 import 'package:tugas_akhir/app/widgets/dialog/custom_notification.dart';
 
 class DetailJadwalController extends GetxController {
+  DateTime? start;
+  DateTime end = DateTime.now();
   RxBool isLoading = false.obs;
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -36,6 +38,38 @@ class DetailJadwalController extends GetxController {
         .collection("schedule")
         .doc(todayocId)
         .snapshots();
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getAllSchedule() async {
+    String uid = auth.currentUser!.uid;
+    if (start == null) {
+      QuerySnapshot<Map<String, dynamic>> query = await firestore
+          .collection("user")
+          .doc(uid)
+          .collection("schedule")
+          .where("date", isLessThan: end.toIso8601String())
+          .orderBy("date", descending: true)
+          .get();
+      return query;
+    } else {
+      QuerySnapshot<Map<String, dynamic>> query = await firestore
+          .collection("user")
+          .doc(uid)
+          .collection("schedule")
+          .where("date", isGreaterThan: start!.toIso8601String())
+          .where("date",
+              isLessThan: end.add(Duration(days: 1)).toIso8601String())
+          .orderBy("date", descending: true)
+          .get();
+      return query;
+    }
+  }
+
+  void pickDate(DateTime pickStart, DateTime pickEnd) {
+    start = pickStart;
+    end = pickEnd;
+    update();
+    Get.back();
   }
 
   Future<void> deleteSchedule(String docId) async {

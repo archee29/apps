@@ -144,34 +144,110 @@ class MainView extends GetView<MainController> {
                   ),
 
                   const SizedBox(height: 20),
-                  Card(
-                    clipBehavior: Clip.antiAlias,
-                    margin: const EdgeInsets.all(8.0),
-                    child: TableCalendar(
-                      focusedDay: DateTime.now(),
-                      firstDay: DateTime(1950),
-                      lastDay: DateTime(2100),
-                      headerStyle: HeaderStyle(
-                        decoration: BoxDecoration(color: AppColors.primary),
-                        headerMargin: const EdgeInsets.only(bottom: 8.0),
-                        titleTextStyle: const TextStyle(color: Colors.white),
-                        formatButtonDecoration: BoxDecoration(
-                          border: Border.all(color: Colors.white),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        formatButtonTextStyle:
-                            const TextStyle(color: Colors.white),
-                        leftChevronIcon: const Icon(
-                          Icons.chevron_left,
-                          color: Colors.white,
-                        ),
-                        rightChevronIcon: const Icon(
-                          Icons.chevron_right,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
+
+                  GetBuilder<MainController>(
+                    builder: (con) {
+                      return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                        future: controller.getAllSchedule(),
+                        builder: (context, snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            case ConnectionState.active:
+                            case ConnectionState.done:
+                              var data = snapshot.data!.docs;
+                              return Column(
+                                children: [
+                                  Card(
+                                    clipBehavior: Clip.antiAlias,
+                                    margin: const EdgeInsets.all(8.0),
+                                    child: TableCalendar(
+                                      // eventLoader: (day) => controller.,
+                                      // onDaySelected: (selectedDay, focusedDay) {
+                                      //   controller.selectedDay = selectedDay;
+                                      //   controller.focusedDay = focusedDay;
+                                      // },
+                                      selectedDayPredicate: (day) => isSameDay(
+                                          day, controller.selectedDay),
+                                      focusedDay: DateTime.now(),
+                                      firstDay: DateTime(1950),
+                                      lastDay: DateTime(2100),
+                                      headerStyle: HeaderStyle(
+                                        decoration: BoxDecoration(
+                                            color: AppColors.primary),
+                                        headerMargin:
+                                            const EdgeInsets.only(bottom: 8.0),
+                                        titleTextStyle: const TextStyle(
+                                            color: Colors.white),
+                                        formatButtonDecoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.white),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        formatButtonTextStyle: const TextStyle(
+                                            color: Colors.white),
+                                        leftChevronIcon: const Icon(
+                                          Icons.chevron_left,
+                                          color: Colors.white,
+                                        ),
+                                        rightChevronIcon: const Icon(
+                                          Icons.chevron_right,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  // ListView.builder(
+                                  //   shrinkWrap: true,
+                                  //   physics: const BouncingScrollPhysics(),
+                                  //   itemCount: data.length,
+                                  //   itemBuilder: (context, index) {
+                                  //     var scheduleData = data[index].data();
+                                  //     return ScheduleTile(
+                                  //       scheduleData: scheduleData,
+                                  //     );
+                                  //   },
+                                  // ),
+                                ],
+                              );
+                            default:
+                              return const SizedBox();
+                          }
+                        },
+                      );
+                    },
                   ),
+
+                  // Card(
+                  //   clipBehavior: Clip.antiAlias,
+                  //   margin: const EdgeInsets.all(8.0),
+                  //   child: TableCalendar(
+                  //     focusedDay: DateTime.now(),
+                  //     firstDay: DateTime(1950),
+                  //     lastDay: DateTime(2100),
+                  //     headerStyle: HeaderStyle(
+                  //       decoration: BoxDecoration(color: AppColors.primary),
+                  //       headerMargin: const EdgeInsets.only(bottom: 8.0),
+                  //       titleTextStyle: const TextStyle(color: Colors.white),
+                  //       formatButtonDecoration: BoxDecoration(
+                  //         border: Border.all(color: Colors.white),
+                  //         borderRadius: BorderRadius.circular(8),
+                  //       ),
+                  //       formatButtonTextStyle:
+                  //           const TextStyle(color: Colors.white),
+                  //       leftChevronIcon: const Icon(
+                  //         Icons.chevron_left,
+                  //         color: Colors.white,
+                  //       ),
+                  //       rightChevronIcon: const Icon(
+                  //         Icons.chevron_right,
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
 
                   const SizedBox(height: 20),
                   // Stok Pakan dan minum Card
@@ -224,7 +300,7 @@ class MainView extends GetView<MainController> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      '120 Gr',
+                                      "120 Gram",
                                       style: TextStyle(
                                         fontSize: 15,
                                         fontFamily: 'poppins',
@@ -321,7 +397,7 @@ class MainView extends GetView<MainController> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      '120 ml',
+                                      "120 mL",
                                       style: TextStyle(
                                         fontSize: 15,
                                         fontFamily: 'poppins',
@@ -408,6 +484,36 @@ class MainView extends GetView<MainController> {
                     ],
                   ),
 
+                  // GetBuilder<MainController>(
+                  //   builder: (con) {
+                  //     return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                  //       future: controller.getAllSchedule(),
+                  //       builder: (context, snapshot) {
+                  //         switch (snapshot.connectionState) {
+                  //           case ConnectionState.waiting:
+                  //             return const Center(
+                  //                 child: CircularProgressIndicator());
+                  //           case ConnectionState.active:
+                  //           case ConnectionState.done:
+                  //             var data = snapshot.data!.docs;
+                  //             return ListView.builder(
+                  //               shrinkWrap: true,
+                  //               physics: const BouncingScrollPhysics(),
+                  //               itemBuilder: (context, index) {
+                  //                 var scheduleData = data[index].data();
+                  //                 return ScheduleTile(
+                  //                     scheduleData: scheduleData);
+                  //               },
+                  //               itemCount: data.length,
+                  //             );
+                  //           default:
+                  //             return const SizedBox();
+                  //         }
+                  //       },
+                  //     );
+                  //   },
+                  // ),
+
                   StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                     stream: controller.streamLastSchedule(),
                     builder: (context, snapshot) {
@@ -419,25 +525,18 @@ class MainView extends GetView<MainController> {
                         case ConnectionState.done:
                           List<QueryDocumentSnapshot<Map<String, dynamic>>>
                               listSchedule = snapshot.data!.docs;
-                          if (snapshot.hasData) {
-                            return ListView.separated(
-                                shrinkWrap: true,
-                                physics: const BouncingScrollPhysics(),
-                                separatorBuilder: (context, index) =>
-                                    const SizedBox(height: 16),
-                                itemCount: listSchedule.length,
-                                itemBuilder: (context, index) {
-                                  Map<String, dynamic> scheduleData =
-                                      listSchedule[index].data();
-                                  return ScheduleTile(
-                                      scheduleData: scheduleData);
-                                });
-                          } else if (snapshot.hasError) {
-                            return Text("${snapshot.error}");
-                          } else {
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          }
+                          return ListView.builder(
+                              shrinkWrap: true,
+                              physics: const BouncingScrollPhysics(),
+                              // separatorBuilder: (context, index) =>
+                              //     const SizedBox(height: 16),
+                              itemCount: listSchedule.length,
+                              itemBuilder: (context, index) {
+                                Map<String, dynamic> scheduleData =
+                                    listSchedule[index].data();
+                                return ScheduleTile(scheduleData: scheduleData);
+                              });
+
                         default:
                           return const SizedBox();
                       }

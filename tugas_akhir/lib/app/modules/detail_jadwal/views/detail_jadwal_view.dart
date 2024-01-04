@@ -76,6 +76,38 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
                         ),
                       ),
                       // Data Scheduled
+
+                      // GetBuilder<DetailJadwalController>(
+                      //   builder: (con) {
+                      //     return FutureBuilder<
+                      //         QuerySnapshot<Map<String, dynamic>>>(
+                      //       future: controller.getAllSchedule(),
+                      //       builder: (context, snapshot) {
+                      //         switch (snapshot.connectionState) {
+                      //           case ConnectionState.waiting:
+                      //             return const Center(
+                      //                 child: CircularProgressIndicator());
+                      //           case ConnectionState.active:
+                      //           case ConnectionState.done:
+                      //             var data = snapshot.data!.docs;
+                      //             return ListView.builder(
+                      //               shrinkWrap: true,
+                      //               physics: const BouncingScrollPhysics(),
+                      //               itemBuilder: (context, index) {
+                      //                 var scheduleData = data[index].data();
+                      //                 return ScheduleTile(
+                      //                     scheduleData: scheduleData);
+                      //               },
+                      //               itemCount: data.length,
+                      //             );
+                      //           default:
+                      //             return const SizedBox();
+                      //         }
+                      //       },
+                      //     );
+                      //   },
+                      // ),
+
                       StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                         stream: controller.streamLastSchedule(),
                         builder: (context, snapshot) {
@@ -88,11 +120,11 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
                               List<QueryDocumentSnapshot<Map<String, dynamic>>>
                                   listSchedule = snapshot.data!.docs;
                               if (snapshot.hasData) {
-                                return ListView.separated(
+                                return ListView.builder(
                                     shrinkWrap: true,
                                     physics: const BouncingScrollPhysics(),
-                                    separatorBuilder: (context, index) =>
-                                        const SizedBox(height: 16),
+                                    // separatorBuilder: (context, index) =>
+                                    //     const SizedBox(height: 16),
                                     itemCount: listSchedule.length,
                                     itemBuilder: (context, index) {
                                       Map<String, dynamic> scheduleData =
