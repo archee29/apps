@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,6 +18,7 @@ class MainView extends GetView<MainController> {
 
   @override
   Widget build(BuildContext context) {
+    MainController mc = Get.put(MainController());
     return Scaffold(
       bottomNavigationBar: const CustomBottomNavigationBar(),
       extendBody: true,
@@ -84,44 +86,187 @@ class MainView extends GetView<MainController> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: AppColors.primary),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color(0x003f0000),
-                          blurRadius: 20,
-                          offset: Offset(4, 4),
-                          spreadRadius: 0,
-                        ),
-                      ],
                     ),
-                    child: Row(
+                    child: Column(
                       children: [
+                        // Header Text
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            const Text(
+                              "Feeder",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.pink,
+                              ),
+                            ),
                             Row(
                               children: [
-                                const Text(
-                                  "Feeder",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'poppins',
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
+                                SizedBox(
+                                  child: ElevatedButton.icon(
+                                    onPressed: () {
+                                      Get.toNamed(Routes.SETTING);
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.white,
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 18),
+                                      elevation: 0,
+                                      shadowColor: const Color(0x3F000000),
+                                    ),
+                                    icon: const Icon(
+                                      Icons.settings,
+                                      color: Colors.black,
+                                    ),
+                                    label: const Text(
+                                      "Cek Status Alat",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12,
+                                        fontFamily: 'poppins',
+                                      ),
+                                    ),
                                   ),
                                 ),
-                                const SizedBox(width: 80),
-                                MainTile(
-                                  title: "Cek Status Alat",
-                                  icon: SvgPicture.asset(
-                                      'assets/icons/setting.svg'),
-                                  onTap: () => Get.toNamed(Routes.SETTING),
-                                ),
                               ],
+                            ),
+                          ],
+                        ),
+                        const Divider(
+                          color: Colors.black,
+                          thickness: 1,
+                        ),
+                        const SizedBox(height: 15),
+                        // Button tambah makan dan minum
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            // Button Tambah Makanan
+                            SizedBox(
+                              child: ElevatedButton.icon(
+                                // Function
+                                onPressed: () {
+                                  Get.toNamed(Routes.TAMBAH_JADWAL);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 18),
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    side: const BorderSide(
+                                        width: 1, color: Color(0xFFFF39B0)),
+                                  ),
+                                  shadowColor: const Color(0x3F000000),
+                                ),
+                                icon: const Icon(
+                                  Icons.add_outlined,
+                                  color: Colors.black,
+                                ),
+                                label: const Text(
+                                  "Tambah Makanan",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12,
+                                    fontFamily: 'poppins',
+                                  ),
+                                ),
+                              ),
+                            ),
+                            // Button Tambah Minuman
+                            SizedBox(
+                              child: ElevatedButton.icon(
+                                onPressed: () {
+                                  Get.toNamed(Routes.ALL_FEEDER);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 18),
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    side: const BorderSide(
+                                        width: 1, color: Color(0xFFFF39B0)),
+                                  ),
+                                  shadowColor: const Color(0x3F000000),
+                                ),
+                                icon: const Icon(
+                                  Icons.add_outlined,
+                                  color: Colors.black,
+                                ),
+                                label: const Text(
+                                  "Tambah Minuman",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 12,
+                                    fontFamily: 'poppins',
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 30),
+                        // button servo dan pump
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            // Button Servo (on/off)
+                            Obx(
+                              () => FlutterSwitch(
+                                toggleSize: 30,
+                                width: 110,
+                                height: 55,
+                                valueFontSize: 15,
+                                padding: 7,
+                                activeText: "Servo",
+                                activeIcon: const Text("ON"),
+                                activeColor: AppColors.success,
+                                activeTextFontWeight: FontWeight.normal,
+                                inactiveText: "Servo",
+                                inactiveIcon: const Text("OFF"),
+                                inactiveColor: AppColors.error,
+                                inactiveTextFontWeight: FontWeight.normal,
+                                showOnOff: true,
+                                value: mc.servoSwitched.value,
+                                onToggle: (val) => mc.servoToggled(),
+                              ),
+                            ),
+
+                            // Button Pump (on/off)
+                            Obx(
+                              () => FlutterSwitch(
+                                toggleSize: 30,
+                                width: 110,
+                                height: 55,
+                                valueFontSize: 15,
+                                padding: 7,
+                                activeText: "Pump Water",
+                                activeIcon: const Text("ON"),
+                                activeColor: AppColors.success,
+                                activeTextFontWeight: FontWeight.normal,
+                                inactiveText: "Pump Water",
+                                inactiveIcon: const Text("OFF"),
+                                inactiveColor: AppColors.error,
+                                inactiveTextFontWeight: FontWeight.normal,
+                                showOnOff: true,
+                                value: mc.pumpSwitched.value,
+                                onToggle: (val) => mc.pumpToggled(),
+                              ),
                             ),
                           ],
                         ),
                       ],
                     ),
                   ),
+
                   const SizedBox(height: 50),
                   // Tambah Feeder Card
                   Row(

@@ -130,10 +130,12 @@ class HomeView extends GetView<HomeController> {
                       ),
                       padding: const EdgeInsets.only(
                           left: 24, top: 20, right: 29, bottom: 20),
-                      child: Column(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           // Deskripsi 1 Info  Feeder
-                          const Row(
+                          const Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               // Tabung Pakan
                               Column(
@@ -147,7 +149,6 @@ class HomeView extends GetView<HomeController> {
                                       color: Colors.black,
                                     ),
                                   ),
-                                  SizedBox(height: 6),
                                   Text(
                                     "1.200 Gr",
                                     style: TextStyle(
@@ -158,7 +159,7 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                 ],
                               ),
-                              SizedBox(width: 20),
+                              SizedBox(height: 10),
                               // Output
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.end,
@@ -171,7 +172,6 @@ class HomeView extends GetView<HomeController> {
                                       color: Colors.black,
                                     ),
                                   ),
-                                  SizedBox(height: 6),
                                   Text(
                                     "120 Gram",
                                     style: TextStyle(
@@ -184,9 +184,9 @@ class HomeView extends GetView<HomeController> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 20),
+
                           // Deskripsi 2 Info Feeder
-                          const Row(
+                          const Column(
                             children: [
                               // Jenis Makanan
                               Column(
@@ -200,7 +200,6 @@ class HomeView extends GetView<HomeController> {
                                       color: Colors.black,
                                     ),
                                   ),
-                                  SizedBox(height: 6),
                                   Text(
                                     "300 mL",
                                     style: TextStyle(
@@ -211,7 +210,7 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                 ],
                               ),
-                              SizedBox(width: 20),
+                              SizedBox(height: 10),
                               // Tabung Minum
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -224,7 +223,6 @@ class HomeView extends GetView<HomeController> {
                                       color: Colors.black,
                                     ),
                                   ),
-                                  SizedBox(height: 6),
                                   Text(
                                     "1 Liter",
                                     style: TextStyle(
@@ -237,9 +235,10 @@ class HomeView extends GetView<HomeController> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 22),
+
                           // Button Detail Feeder
-                          Row(
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               // Button Setting
                               SizedBox(
@@ -247,31 +246,22 @@ class HomeView extends GetView<HomeController> {
                                   onPressed: () {
                                     Get.toNamed(Routes.SETTING);
                                   },
-                                  icon: SvgPicture.asset(
-                                      "assets/icon/cancel_button.svg"),
-                                  label: const Text(
-                                    "Settings",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12,
-                                      fontFamily: 'poppins',
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 18),
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      side:
+                                          const BorderSide(color: Colors.white),
                                     ),
+                                    shadowColor: const Color(0x3F000000),
                                   ),
-                                ),
-                              ),
-
-                              const SizedBox(width: 15),
-                              // Button Edit
-                              SizedBox(
-                                child: ElevatedButton.icon(
-                                  onPressed: () {
-                                    Get.toNamed(Routes.DETAIL_JADWAL);
-                                  },
-                                  icon: SvgPicture.asset(
-                                      "assets/icon/cancel_button.svg"),
+                                  icon: Icon(Icons.arrow_circle_right_outlined,
+                                      color: AppColors.primary),
                                   label: const Text(
-                                    "Edit",
+                                    "",
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.w600,
@@ -440,8 +430,18 @@ class HomeView extends GetView<HomeController> {
                                           onPressed: () {
                                             Get.toNamed(Routes.SETTING);
                                           },
-                                          icon: SvgPicture.asset(
-                                              "assets/icon/cancel_button.svg"),
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white,
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 18),
+                                            elevation: 0,
+                                            shadowColor:
+                                                const Color(0x3F000000),
+                                          ),
+                                          icon: const Icon(
+                                            Icons.settings,
+                                            color: Colors.black,
+                                          ),
                                           label: const Text(
                                             "Settings",
                                             style: TextStyle(
@@ -453,16 +453,24 @@ class HomeView extends GetView<HomeController> {
                                           ),
                                         ),
                                       ),
-
-                                      const SizedBox(width: 15),
                                       // Button Edit
                                       SizedBox(
                                         child: ElevatedButton.icon(
                                           onPressed: () {
                                             Get.toNamed(Routes.DETAIL_JADWAL);
                                           },
-                                          icon: SvgPicture.asset(
-                                              "assets/icon/cancel_button.svg"),
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white,
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 18),
+                                            elevation: 0,
+                                            shadowColor:
+                                                const Color(0x3F000000),
+                                          ),
+                                          icon: const Icon(
+                                            Icons.mode_edit_outline_outlined,
+                                            color: Colors.black,
+                                          ),
                                           label: const Text(
                                             "Edit",
                                             style: TextStyle(
@@ -482,6 +490,7 @@ class HomeView extends GetView<HomeController> {
                           ),
                           const Divider(
                             color: Colors.black,
+                            thickness: 1,
                           ),
                           const SizedBox(height: 15),
                           // Deskripsi 1 Info  Feeder
@@ -635,6 +644,76 @@ class HomeView extends GetView<HomeController> {
                       ),
                     ),
 
+                    const SizedBox(height: 10),
+
+                    // Card Menu
+                    // Container(
+                    //   width: MediaQuery.of(context).size.width,
+                    //   decoration: BoxDecoration(
+                    //     borderRadius: BorderRadius.circular(8),
+                    //     border: Border.all(
+                    //       width: 3,
+                    //       color: AppColors.primaryExtraSoft,
+                    //     ),
+                    //   ),
+                    //   padding: const EdgeInsets.only(
+                    //       left: 24, top: 20, right: 29, bottom: 20),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       const Text(
+                    //         "Main Menu",
+                    //         style: TextStyle(
+                    //           fontSize: 20,
+                    //           color: Colors.black,
+                    //           fontWeight: FontWeight.w600,
+                    //         ),
+                    //       ),
+                    //       const Divider(
+                    //         color: Colors.pink,
+                    //         thickness: 2,
+                    //         height: 20,
+                    //       ),
+                    //       Row(
+                    //         crossAxisAlignment: CrossAxisAlignment.start,
+                    //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //         children: [
+                    //           Container(
+                    //             height: 100,
+                    //             width: 100,
+                    //             padding: const EdgeInsets.symmetric(
+                    //                 horizontal: 8, vertical: 8),
+                    //             decoration: BoxDecoration(
+                    //               color: AppColors.primary,
+                    //               borderRadius: BorderRadius.circular(8),
+                    //             ),
+                    //             child: Row(
+                    //               children: [
+                    //                 const Text(
+                    //                   "Feeder & \n Pool",
+                    //                   style: TextStyle(color: Colors.white),
+                    //                 ),
+                    //                 SvgPicture.asset(
+                    //                     "assets/icons/dry_food.svg"),
+                    //               ],
+                    //             ),
+                    //           ),
+                    //           // Container(
+                    //           //   width: 100,
+                    //           //   height: 100,
+                    //           //   padding: const EdgeInsets.symmetric(
+                    //           //       horizontal: 8, vertical: 8),
+                    //           //   decoration: BoxDecoration(
+                    //           //     color: AppColors.secondarySoft,
+                    //           //     borderRadius: BorderRadius.circular(8),
+                    //           //   ),
+                    //           // ),
+                    //         ],
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -655,116 +734,33 @@ class HomeView extends GetView<HomeController> {
                       ],
                     ),
                     // Menampilkan List Database Feeder Terakhir
-                    StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                      stream: controller.streamLastFeeder(),
-                      builder: (context, snapshot) {
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.waiting:
-                            return const Center(
-                                child: CircularProgressIndicator());
-                          case ConnectionState.active:
-                          case ConnectionState.done:
-                            List<QueryDocumentSnapshot<Map<String, dynamic>>>
-                                listFeeder = snapshot.data!.docs;
-                            return ListView.separated(
-                              itemCount: listFeeder.length,
-                              shrinkWrap: true,
-                              physics: const BouncingScrollPhysics(),
-                              separatorBuilder: (context, index) =>
-                                  const SizedBox(height: 16),
-                              itemBuilder: (context, index) {
-                                Map<String, dynamic> feederData =
-                                    listFeeder[index].data();
-                                return FeederTile(feederData: feederData);
-                              },
-                            );
-                          default:
-                            return const SizedBox();
-                        }
-                      },
-                    ),
-
-                    // Menu Card
-                    // Container(
-                    //   width: MediaQuery.of(context).size.width,
-                    //   padding: const EdgeInsets.only(
-                    //     left: 24,
-                    //     top: 24,
-                    //     right: 24,
-                    //     bottom: 16,
-                    //   ),
-                    //   decoration: BoxDecoration(
-                    //     color: AppColors.secondaryExtraSoft,
-                    //     borderRadius: BorderRadius.circular(8),
-                    //   ),
-                    //   child: Column(
-                    //     crossAxisAlignment: CrossAxisAlignment.start,
-                    //     children: [
-                    //       Text(
-                    //         "Menu",
-                    //         style: TextStyle(
-                    //           color: Colors.black,
-                    //           fontFamily: 'poppins',
-                    //           fontWeight: FontWeight.w800,
-                    //           fontSize: 14,
-                    //           decoration: TextDecoration.underline,
-                    //           decorationColor: AppColors.primary,
-                    //           decorationStyle: TextDecorationStyle.solid,
-                    //         ),
-                    //       ),
-                    //       const SizedBox(height: 4),
-                    //       Container(
-                    //         width: MediaQuery.of(context).size.width,
-                    //         padding: const EdgeInsets.symmetric(
-                    //             horizontal: 8, vertical: 8),
-                    //         decoration: BoxDecoration(
-                    //           color: AppColors.primary,
-                    //           borderRadius: BorderRadius.circular(8),
-                    //         ),
-                    //         child: Row(
-                    //           children: [
-                    //             Expanded(
-                    //               child: Column(
-                    //                 children: [
-                    //                   Container(
-                    //                     margin:
-                    //                         const EdgeInsets.only(bottom: 6),
-                    //                     child: TextButton(
-                    //                       onPressed: () =>
-                    //                           Get.toNamed(Routes.MAIN),
-                    //                       child: const Text(
-                    //                         "Feeder &\nPool",
-                    //                         style: TextStyle(
-                    //                           fontSize: 12,
-                    //                           color: Colors.white,
-                    //                         ),
-                    //                       ),
-                    //                     ),
-                    //                   ),
-                    //                 ],
-                    //               ),
-                    //             ),
-                    // Expanded(
-                    //             //   child: Column(
-                    //             //     children: [
-                    //             //       Container(
-                    //             //         margin: EdgeInsets.only(bottom: 6),
-                    //             //         child: Text(
-                    //             //           "Makanan &\nMinuman",
-                    //             //           style: TextStyle(
-                    //             //             fontSize: 12,
-                    //             //             color: AppColors.primary,
-                    //             //           ),
-                    //             //         ),
-                    //             //       ),
-                    //             //     ],
-                    //             //   ),
-                    //             // ),
-                    //           ],
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
+                    // StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                    //   stream: controller.streamLastFeeder(),
+                    //   builder: (context, snapshot) {
+                    //     switch (snapshot.connectionState) {
+                    //       case ConnectionState.waiting:
+                    //         return const Center(
+                    //             child: CircularProgressIndicator());
+                    //       case ConnectionState.active:
+                    //       case ConnectionState.done:
+                    //         List<QueryDocumentSnapshot<Map<String, dynamic>>>
+                    //             listFeeder = snapshot.data!.docs;
+                    //         return ListView.separated(
+                    //           itemCount: listFeeder.length,
+                    //           shrinkWrap: true,
+                    //           physics: const BouncingScrollPhysics(),
+                    //           separatorBuilder: (context, index) =>
+                    //               const SizedBox(height: 16),
+                    //           itemBuilder: (context, index) {
+                    //             Map<String, dynamic> feederData =
+                    //                 listFeeder[index].data();
+                    //             return FeederTile(feederData: feederData);
+                    //           },
+                    //         );
+                    //       default:
+                    //         return const SizedBox();
+                    //     }
+                    //   },
                     // ),
                   ],
                 );

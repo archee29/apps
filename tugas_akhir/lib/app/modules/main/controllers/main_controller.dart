@@ -16,6 +16,13 @@ class MainController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   var selectedDateSchedule = DateTime.now().obs;
+  RxBool servoSwitched = false.obs;
+  RxBool pumpSwitched = false.obs;
+
+  void servoToggled() =>
+      servoSwitched.value = servoSwitched.value ? false : true;
+
+  void pumpToggled() => pumpSwitched.value = pumpSwitched.value ? false : true;
 
   Stream<DocumentSnapshot<Map<String, dynamic>>> streamUser() async* {
     String uid = auth.currentUser!.uid;
