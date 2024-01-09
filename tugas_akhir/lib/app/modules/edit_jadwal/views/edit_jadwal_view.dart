@@ -7,7 +7,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_input.dart';
-import 'package:tugas_akhir/app/widgets/feeder/schedule_widget.dart';
+import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_schedule_input.dart';
 
 import '../controllers/edit_jadwal_controller.dart';
 

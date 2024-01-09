@@ -2,10 +2,10 @@ import 'package:get/get.dart';
 
 import '../modules/all_feeder/bindings/all_feeder_binding.dart';
 import '../modules/all_feeder/views/all_feeder_view.dart';
+import '../modules/all_schedule/bindings/all_schedule_binding.dart';
+import '../modules/all_schedule/views/all_schedule_view.dart';
 import '../modules/detail_feeder/bindings/detail_feeder_binding.dart';
 import '../modules/detail_feeder/views/detail_feeder_view.dart';
-import '../modules/detail_food/bindings/detail_food_binding.dart';
-import '../modules/detail_food/views/detail_food_view.dart';
 import '../modules/detail_jadwal/bindings/detail_jadwal_binding.dart';
 import '../modules/detail_jadwal/views/detail_jadwal_view.dart';
 import '../modules/detail_water/bindings/detail_water_binding.dart';
@@ -113,14 +113,14 @@ class AppPages {
       binding: DetailJadwalBinding(),
     ),
     GetPage(
-      name: _Paths.DETAIL_FOOD,
-      page: () => const DetailFoodView(),
-      binding: DetailFoodBinding(),
+      name: _Paths.DETAIL_WATER,
+      page: () => DetailWaterView(),
+      binding: DetailWaterBinding(),
     ),
     GetPage(
-      name: _Paths.DETAIL_WATER,
-      page: () => const DetailWaterView(),
-      binding: DetailWaterBinding(),
+      name: _Paths.ALL_SCHEDULE,
+      page: () => const AllScheduleView(),
+      binding: AllScheduleBinding(),
     ),
   ];
 }

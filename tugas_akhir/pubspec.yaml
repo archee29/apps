@@ -23,20 +23,17 @@ dependencies:
   convex_bottom_bar: ^3.0.0
   carousel_slider: ^4.2.1
   image_picker: ^0.8.5
-  intl: ^0.18.1
+  intl:  ^0.18.1
   geolocator: ^10.0.1
   geocoding: ^2.1.0
   flutter_dotenv: ^5.1.0
   http: ^1.1.0
   mqtt_client: ^10.0.0
-  flutter_svg: ^2.0.7
+  flutter_svg:
   maps_launcher: ^2.0.1
   syncfusion_flutter_datepicker: ^20.1.51
   syncfusion_flutter_calendar:
-  flutter_form_builder:
-  syncfusion_flutter_datagrid: ^20.1.51
   table_calendar: ^3.0.9
-  dynamic_table: ^0.0.1-beta.2
   flutter_switch:
 
 

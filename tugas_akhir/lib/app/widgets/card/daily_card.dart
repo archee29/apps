@@ -1,174 +1,164 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 
 class DailyCard extends StatelessWidget {
-  const DailyCard({super.key});
+  final Map<String, dynamic>? todayScheduleData;
+
+  const DailyCard({super.key, required this.todayScheduleData});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.only(left: 24, top: 24, right: 24, bottom: 16),
       decoration: BoxDecoration(
-        color: AppColors.primary,
         borderRadius: BorderRadius.circular(8),
-        image: const DecorationImage(
-          image: AssetImage('assets/images/pattern-1.png'),
-          fit: BoxFit.cover,
+        border: Border.all(
+          width: 3,
+          color: AppColors.primaryExtraSoft,
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.only(left: 24, top: 20, right: 29, bottom: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Container untuk feeder
-          Container(
-            width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-            decoration: BoxDecoration(
-              color: AppColors.primarySoft,
-              borderRadius: BorderRadius.circular(8),
-            ),
+          // Deskripsi 1 Info  Feeder
+          Column(
+            children: [
+              // Daily Feed (food)
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Daily Feed (gr)",
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Text(
+                    "120 Gr",
+                    style: TextStyle(
+                      color: AppColors.primary,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              // Daily Water (water)
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Daily Water (mL)",
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Text(
+                    "120 mL",
+                    style: TextStyle(
+                      color: AppColors.primary,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
 
-          const SizedBox(height: 20),
-
-          // Container untuk Schedule (food)
-          Container(
-            width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-            decoration: BoxDecoration(
-              color: AppColors.primarySoft,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Row(
-              children: [
-                // Daily Feed
-                Expanded(
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 6),
-                        child: const Text(
-                          "Daily Feed (gr)",
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const Text(
-                        "120 gr",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
+          // Deskripsi 2 Info Feeder
+          Column(
+            children: [
+              // Output Feed (food)
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Total Feed (Kg)",
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-                Container(
-                  width: 1.5,
-                  height: 24,
-                  color: Colors.white,
-                ),
-                // Total Feed
-                Expanded(
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 6),
-                        child: const Text(
-                          "Total Food (Kg)",
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const Text(
-                        "5.0 Kg",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
+                  Text(
+                    "1.0 Kg",
+                    style: TextStyle(
+                      color: AppColors.primary,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              // Output Water
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Total Water (L)",
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Text(
+                    "1 Liter",
+                    style: TextStyle(
+                      color: AppColors.primary,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
-          const SizedBox(height: 20),
 
-          // Container untuk schedule (water)
-          Container(
-            width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-            decoration: BoxDecoration(
-              color: AppColors.primarySoft,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Row(
-              children: [
-                // Daily Water
-                Expanded(
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 6),
-                        child: const Text(
-                          "Daily Water (mL)",
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const Text(
-                        "400 mL",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
+          // Button Detail Feeder
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              // Button Setting
+              SizedBox(
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Get.toNamed(Routes.DETAIL_JADWAL);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 18),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side: const BorderSide(color: Colors.white),
+                    ),
+                    shadowColor: const Color(0x3F000000),
+                  ),
+                  icon: Icon(Icons.arrow_circle_right_outlined,
+                      color: AppColors.primary),
+                  label: const Text(
+                    "",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12,
+                      fontFamily: 'poppins',
+                    ),
                   ),
                 ),
-                Container(
-                  width: 1.5,
-                  height: 24,
-                  color: Colors.white,
-                ),
-                // Total Water
-                Expanded(
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 6),
-                        child: const Text(
-                          "Total Water (L)",
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      const Text(
-                        "2 L",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),

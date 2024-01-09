@@ -82,6 +82,17 @@ class MainController extends GetxController {
     }
   }
 
+  Stream<QuerySnapshot<Map<String, dynamic>>> streamLastFeeder() async* {
+    String uid = auth.currentUser!.uid;
+    yield* firestore
+        .collection("user")
+        .doc(uid)
+        .collection("feeder")
+        .orderBy("date", descending: true)
+        .limitToLast(5)
+        .snapshots();
+  }
+
   void pickDate(DateTime pickStart, DateTime pickEnd) {
     start = pickStart;
     end = pickEnd;

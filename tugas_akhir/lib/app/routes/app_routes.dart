@@ -21,6 +21,7 @@ abstract class Routes {
   static const DETAIL_JADWAL = _Paths.DETAIL_JADWAL;
   static const DETAIL_FOOD = _Paths.DETAIL_FOOD;
   static const DETAIL_WATER = _Paths.DETAIL_WATER;
+  static const ALL_SCHEDULE = _Paths.ALL_SCHEDULE;
 }
 
 abstract class _Paths {
@@ -41,4 +42,5 @@ abstract class _Paths {
   static const DETAIL_JADWAL = '/detail-jadwal';
   static const DETAIL_FOOD = '/detail-food';
   static const DETAIL_WATER = '/detail-water';
+  static const ALL_SCHEDULE = '/all-schedule';
 }

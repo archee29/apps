@@ -99,183 +99,24 @@ class HomeView extends GetView<HomeController> {
                           }
                         }),
 
-                    // StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                    //     stream: controller.streamTodayFeeder(),
-                    //     builder: (context, snapshot) {
-                    //       switch (snapshot.connectionState) {
-                    //         case ConnectionState.waiting:
-                    //           return const Center(
-                    //               child: CircularProgressIndicator());
-                    //         case ConnectionState.active:
-                    //         case ConnectionState.done:
-                    //           var todayFeederData = snapshot.data?.data();
-                    //           return DailyCard(
-                    //             userData: user,
-                    //             todayFeederData: todayFeederData,
-                    //           );
-                    //         default:
-                    //           return const SizedBox();
-                    //       }
-                    //     }),
-
                     // Daily Card
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          width: 3,
-                          color: AppColors.primaryExtraSoft,
-                        ),
-                      ),
-                      padding: const EdgeInsets.only(
-                          left: 24, top: 20, right: 29, bottom: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          // Deskripsi 1 Info  Feeder
-                          const Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              // Tabung Pakan
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Daily Feed (Kg)",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  Text(
-                                    "1.200 Gr",
-                                    style: TextStyle(
-                                      color: Colors.pink,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 10),
-                              // Output
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Total Feed (Kg)",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  Text(
-                                    "120 Gram",
-                                    style: TextStyle(
-                                      color: Colors.pink,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-
-                          // Deskripsi 2 Info Feeder
-                          const Column(
-                            children: [
-                              // Jenis Makanan
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Daily Water (mL)",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  Text(
-                                    "300 mL",
-                                    style: TextStyle(
-                                      color: Colors.pink,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(height: 10),
-                              // Tabung Minum
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Total Water (L)",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  Text(
-                                    "1 Liter",
-                                    style: TextStyle(
-                                      color: Colors.pink,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-
-                          // Button Detail Feeder
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              // Button Setting
-                              SizedBox(
-                                child: ElevatedButton.icon(
-                                  onPressed: () {
-                                    Get.toNamed(Routes.SETTING);
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 18),
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      side:
-                                          const BorderSide(color: Colors.white),
-                                    ),
-                                    shadowColor: const Color(0x3F000000),
-                                  ),
-                                  icon: Icon(Icons.arrow_circle_right_outlined,
-                                      color: AppColors.primary),
-                                  label: const Text(
-                                    "",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12,
-                                      fontFamily: 'poppins',
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+                    StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                        stream: controller.streamDailyFeeder(),
+                        builder: (contex, snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            case ConnectionState.active:
+                            case ConnectionState.done:
+                              var todayScheduleData = snapshot.data?.data();
+                              return DailyCard(
+                                todayScheduleData: todayScheduleData,
+                              );
+                            default:
+                              return const SizedBox();
+                          }
+                        }),
 
                     // Menampilkan Alamat Feeder
                     Container(
@@ -354,47 +195,94 @@ class HomeView extends GetView<HomeController> {
                         ],
                       ),
                     ),
-                    // Welcome Card
-                    // Container(
-                    //   width: MediaQuery.of(context).size.width,
-                    //   padding: const EdgeInsets.only(
-                    //       left: 24, top: 24, right: 24, bottom: 16),
-                    //   decoration: BoxDecoration(
-                    //     color: AppColors.primary,
-                    //     borderRadius: BorderRadius.circular(8),
-                    //   ),
-                    //   child: Column(
-                    //     crossAxisAlignment: CrossAxisAlignment.start,
-                    //     children: [
-                    //       const Text(
-                    //         "Halo, Admin !",
-                    //         style: TextStyle(
-                    //           color: Colors.white,
-                    //           fontFamily: 'poppins',
-                    //           fontSize: 16,
-                    //           fontWeight: FontWeight.w700,
-                    //           letterSpacing: 2,
-                    //         ),
-                    //       ),
-                    //       Container(
-                    //         margin: const EdgeInsets.only(top: 4, bottom: 12),
-                    //         child: const Text(
-                    //           "Cek Kondisi Pakan Hari ini.\nPastikan Stok Pakan Cukup, Untuk Hari Ini!",
-                    //           style: TextStyle(
-                    //             color: Colors.white,
-                    //             fontFamily: 'poppins',
-                    //             fontSize: 14,
-                    //             fontWeight: FontWeight.w500,
-                    //             // letterSpacing: 2,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       Container()
-                    //     ],
-                    //   ),
-                    // ),
-                    // Menampilkan Feeder History
 
+                    // Card Menu
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          width: 3,
+                          color: AppColors.primaryExtraSoft,
+                        ),
+                      ),
+                      padding: const EdgeInsets.only(
+                          left: 24, top: 20, right: 29, bottom: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Main Menu",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Divider(
+                            color: AppColors.primary,
+                            thickness: 2,
+                            height: 20,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              // Button Main Menu
+                              TextButton.icon(
+                                onPressed: () {
+                                  Get.toNamed(Routes.MAIN);
+                                },
+                                icon: SvgPicture.asset(
+                                    "assets/icons/icon-menu-kucingsvg.svg"),
+                                label: const Text(
+                                  "Feeder&\nPool",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontFamily: 'poppins',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                style: TextButton.styleFrom(
+                                  backgroundColor: AppColors.primary,
+                                  side: const BorderSide(
+                                    color: Colors.white,
+                                    width: 1,
+                                    strokeAlign: BorderSide.strokeAlignOutside,
+                                  ),
+                                ),
+                              ),
+                              // Button Detail Food Menu
+                              TextButton.icon(
+                                onPressed: () {
+                                  Get.toNamed(Routes.DETAIL_JADWAL);
+                                },
+                                icon: SvgPicture.asset(
+                                    "assets/icons/icon-menu-food.svg"),
+                                label: Text(
+                                  "Makanan&\nMinuman",
+                                  style: TextStyle(
+                                    color: AppColors.primary,
+                                    fontSize: 14,
+                                    fontFamily: 'poppins',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  side: BorderSide(
+                                    color: AppColors.primary,
+                                    width: 1,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
                     // Menampilkan Card Info Feeder
                     Container(
                       width: MediaQuery.of(context).size.width,
@@ -414,11 +302,11 @@ class HomeView extends GetView<HomeController> {
                             children: [
                               Row(
                                 children: [
-                                  const Text(
+                                  Text(
                                     "Info Feeder",
                                     style: TextStyle(
                                       fontSize: 20,
-                                      color: Colors.pink,
+                                      color: AppColors.primary,
                                     ),
                                   ),
                                   const SizedBox(width: 20),
@@ -644,123 +532,25 @@ class HomeView extends GetView<HomeController> {
                       ),
                     ),
 
-                    const SizedBox(height: 10),
-
-                    // Card Menu
-                    // Container(
-                    //   width: MediaQuery.of(context).size.width,
-                    //   decoration: BoxDecoration(
-                    //     borderRadius: BorderRadius.circular(8),
-                    //     border: Border.all(
-                    //       width: 3,
-                    //       color: AppColors.primaryExtraSoft,
-                    //     ),
-                    //   ),
-                    //   padding: const EdgeInsets.only(
-                    //       left: 24, top: 20, right: 29, bottom: 20),
-                    //   child: Column(
-                    //     crossAxisAlignment: CrossAxisAlignment.start,
-                    //     children: [
-                    //       const Text(
-                    //         "Main Menu",
-                    //         style: TextStyle(
-                    //           fontSize: 20,
-                    //           color: Colors.black,
-                    //           fontWeight: FontWeight.w600,
-                    //         ),
-                    //       ),
-                    //       const Divider(
-                    //         color: Colors.pink,
-                    //         thickness: 2,
-                    //         height: 20,
-                    //       ),
-                    //       Row(
-                    //         crossAxisAlignment: CrossAxisAlignment.start,
-                    //         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    //         children: [
-                    //           Container(
-                    //             height: 100,
-                    //             width: 100,
-                    //             padding: const EdgeInsets.symmetric(
-                    //                 horizontal: 8, vertical: 8),
-                    //             decoration: BoxDecoration(
-                    //               color: AppColors.primary,
-                    //               borderRadius: BorderRadius.circular(8),
-                    //             ),
-                    //             child: Row(
-                    //               children: [
-                    //                 const Text(
-                    //                   "Feeder & \n Pool",
-                    //                   style: TextStyle(color: Colors.white),
-                    //                 ),
-                    //                 SvgPicture.asset(
-                    //                     "assets/icons/dry_food.svg"),
-                    //               ],
-                    //             ),
-                    //           ),
-                    //           // Container(
-                    //           //   width: 100,
-                    //           //   height: 100,
-                    //           //   padding: const EdgeInsets.symmetric(
-                    //           //       horizontal: 8, vertical: 8),
-                    //           //   decoration: BoxDecoration(
-                    //           //     color: AppColors.secondarySoft,
-                    //           //     borderRadius: BorderRadius.circular(8),
-                    //           //   ),
-                    //           // ),
-                    //         ],
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Feeder History",
-                          style: TextStyle(
-                            fontFamily: "poppins",
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () => Get.toNamed(Routes.ALL_FEEDER),
-                          style: TextButton.styleFrom(
-                            foregroundColor: AppColors.primary,
-                          ),
-                          child: const Text("Lihat Semua"),
-                        ),
-                      ],
-                    ),
                     // Menampilkan List Database Feeder Terakhir
-                    // StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                    //   stream: controller.streamLastFeeder(),
-                    //   builder: (context, snapshot) {
-                    //     switch (snapshot.connectionState) {
-                    //       case ConnectionState.waiting:
-                    //         return const Center(
-                    //             child: CircularProgressIndicator());
-                    //       case ConnectionState.active:
-                    //       case ConnectionState.done:
-                    //         List<QueryDocumentSnapshot<Map<String, dynamic>>>
-                    //             listFeeder = snapshot.data!.docs;
-                    //         return ListView.separated(
-                    //           itemCount: listFeeder.length,
-                    //           shrinkWrap: true,
-                    //           physics: const BouncingScrollPhysics(),
-                    //           separatorBuilder: (context, index) =>
-                    //               const SizedBox(height: 16),
-                    //           itemBuilder: (context, index) {
-                    //             Map<String, dynamic> feederData =
-                    //                 listFeeder[index].data();
-                    //             return FeederTile(feederData: feederData);
-                    //           },
-                    //         );
-                    //       default:
-                    //         return const SizedBox();
-                    //     }
-                    //   },
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     const Text(
+                    //       "Feeder History",
+                    //       style: TextStyle(
+                    //         fontFamily: "poppins",
+                    //         fontWeight: FontWeight.w600,
+                    //       ),
+                    //     ),
+                    //     TextButton(
+                    //       onPressed: () => Get.toNamed(Routes.ALL_FEEDER),
+                    //       style: TextButton.styleFrom(
+                    //         foregroundColor: AppColors.primary,
+                    //       ),
+                    //       child: const Text("Lihat Semua"),
+                    //     ),
+                    //   ],
                     // ),
                   ],
                 );

@@ -127,4 +127,16 @@ class HomeController extends GetxController {
         .doc(todayDocId)
         .snapshots();
   }
+
+  Stream<DocumentSnapshot<Map<String, dynamic>>> streamDailyFeeder() async* {
+    String uid = auth.currentUser!.uid;
+    String todayDocId =
+        DateFormat.yMd().format(DateTime.now()).replaceAll("/", "-");
+    yield* firestore
+        .collection("user")
+        .doc(uid)
+        .collection("schedule")
+        .doc(todayDocId)
+        .snapshots();
+  }
 }

@@ -77,73 +77,6 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
                       ),
                       // Data Scheduled
 
-                      // GetBuilder<DetailJadwalController>(
-                      //   builder: (con) {
-                      //     return FutureBuilder<
-                      //         QuerySnapshot<Map<String, dynamic>>>(
-                      //       future: controller.getAllSchedule(),
-                      //       builder: (context, snapshot) {
-                      //         switch (snapshot.connectionState) {
-                      //           case ConnectionState.waiting:
-                      //             return const Center(
-                      //                 child: CircularProgressIndicator());
-                      //           case ConnectionState.active:
-                      //           case ConnectionState.done:
-                      //             var data = snapshot.data!.docs;
-                      //             return ListView.builder(
-                      //               shrinkWrap: true,
-                      //               physics: const BouncingScrollPhysics(),
-                      //               itemBuilder: (context, index) {
-                      //                 var scheduleData = data[index].data();
-                      //                 return ScheduleTile(
-                      //                     scheduleData: scheduleData);
-                      //               },
-                      //               itemCount: data.length,
-                      //             );
-                      //           default:
-                      //             return const SizedBox();
-                      //         }
-                      //       },
-                      //     );
-                      //   },
-                      // ),
-
-                      StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                        stream: controller.streamLastSchedule(),
-                        builder: (context, snapshot) {
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.waiting:
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            case ConnectionState.active:
-                            case ConnectionState.done:
-                              List<QueryDocumentSnapshot<Map<String, dynamic>>>
-                                  listSchedule = snapshot.data!.docs;
-                              if (snapshot.hasData) {
-                                return ListView.builder(
-                                    shrinkWrap: true,
-                                    physics: const BouncingScrollPhysics(),
-                                    // separatorBuilder: (context, index) =>
-                                    //     const SizedBox(height: 16),
-                                    itemCount: listSchedule.length,
-                                    itemBuilder: (context, index) {
-                                      Map<String, dynamic> scheduleData =
-                                          listSchedule[index].data();
-                                      return ScheduleTile(
-                                          scheduleData: scheduleData);
-                                    });
-                              } else if (snapshot.hasError) {
-                                return Text("${snapshot.error}");
-                              } else {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              }
-                            default:
-                              return const SizedBox();
-                          }
-                        },
-                      ),
-
                       const SizedBox(width: 24),
                       // Button
                       Row(
@@ -198,9 +131,9 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8),
-                                    side: const BorderSide(
+                                    side: BorderSide(
                                       width: 1,
-                                      color: Color(0xfffff39b0),
+                                      color: AppColors.primary,
                                     ),
                                   )),
                               icon: SvgPicture.asset('assets/icons/water2.svg'),
@@ -213,6 +146,239 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
                                   fontFamily: 'poppins',
                                 ),
                               ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 25),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Data Stok Pakan",
+                            style: TextStyle(
+                              fontFamily: 'poppins',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 18,
+                            ),
+                          ),
+                          DetailTile(
+                            title: "Lihat Detail",
+                            icon: SvgPicture.asset('assets/icons/jadwal.svg'),
+                            onTap: () => Get.toNamed(Routes.EDIT_JADWAL),
+                          ),
+                        ],
+                      ),
+                      //  Data Stok Pakan Mingguan
+                      const SizedBox(height: 20),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Week
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin: const EdgeInsets.only(bottom: 10),
+                            child: Row(
+                              children: [
+                                // Stok Pakan
+                                Expanded(
+                                  child: Container(
+                                    height: 84,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primary,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.only(bottom: 6),
+                                          child: const Text(
+                                            'Total Food / Day',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14),
+                                          ),
+                                        ),
+                                        const Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "120 Gram",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                fontFamily: 'poppins',
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            Icon(
+                                              Icons.bar_chart_rounded,
+                                              color: Colors.white,
+                                              size: 30,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                // Output
+                                Expanded(
+                                  child: Container(
+                                    height: 84,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primary,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.only(bottom: 6),
+                                          child: const Text(
+                                            'Total Output / Week',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14),
+                                          ),
+                                        ),
+                                        const Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              '1.0 Kg',
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                fontFamily: 'poppins',
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            Icon(
+                                              Icons.bar_chart_rounded,
+                                              color: Colors.white,
+                                              size: 30,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 15),
+                          // Month
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin: const EdgeInsets.only(bottom: 10),
+                            child: Row(
+                              children: [
+                                // Stok Pakan
+                                Expanded(
+                                  child: Container(
+                                    height: 84,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primary,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.only(bottom: 6),
+                                          child: const Text(
+                                            'Total Food / Day',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14),
+                                          ),
+                                        ),
+                                        const Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "120 Gram",
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                fontFamily: 'poppins',
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            Icon(
+                                              Icons.bar_chart_rounded,
+                                              color: Colors.white,
+                                              size: 30,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 16),
+                                // Output
+                                Expanded(
+                                  child: Container(
+                                    height: 84,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primary,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.only(bottom: 6),
+                                          child: const Text(
+                                            'Total Output / Month',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 14),
+                                          ),
+                                        ),
+                                        const Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              '1.0 Kg',
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                fontFamily: 'poppins',
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            Icon(
+                                              Icons.bar_chart_rounded,
+                                              color: Colors.white,
+                                              size: 30,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         ],
@@ -337,3 +503,41 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
 //           ),
 //         ],
 //       ),
+
+class DetailTile extends StatelessWidget {
+  final String title;
+  final Widget icon;
+  final void Function() onTap;
+  final bool isDanger;
+
+  const DetailTile({
+    super.key,
+    required this.title,
+    required this.icon,
+    required this.onTap,
+    this.isDanger = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Row(
+        children: [
+          Container(
+            child: icon,
+          ),
+          const SizedBox(width: 5),
+          Text(
+            title,
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              color: AppColors.primary,
+              fontSize: 16,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
