@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:tugas_akhir/app/routes/app_pages.dart';
+
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 
 // class ScheduleTile extends StatelessWidget {

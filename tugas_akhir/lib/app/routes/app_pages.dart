@@ -84,7 +84,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.EDIT_JADWAL,
-      page: () => const EditJadwalView(),
+      page: () => EditJadwalView(),
       binding: EditJadwalBinding(),
     ),
     GetPage(

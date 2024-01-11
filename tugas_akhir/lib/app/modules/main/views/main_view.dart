@@ -630,6 +630,8 @@ class MainView extends GetView<MainController> {
                     ],
                   ),
 
+                  // Menampilkan List Database schedule Terakhir
+
                   GetBuilder<MainController>(
                     builder: (con) {
                       return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(

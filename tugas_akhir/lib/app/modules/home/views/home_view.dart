@@ -118,6 +118,99 @@ class HomeView extends GetView<HomeController> {
                           }
                         }),
 
+                    const SizedBox(height: 15),
+
+                    // Card Menu
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          width: 3,
+                          color: AppColors.primaryExtraSoft,
+                        ),
+                      ),
+                      padding: const EdgeInsets.only(
+                          left: 24, top: 20, right: 29, bottom: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Main Menu",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          Divider(
+                            color: AppColors.primaryExtraSoft,
+                            thickness: 2.5,
+                          ),
+                          const SizedBox(height: 15),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              // Button Main Menu
+                              TextButton.icon(
+                                onPressed: () {
+                                  Get.toNamed(Routes.MAIN);
+                                },
+                                icon: SvgPicture.asset(
+                                    "assets/icons/icon-menu-kucingsvg.svg"),
+                                label: Text(
+                                  "Feeder&\nPool",
+                                  style: TextStyle(
+                                    color: AppColors.primary,
+                                    fontSize: 14,
+                                    fontFamily: 'poppins',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.white,
+                                  side: BorderSide(
+                                    color: AppColors.primaryExtraSoft,
+                                    width: 2,
+                                    strokeAlign: BorderSide.strokeAlignOutside,
+                                  ),
+                                ),
+                              ),
+                              // Button Detail Food Menu
+                              TextButton.icon(
+                                onPressed: () {
+                                  Get.toNamed(Routes.DETAIL_JADWAL);
+                                },
+                                icon: SvgPicture.asset(
+                                    "assets/icons/icon-menu-food.svg"),
+                                label: const Text(
+                                  "Makanan&\nMinuman",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontFamily: 'poppins',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                style: TextButton.styleFrom(
+                                  backgroundColor: AppColors.primary,
+                                  side: BorderSide(
+                                    color: AppColors.primaryExtraSoft,
+                                    width: 2,
+                                    strokeAlign: BorderSide.strokeAlignOutside,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const SizedBox(height: 10),
+
                     // Menampilkan Alamat Feeder
                     Container(
                       margin:
@@ -196,93 +289,6 @@ class HomeView extends GetView<HomeController> {
                       ),
                     ),
 
-                    // Card Menu
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          width: 3,
-                          color: AppColors.primaryExtraSoft,
-                        ),
-                      ),
-                      padding: const EdgeInsets.only(
-                          left: 24, top: 20, right: 29, bottom: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "Main Menu",
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Divider(
-                            color: AppColors.primary,
-                            thickness: 2,
-                            height: 20,
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              // Button Main Menu
-                              TextButton.icon(
-                                onPressed: () {
-                                  Get.toNamed(Routes.MAIN);
-                                },
-                                icon: SvgPicture.asset(
-                                    "assets/icons/icon-menu-kucingsvg.svg"),
-                                label: const Text(
-                                  "Feeder&\nPool",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontFamily: 'poppins',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                style: TextButton.styleFrom(
-                                  backgroundColor: AppColors.primary,
-                                  side: const BorderSide(
-                                    color: Colors.white,
-                                    width: 1,
-                                    strokeAlign: BorderSide.strokeAlignOutside,
-                                  ),
-                                ),
-                              ),
-                              // Button Detail Food Menu
-                              TextButton.icon(
-                                onPressed: () {
-                                  Get.toNamed(Routes.DETAIL_JADWAL);
-                                },
-                                icon: SvgPicture.asset(
-                                    "assets/icons/icon-menu-food.svg"),
-                                label: Text(
-                                  "Makanan&\nMinuman",
-                                  style: TextStyle(
-                                    color: AppColors.primary,
-                                    fontSize: 14,
-                                    fontFamily: 'poppins',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                style: TextButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  side: BorderSide(
-                                    color: AppColors.primary,
-                                    width: 1,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 10),
                     // Menampilkan Card Info Feeder
                     Container(
                       width: MediaQuery.of(context).size.width,
@@ -345,7 +351,7 @@ class HomeView extends GetView<HomeController> {
                                       SizedBox(
                                         child: ElevatedButton.icon(
                                           onPressed: () {
-                                            Get.toNamed(Routes.DETAIL_JADWAL);
+                                            Get.toNamed(Routes.ALL_SCHEDULE);
                                           },
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor: Colors.white,

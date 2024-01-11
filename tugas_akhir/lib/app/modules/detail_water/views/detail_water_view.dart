@@ -7,6 +7,7 @@ import 'package:tugas_akhir/app/controllers/page_index_controller.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_bottom_navbar.dart';
+import 'package:tugas_akhir/app/widgets/card/feeder_tile.dart';
 
 import '../controllers/detail_water_controller.dart';
 
@@ -216,26 +217,64 @@ class DetailWaterView extends GetView<DetailWaterController> {
                         ],
                       ),
 
-                      // Data Stok Minuman
-                      const SizedBox(height: 25),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            "Data Stok Minuman",
-                            style: TextStyle(
-                              fontFamily: 'poppins',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                            ),
-                          ),
-                          DetailTile(
-                            title: "Lihat Detail",
-                            icon: SvgPicture.asset('assets/icons/jadwal.svg'),
-                            onTap: () => Get.toNamed(Routes.EDIT_JADWAL),
-                          ),
-                        ],
+                      // Data Feeder
+
+                      GetBuilder<DetailWaterController>(
+                        builder: (con) {
+                          return FutureBuilder<
+                              QuerySnapshot<Map<String, dynamic>>>(
+                            future: controller.getAllFeeder(),
+                            builder: (context, snapshot) {
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.waiting:
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                case ConnectionState.active:
+                                case ConnectionState.done:
+                                  var data = snapshot.data!.docs;
+                                  return ListView.separated(
+                                    shrinkWrap: true,
+                                    physics: const BouncingScrollPhysics(),
+                                    padding: const EdgeInsets.all(20),
+                                    itemCount: data.length,
+                                    separatorBuilder: (context, index) =>
+                                        const SizedBox(height: 16),
+                                    itemBuilder: (context, index) {
+                                      var feederData = data[index].data();
+                                      return FeederTile(
+                                        feederData: feederData,
+                                      );
+                                    },
+                                  );
+                                default:
+                                  return const SizedBox();
+                              }
+                            },
+                          );
+                        },
                       ),
+
+                      // Data Stok Minuman
+                      // const SizedBox(height: 25),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     const Text(
+                      //       "Data Stok Minuman",
+                      //       style: TextStyle(
+                      //         fontFamily: 'poppins',
+                      //         fontWeight: FontWeight.w600,
+                      //         fontSize: 18,
+                      //       ),
+                      //     ),
+                      //     DetailTile(
+                      //       title: "Lihat Detail",
+                      //       icon: SvgPicture.asset('assets/icons/jadwal.svg'),
+                      //       onTap: () => Get.toNamed(Routes.ALL_SCHEDULE),
+                      //     ),
+                      //   ],
+                      // ),
+
                       //  Data Stok Pakan Mingguan
                       const SizedBox(height: 20),
                       Column(

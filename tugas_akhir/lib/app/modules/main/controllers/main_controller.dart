@@ -29,34 +29,6 @@ class MainController extends GetxController {
     yield* firestore.collection("user").doc(uid).snapshots();
   }
 
-  Future<QuerySnapshot<Object?>> getSchedule() {
-    CollectionReference schedule = firestore.collection("schedule");
-    return schedule.get();
-  }
-
-  Stream<QuerySnapshot<Map<String, dynamic>>> streamLastSchedule() async* {
-    String uid = auth.currentUser!.uid;
-    yield* firestore
-        .collection("user")
-        .doc(uid)
-        .collection("schedule")
-        .orderBy("date", descending: true)
-        .limitToLast(5)
-        .snapshots();
-  }
-
-  Stream<DocumentSnapshot<Map<String, dynamic>>> streamSchedule() async* {
-    String uid = auth.currentUser!.uid;
-    String todayDocId =
-        DateFormat.yMd().format(DateTime.now()).replaceAll("/", "-");
-    yield* firestore
-        .collection("user")
-        .doc(uid)
-        .collection("schedule")
-        .doc(todayDocId)
-        .snapshots();
-  }
-
   Future<QuerySnapshot<Map<String, dynamic>>> getAllSchedule() async {
     String uid = auth.currentUser!.uid;
     if (start == null) {
@@ -80,17 +52,6 @@ class MainController extends GetxController {
           .get();
       return query;
     }
-  }
-
-  Stream<QuerySnapshot<Map<String, dynamic>>> streamLastFeeder() async* {
-    String uid = auth.currentUser!.uid;
-    yield* firestore
-        .collection("user")
-        .doc(uid)
-        .collection("feeder")
-        .orderBy("date", descending: true)
-        .limitToLast(5)
-        .snapshots();
   }
 
   void pickDate(DateTime pickStart, DateTime pickEnd) {
