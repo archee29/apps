@@ -33,6 +33,7 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 36),
                   children: [
+                    // Daata photo dan nama user
                     const SizedBox(height: 16),
                     Container(
                       margin: const EdgeInsets.only(bottom: 16),
@@ -74,82 +75,8 @@ class DetailJadwalView extends GetView<DetailJadwalController> {
                         ],
                       ),
                     ),
+
                     // Data Scheduled
-
-                    const SizedBox(width: 24),
-                    // Button
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        // Dry Food Button
-                        SizedBox(
-                          width: 150,
-                          height: 60,
-                          child: ElevatedButton.icon(
-                            onPressed: () {
-                              Get.toNamed(Routes.DETAIL_FOOD);
-                            },
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primary,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 18),
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  side: const BorderSide(
-                                    width: 1,
-                                    color: Colors.white,
-                                  ),
-                                )),
-                            icon:
-                                SvgPicture.asset('assets/icons/dry_food2.svg'),
-                            label: const Text(
-                              "Dry Food",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                                fontFamily: 'poppins',
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        // Water Button
-                        SizedBox(
-                          width: 150,
-                          height: 60,
-                          child: ElevatedButton.icon(
-                            onPressed: () {
-                              Get.toNamed(Routes.DETAIL_WATER);
-                            },
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 18),
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  side: BorderSide(
-                                    width: 1,
-                                    color: AppColors.primary,
-                                  ),
-                                )),
-                            icon: SvgPicture.asset('assets/icons/water2.svg'),
-                            label: const Text(
-                              "Water",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                                fontFamily: 'poppins',
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-
                     const SizedBox(height: 25),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

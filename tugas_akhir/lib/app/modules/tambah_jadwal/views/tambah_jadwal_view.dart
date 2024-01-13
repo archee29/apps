@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:tugas_akhir/app/controllers/schedule_controller.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_input.dart';
@@ -9,7 +10,8 @@ import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_schedule_input.dart
 import '../controllers/tambah_jadwal_controller.dart';
 
 class TambahJadwalView extends GetView<TambahJadwalController> {
-  const TambahJadwalView({Key? key}) : super(key: key);
+  final scheduleController = Get.find<ScheduleController>();
+  TambahJadwalView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -75,22 +77,22 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
 
           // Kalender
           CustomScheduleInput(
-            controller: controller.dateController,
+            controller: scheduleController.dateController,
             label: "Kalender",
             hint: DateFormat("dd-MM-yyyy")
-                .format(controller.selectedDate.value)
+                .format(scheduleController.selectedDate.value)
                 .toString(),
             onTap: () {
-              controller.chooseDate();
+              scheduleController.chooseDate();
             },
           ),
 
           // Time
           CustomScheduleInput(
-            controller: controller.timeController,
+            controller: scheduleController.timeController,
             label: "Waktu",
             hint:
-                "${controller.selectedTime.value.hour}:${controller.selectedTime.value.minute}",
+                "${scheduleController.selectedTime.value.hour}:${scheduleController.selectedTime.value.minute}",
             onTap: () {
               controller.chooseTime();
             },
@@ -98,43 +100,27 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
 
           // Input Judul
           CustomInput(
-            controller: controller.titleController,
+            controller: scheduleController.titleController,
             label: "Judul",
             hint: "Masukkan Judul",
-            suffixIcon: IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset('assets/icons/judul.svg'),
-            ),
           ),
           // Input Deskripsi
           CustomInput(
-            controller: controller.deskripsiController,
+            controller: scheduleController.deskripsiController,
             label: "Deskripsi",
             hint: "Masukkan Deskripsi",
-            suffixIcon: IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset('assets/icons/deskripsi.svg'),
-            ),
           ),
           // Input Makanan
           CustomInput(
-            controller: controller.makananController,
+            controller: scheduleController.makananController,
             label: "Makanan",
             hint: "Masukkan Jumlah Makanan",
-            suffixIcon: IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset('assets/icons/makanan.svg'),
-            ),
           ),
           // Input Minuman
           CustomInput(
-            controller: controller.minumanController,
+            controller: scheduleController.minumanController,
             label: "Minuman",
             hint: "Masukkan Jumlah Minuman",
-            suffixIcon: IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset('assets/icons/minuman.svg'),
-            ),
           ),
           const SizedBox(height: 20),
           // Button
@@ -179,8 +165,8 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
                 child: Obx(
                   () => ElevatedButton.icon(
                     onPressed: () {
-                      if (controller.isLoading.isFalse) {
-                        controller.addSchedule();
+                      if (scheduleController.isLoading.isFalse) {
+                        scheduleController.processSchedule();
                       }
                     },
                     style: ElevatedButton.styleFrom(

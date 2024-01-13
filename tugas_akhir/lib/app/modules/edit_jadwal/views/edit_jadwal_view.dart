@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:tugas_akhir/app/controllers/schedule_controller.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_input.dart';
@@ -12,16 +13,18 @@ import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_schedule_input.dart
 import '../controllers/edit_jadwal_controller.dart';
 
 class EditJadwalView extends GetView<EditJadwalController> {
-  final Map<String, dynamic> schedule = Get.arguments;
+  // final Map<String, dynamic> schedule = Get.arguments;
+  final scheduleController = Get.find<ScheduleController>();
   EditJadwalView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    controller.dateController.text = schedule["tanggal"];
-    controller.timeController.text = schedule["waktu"];
-    controller.titleController.text = schedule["title"];
-    controller.deskripsiController.text = schedule["deskripsi"];
-    controller.makananController.text = schedule["makanan"];
-    controller.minumanController.text = schedule["minuman"];
+    // controller.dateController.text = schedule["tanggal"];
+    // controller.timeController.text = schedule["waktu"];
+    // controller.titleController.text = schedule["title"];
+    // controller.deskripsiController.text = schedule["deskripsi"];
+    // controller.makananController.text = schedule["makanan"];
+    // controller.minumanController.text = schedule["minuman"];
 
     return Scaffold(
       appBar: AppBar(
@@ -55,10 +58,11 @@ class EditJadwalView extends GetView<EditJadwalController> {
         children: [
           // Kalender
           CustomScheduleInput(
-            controller: controller.dateController,
+            controller: scheduleController.dateController,
             label: "Kalender",
+            // hint: "${controller.selectedDate.value}",
             hint: DateFormat("dd-MM-yyyy")
-                .format(controller.selectedDate.value)
+                .format(scheduleController.selectedDate.value)
                 .toString(),
             onTap: () {
               controller.chooseDate();
@@ -67,10 +71,10 @@ class EditJadwalView extends GetView<EditJadwalController> {
 
           // Time
           CustomScheduleInput(
-            controller: controller.timeController,
+            controller: scheduleController.timeController,
             label: "Waktu",
             hint:
-                "${controller.selectedTime.value.hour}:${controller.selectedTime.value.minute}",
+                "${scheduleController.selectedTime.value.hour}:${scheduleController.selectedTime.value.minute}",
             onTap: () {
               controller.chooseTime();
             },
@@ -78,46 +82,30 @@ class EditJadwalView extends GetView<EditJadwalController> {
 
           // Input Judul
           CustomInput(
-            controller: controller.titleController,
+            controller: scheduleController.titleController,
             label: "Judul",
             hint: "Masukkan Judul",
-            suffixIcon: IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset('assets/icons/judul.svg'),
-            ),
           ),
 
           // Input Deskripsi
           CustomInput(
-            controller: controller.deskripsiController,
+            controller: scheduleController.deskripsiController,
             label: "Deskripsi",
             hint: "Masukkan Deskripsi",
-            suffixIcon: IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset('assets/icons/deskripsi.svg'),
-            ),
           ),
 
           // Input makanan
           CustomInput(
-            controller: controller.makananController,
+            controller: scheduleController.makananController,
             label: "Makanan",
             hint: "Masukkan Jumlah Makanan",
-            suffixIcon: IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset('assets/icons/makanan.svg'),
-            ),
           ),
 
           // Input minuman
           CustomInput(
-            controller: controller.minumanController,
+            controller: scheduleController.minumanController,
             label: "Minuman",
             hint: "Masukkan Jumlah Minuman",
-            suffixIcon: IconButton(
-              onPressed: () {},
-              icon: SvgPicture.asset('assets/icons/minuman.svg'),
-            ),
           ),
 
           const SizedBox(height: 20),
@@ -158,41 +146,43 @@ class EditJadwalView extends GetView<EditJadwalController> {
               ),
 
               // Edit Button
-              SizedBox(
+              Obx(
+                () => SizedBox(
                   width: 200,
                   height: 60,
-                  child: Obx(
-                    () => ElevatedButton.icon(
-                      onPressed: () {
-                        if (controller.isLoading.isFalse) {
-                          controller.updateSchedule(Get.arguments);
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        padding: const EdgeInsets.symmetric(vertical: 18),
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          side: const BorderSide(
-                            width: 1,
-                            color: Colors.white,
-                          ),
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      if (scheduleController.isLoading.isFalse) {
+                        // controller.editSchedule();
+                        scheduleController.processSchedule();
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      padding: const EdgeInsets.symmetric(vertical: 18),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        side: const BorderSide(
+                          width: 1,
+                          color: Colors.white,
                         ),
-                        shadowColor: const Color(0x3F000000),
                       ),
-                      icon: SvgPicture.asset('assets/icons/edit_button.svg'),
-                      label: Text(
-                        (controller.isLoading.isFalse)
-                            ? 'Edit Jadwal'
-                            : 'Loading ...',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'poppins',
-                        ),
+                      shadowColor: const Color(0x3F000000),
+                    ),
+                    icon: SvgPicture.asset('assets/icons/edit_button.svg'),
+                    label: Text(
+                      (controller.isLoading.isFalse)
+                          ? 'Edit Jadwal'
+                          : 'Loading ...',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'poppins',
                       ),
                     ),
-                  )),
+                  ),
+                ),
+              ),
             ],
           ),
         ],

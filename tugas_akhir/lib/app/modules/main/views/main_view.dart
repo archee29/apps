@@ -93,11 +93,11 @@ class MainView extends GetView<MainController> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
+                            Text(
                               "Feeder",
                               style: TextStyle(
                                 fontSize: 20,
-                                color: Colors.pink,
+                                color: AppColors.primary,
                               ),
                             ),
                             Row(
@@ -267,140 +267,13 @@ class MainView extends GetView<MainController> {
                     ),
                   ),
 
-                  const SizedBox(height: 50),
-                  // Tambah Feeder Card
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Jadwal Feeder",
-                        style: TextStyle(
-                          fontFamily: 'poppins',
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                        ),
-                      ),
-                      MainTile(
-                        title: "Tambah Jadwal",
-                        icon: SvgPicture.asset('assets/icons/tambah.svg'),
-                        onTap: () => Get.toNamed(Routes.TAMBAH_JADWAL),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  GetBuilder<MainController>(
-                    builder: (con) {
-                      return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                        future: controller.getAllSchedule(),
-                        builder: (context, snapshot) {
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.waiting:
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            case ConnectionState.active:
-                            case ConnectionState.done:
-                              var data = snapshot.data!.docs;
-                              return Column(
-                                children: [
-                                  Card(
-                                    clipBehavior: Clip.antiAlias,
-                                    margin: const EdgeInsets.all(8.0),
-                                    child: TableCalendar(
-                                      // eventLoader: (day) => controller.,
-                                      // onDaySelected: (selectedDay, focusedDay) {
-                                      //   controller.selectedDay = selectedDay;
-                                      //   controller.focusedDay = focusedDay;
-                                      // },
-                                      selectedDayPredicate: (day) => isSameDay(
-                                          day, controller.selectedDay),
-                                      focusedDay: DateTime.now(),
-                                      firstDay: DateTime(1950),
-                                      lastDay: DateTime(2100),
-                                      headerStyle: HeaderStyle(
-                                        decoration: BoxDecoration(
-                                            color: AppColors.primary),
-                                        headerMargin:
-                                            const EdgeInsets.only(bottom: 8.0),
-                                        titleTextStyle: const TextStyle(
-                                            color: Colors.white),
-                                        formatButtonDecoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.white),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        formatButtonTextStyle: const TextStyle(
-                                            color: Colors.white),
-                                        leftChevronIcon: const Icon(
-                                          Icons.chevron_left,
-                                          color: Colors.white,
-                                        ),
-                                        rightChevronIcon: const Icon(
-                                          Icons.chevron_right,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  // ListView.builder(
-                                  //   shrinkWrap: true,
-                                  //   physics: const BouncingScrollPhysics(),
-                                  //   itemCount: data.length,
-                                  //   itemBuilder: (context, index) {
-                                  //     var scheduleData = data[index].data();
-                                  //     return ScheduleTile(
-                                  //       scheduleData: scheduleData,
-                                  //     );
-                                  //   },
-                                  // ),
-                                ],
-                              );
-                            default:
-                              return const SizedBox();
-                          }
-                        },
-                      );
-                    },
-                  ),
-
-                  // Card(
-                  //   clipBehavior: Clip.antiAlias,
-                  //   margin: const EdgeInsets.all(8.0),
-                  //   child: TableCalendar(
-                  //     focusedDay: DateTime.now(),
-                  //     firstDay: DateTime(1950),
-                  //     lastDay: DateTime(2100),
-                  //     headerStyle: HeaderStyle(
-                  //       decoration: BoxDecoration(color: AppColors.primary),
-                  //       headerMargin: const EdgeInsets.only(bottom: 8.0),
-                  //       titleTextStyle: const TextStyle(color: Colors.white),
-                  //       formatButtonDecoration: BoxDecoration(
-                  //         border: Border.all(color: Colors.white),
-                  //         borderRadius: BorderRadius.circular(8),
-                  //       ),
-                  //       formatButtonTextStyle:
-                  //           const TextStyle(color: Colors.white),
-                  //       leftChevronIcon: const Icon(
-                  //         Icons.chevron_left,
-                  //         color: Colors.white,
-                  //       ),
-                  //       rightChevronIcon: const Icon(
-                  //         Icons.chevron_right,
-                  //         color: Colors.white,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-
                   const SizedBox(height: 20),
                   // Stok Pakan dan minum Card
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        "Stok Pakan Mingguan",
+                        "Stok Pakan",
                         style: TextStyle(
                           fontFamily: 'poppins',
                           fontWeight: FontWeight.w600,
@@ -408,9 +281,9 @@ class MainView extends GetView<MainController> {
                         ),
                       ),
                       MainTile(
-                        title: "Detail Data",
+                        title: "Lihat Selengkapnya",
                         icon: SvgPicture.asset('assets/icons/edit.svg'),
-                        onTap: () => Get.toNamed(Routes.ALL_SCHEDULE),
+                        onTap: () => Get.toNamed(Routes.DETAIL_JADWAL),
                       ),
                     ],
                   ),
@@ -608,6 +481,135 @@ class MainView extends GetView<MainController> {
                       ],
                     ),
                   ),
+
+                  const SizedBox(height: 20),
+
+                  // Tambah Feeder Card
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Jadwal Feeder",
+                        style: TextStyle(
+                          fontFamily: 'poppins',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                        ),
+                      ),
+                      MainTile(
+                        title: "Tambah Jadwal",
+                        icon: SvgPicture.asset('assets/icons/tambah.svg'),
+                        onTap: () => Get.toNamed(Routes.TAMBAH_JADWAL),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  GetBuilder<MainController>(
+                    builder: (con) {
+                      return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                        future: controller.getAllSchedule(),
+                        builder: (context, snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            case ConnectionState.active:
+                            case ConnectionState.done:
+                              var data = snapshot.data!.docs;
+                              return Column(
+                                children: [
+                                  Card(
+                                    clipBehavior: Clip.antiAlias,
+                                    margin: const EdgeInsets.all(8.0),
+                                    child: TableCalendar(
+                                      // eventLoader: (day) => controller.,
+                                      // onDaySelected: (selectedDay, focusedDay) {
+                                      //   controller.selectedDay = selectedDay;
+                                      //   controller.focusedDay = focusedDay;
+                                      // },
+                                      selectedDayPredicate: (day) => isSameDay(
+                                          day, controller.selectedDay),
+                                      focusedDay: DateTime.now(),
+                                      firstDay: DateTime(1950),
+                                      lastDay: DateTime(2100),
+                                      headerStyle: HeaderStyle(
+                                        decoration: BoxDecoration(
+                                            color: AppColors.primary),
+                                        headerMargin:
+                                            const EdgeInsets.only(bottom: 8.0),
+                                        titleTextStyle: const TextStyle(
+                                            color: Colors.white),
+                                        formatButtonDecoration: BoxDecoration(
+                                          border:
+                                              Border.all(color: Colors.white),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        formatButtonTextStyle: const TextStyle(
+                                            color: Colors.white),
+                                        leftChevronIcon: const Icon(
+                                          Icons.chevron_left,
+                                          color: Colors.white,
+                                        ),
+                                        rightChevronIcon: const Icon(
+                                          Icons.chevron_right,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  // ListView.builder(
+                                  //   shrinkWrap: true,
+                                  //   physics: const BouncingScrollPhysics(),
+                                  //   itemCount: data.length,
+                                  //   itemBuilder: (context, index) {
+                                  //     var scheduleData = data[index].data();
+                                  //     return ScheduleTile(
+                                  //       scheduleData: scheduleData,
+                                  //     );
+                                  //   },
+                                  // ),
+                                ],
+                              );
+                            default:
+                              return const SizedBox();
+                          }
+                        },
+                      );
+                    },
+                  ),
+
+                  // Card(
+                  //   clipBehavior: Clip.antiAlias,
+                  //   margin: const EdgeInsets.all(8.0),
+                  //   child: TableCalendar(
+                  //     focusedDay: DateTime.now(),
+                  //     firstDay: DateTime(1950),
+                  //     lastDay: DateTime(2100),
+                  //     headerStyle: HeaderStyle(
+                  //       decoration: BoxDecoration(color: AppColors.primary),
+                  //       headerMargin: const EdgeInsets.only(bottom: 8.0),
+                  //       titleTextStyle: const TextStyle(color: Colors.white),
+                  //       formatButtonDecoration: BoxDecoration(
+                  //         border: Border.all(color: Colors.white),
+                  //         borderRadius: BorderRadius.circular(8),
+                  //       ),
+                  //       formatButtonTextStyle:
+                  //           const TextStyle(color: Colors.white),
+                  //       leftChevronIcon: const Icon(
+                  //         Icons.chevron_left,
+                  //         color: Colors.white,
+                  //       ),
+                  //       rightChevronIcon: const Icon(
+                  //         Icons.chevron_right,
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+
                   const SizedBox(height: 20),
 
                   // Jadwal Card
@@ -623,15 +625,14 @@ class MainView extends GetView<MainController> {
                         ),
                       ),
                       MainTile(
-                        title: "Lihat Selengkapnya",
+                        title: "Detail Data",
                         icon: SvgPicture.asset('assets/icons/jadwal.svg'),
-                        onTap: () => Get.toNamed(Routes.DETAIL_JADWAL),
+                        onTap: () => Get.toNamed(Routes.ALL_SCHEDULE),
                       ),
                     ],
                   ),
 
                   // Menampilkan List Database schedule Terakhir
-
                   GetBuilder<MainController>(
                     builder: (con) {
                       return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(

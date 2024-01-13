@@ -79,7 +79,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.TAMBAH_JADWAL,
-      page: () => const TambahJadwalView(),
+      page: () => TambahJadwalView(),
       binding: TambahJadwalBinding(),
     ),
     GetPage(

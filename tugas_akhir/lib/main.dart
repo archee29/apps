@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tugas_akhir/app/controllers/schedule_controller.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/controllers/page_index_controller.dart';
 import 'package:tugas_akhir/app/controllers/feeder_controller.dart';
@@ -13,6 +14,7 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   Get.put(FeederController(), permanent: true);
+  Get.put(ScheduleController(), permanent: true);
   Get.put(PageIndexController(), permanent: true);
   runApp(
     StreamBuilder<User?>(

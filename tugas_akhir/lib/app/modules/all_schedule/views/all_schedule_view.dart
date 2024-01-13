@@ -19,14 +19,14 @@ class AllScheduleView extends GetView<AllScheduleController> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Data Manual',
+          'Data IOT',
           style: TextStyle(
             color: AppColors.secondary,
             fontSize: 14,
           ),
         ),
         leading: IconButton(
-          onPressed: () => Get.back(),
+          onPressed: () => Get.toNamed(Routes.MAIN),
           icon: SvgPicture.asset('assets/icons/arrow-left.svg'),
         ),
         backgroundColor: Colors.white,
@@ -89,7 +89,10 @@ class AllScheduleView extends GetView<AllScheduleController> {
               color: AppColors.secondaryExtraSoft),
         ),
       ),
-      body: Column(
+      body: ListView(
+        shrinkWrap: true,
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 36),
         children: [
           const SizedBox(width: 24),
           // Button
@@ -117,7 +120,7 @@ class AllScheduleView extends GetView<AllScheduleController> {
                       )),
                   icon: SvgPicture.asset('assets/icons/dry_food2.svg'),
                   label: const Text(
-                    "DATA IOT",
+                    "Data IOT",
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
@@ -149,7 +152,7 @@ class AllScheduleView extends GetView<AllScheduleController> {
                       )),
                   icon: SvgPicture.asset('assets/icons/water2.svg'),
                   label: const Text(
-                    "DATA MANUAL",
+                    "Data Manual",
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w600,

@@ -24,28 +24,7 @@ class TambahJadwalController extends GetxController {
 
   Future<void> addSchedule() async {
     String uid = auth.currentUser!.uid;
-    // String todayDocId =
-    //     DateFormat.yMd().format(DateTime.now()).replaceAll("/", "-");
-    // DocumentReference<Map<String, dynamic>> schedule = firestore
-    //     .collection("user")
-    //     .doc(uid)
-    //     .collection("schedule")
-    //     .doc(todayDocId);
-    // CollectionReference<Map<String, dynamic>> scheduleCollection =
-    //     firestore.collection("user").doc(uid).collection("schedule");
-    // QuerySnapshot<Map<String, dynamic>> snapshotPreference =
-    //     await scheduleCollection.get();
 
-    // if (snapshotPreference.docs.isEmpty) {
-    //   addSchedule();
-    // } else {
-    //   DocumentSnapshot<Map<String, dynamic>> todayDoc =
-    //       await scheduleCollection.doc(todayDocId).get();
-    //   if (todayDoc.exists == true) {
-    //     Map<String, dynamic>? dataScheduleToday = todayDoc.data();
-
-    //   }
-    // }
     CollectionReference<Map<String, dynamic>> schedule =
         firestore.collection("user").doc(uid).collection("schedule");
     try {

@@ -19,7 +19,7 @@ class FeederTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             width: 3,
-            color: AppColors.primaryExtraSoft,
+            color: AppColors.primarySoft,
           ),
         ),
         padding:

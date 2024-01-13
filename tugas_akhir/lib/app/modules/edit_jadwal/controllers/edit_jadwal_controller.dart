@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
+import 'package:tugas_akhir/app/widgets/dialog/custom_alert_dialog.dart';
 import 'package:tugas_akhir/app/widgets/dialog/custom_notification.dart';
 
 class EditJadwalController extends GetxController {
@@ -21,20 +23,15 @@ class EditJadwalController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  Future<void> updateSchedule(String docId) async {
-    String uid = auth.currentUser!.uid;
-
-    DocumentReference<Map<String, dynamic>> editScheduleData =
-        firestore.collection("user").doc(uid).collection("schedule").doc(docId);
-    try {
-      if (dateController.text.isNotEmpty &&
-          timeController.text.isNotEmpty &&
-          titleController.text.isNotEmpty &&
-          deskripsiController.text.isNotEmpty &&
-          makananController.text.isNotEmpty &&
-          minumanController.text.isNotEmpty) {
-        isLoading.value = true;
-
+  Future<void> updateSchedule() async {
+    if (dateController.text.isNotEmpty &&
+        timeController.text.isNotEmpty &&
+        titleController.text.isNotEmpty &&
+        deskripsiController.text.isNotEmpty &&
+        makananController.text.isNotEmpty &&
+        minumanController.text.isNotEmpty) {
+      isLoading.value = true;
+      try {
         Map<String, dynamic> data = {
           "date": DateTime.now().toIso8601String(),
           "tanggal": dateController.text,
@@ -45,22 +42,20 @@ class EditJadwalController extends GetxController {
           "minuman": minumanController.text,
           "created_at": DateTime.now().toIso8601String(),
         };
-        await editScheduleData.update(data);
-        Get.back();
+
         Get.back();
         CustomNotification.successNotification(
             "Berhasil", "Berhasil Edit Schedule");
         clearEditingControllers();
-        isLoadingEditSchedule.value = false;
-      } else {
-        isLoading.value = false;
+      } catch (e) {
         CustomNotification.errorNotification(
-            "Error", "Isi Form Terlebih Dahulu");
+            "Error", "Tidak Dapat Update Profile. Error : ${e.toString()}");
+      } finally {
+        isLoading.value = false;
       }
-    } catch (e) {
-      CustomNotification.errorNotification("Terjadi Kesalahan", "$e");
-    } finally {
-      update();
+    } else {
+      isLoading.value = false;
+      CustomNotification.errorNotification("Error", "Isi Form Terlebih Dahulu");
     }
   }
 
@@ -115,6 +110,10 @@ class EditJadwalController extends GetxController {
     );
     if (pickedDate != null && pickedDate != selectedDate.value) {
       selectedDate.value = pickedDate;
+
+      // dateController.text =
+      //     DateFormat("dd-MM-yyyy").format(selectedDate.value).toString();
+      // dateController.text = selectedDate.value.toString();
     }
   }
 
