@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:tugas_akhir/app/controllers/schedule_controller.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_input.dart';
@@ -14,8 +12,8 @@ import '../controllers/edit_jadwal_controller.dart';
 
 class EditJadwalView extends GetView<EditJadwalController> {
   // final Map<String, dynamic> schedule = Get.arguments;
-  final scheduleController = Get.find<ScheduleController>();
-  EditJadwalView({Key? key}) : super(key: key);
+
+  const EditJadwalView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,11 +56,11 @@ class EditJadwalView extends GetView<EditJadwalController> {
         children: [
           // Kalender
           CustomScheduleInput(
-            controller: scheduleController.dateController,
+            controller: controller.dateController,
             label: "Kalender",
             // hint: "${controller.selectedDate.value}",
             hint: DateFormat("dd-MM-yyyy")
-                .format(scheduleController.selectedDate.value)
+                .format(controller.selectedDate.value)
                 .toString(),
             onTap: () {
               controller.chooseDate();
@@ -71,10 +69,10 @@ class EditJadwalView extends GetView<EditJadwalController> {
 
           // Time
           CustomScheduleInput(
-            controller: scheduleController.timeController,
+            controller: controller.timeController,
             label: "Waktu",
             hint:
-                "${scheduleController.selectedTime.value.hour}:${scheduleController.selectedTime.value.minute}",
+                "${controller.selectedTime.value.hour}:${controller.selectedTime.value.minute}",
             onTap: () {
               controller.chooseTime();
             },
@@ -82,28 +80,28 @@ class EditJadwalView extends GetView<EditJadwalController> {
 
           // Input Judul
           CustomInput(
-            controller: scheduleController.titleController,
+            controller: controller.titleController,
             label: "Judul",
             hint: "Masukkan Judul",
           ),
 
           // Input Deskripsi
           CustomInput(
-            controller: scheduleController.deskripsiController,
+            controller: controller.deskripsiController,
             label: "Deskripsi",
             hint: "Masukkan Deskripsi",
           ),
 
           // Input makanan
           CustomInput(
-            controller: scheduleController.makananController,
+            controller: controller.makananController,
             label: "Makanan",
             hint: "Masukkan Jumlah Makanan",
           ),
 
           // Input minuman
           CustomInput(
-            controller: scheduleController.minumanController,
+            controller: controller.minumanController,
             label: "Minuman",
             hint: "Masukkan Jumlah Minuman",
           ),
@@ -152,9 +150,9 @@ class EditJadwalView extends GetView<EditJadwalController> {
                   height: 60,
                   child: ElevatedButton.icon(
                     onPressed: () {
-                      if (scheduleController.isLoading.isFalse) {
+                      if (controller.isLoading.isFalse) {
                         // controller.editSchedule();
-                        scheduleController.processSchedule();
+                        controller.updateSchedule(Get.arguments);
                       }
                     },
                     style: ElevatedButton.styleFrom(

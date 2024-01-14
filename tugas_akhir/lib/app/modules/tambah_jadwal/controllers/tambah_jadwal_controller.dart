@@ -24,7 +24,6 @@ class TambahJadwalController extends GetxController {
 
   Future<void> addSchedule() async {
     String uid = auth.currentUser!.uid;
-
     CollectionReference<Map<String, dynamic>> schedule =
         firestore.collection("user").doc(uid).collection("schedule");
     try {
