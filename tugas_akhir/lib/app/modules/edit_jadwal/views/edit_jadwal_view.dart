@@ -11,18 +11,18 @@ import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_schedule_input.dart
 import '../controllers/edit_jadwal_controller.dart';
 
 class EditJadwalView extends GetView<EditJadwalController> {
-  // final Map<String, dynamic> schedule = Get.arguments;
+  final Map<String, dynamic> schedule = Get.arguments;
 
-  const EditJadwalView({Key? key}) : super(key: key);
+  EditJadwalView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // controller.dateController.text = schedule["tanggal"];
-    // controller.timeController.text = schedule["waktu"];
-    // controller.titleController.text = schedule["title"];
-    // controller.deskripsiController.text = schedule["deskripsi"];
-    // controller.makananController.text = schedule["makanan"];
-    // controller.minumanController.text = schedule["minuman"];
+    controller.dateController.text = schedule["tanggal"];
+    controller.timeController.text = schedule["waktu"];
+    controller.titleController.text = schedule["title"];
+    controller.deskripsiController.text = schedule["deskripsi"];
+    controller.makananController.text = schedule["makanan"];
+    controller.minumanController.text = schedule["minuman"];
 
     return Scaffold(
       appBar: AppBar(

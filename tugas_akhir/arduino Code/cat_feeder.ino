@@ -11,9 +11,22 @@
 #define DATABASE_URL "https://tugas-akhir-3c0d9-default-rtdb.asia-southeast1.firebasedatabase.app/"
 
 // Define pin disini
-#define RTC_PIN 12
-#define ULTRASONIC_PIN 13
-#define LOADCELL_PIN 14
+#define RELAY_PIN 1
+#define SERVO1_PIN 2
+#define SERVO2_PIN 3
+#define PUMP_PIN 4
+#define RTC_PIN 5
+#define ULTRASONIC1_PIN 13
+#define LOADCELL1_PIN 14
+#define ULTRASONIC2_PIN 13
+#define LOADCELL2_PIN 14
+#define LCD_PIN
+
+// DIGITAL PIN
+
+// ANALOG PIN
+
+
 #define LED1_PIN 15
 #define LED2_PIN 16
 #define PWMChannel 0
@@ -34,6 +47,20 @@ float loadCellData = 0.0;
 float voltage = 0.0;
 int pwmValue = 0;
 bool ledStatus = false;
+
+// variable sensor
+int dataUltraSonic1 = 0;
+int dataUltraSonic2 = 0;
+float dataLoadCell1 = 0.0;
+float dataLoadCell2 = 0.0;
+
+// variable output
+bool servo = false;
+bool pump = false;
+
+// lcd
+
+
 
 
 void setup(){
@@ -72,6 +99,7 @@ if(!Firebase.RTDB.beginStream(&fbdo_s1, "/LED/analog")) Serial.printf("stream 1 
 if(!Firebase.RTDB.beginStream(&fbdo_s2, "/LED/digital")) Serial.printf("stream 2 begin error, %s\n\n", fbdo_s2_errorReason().c_str());
 
 }
+
 
 void loop(){
 

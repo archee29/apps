@@ -518,6 +518,8 @@ class MainView extends GetView<MainController> {
                             case ConnectionState.active:
                             case ConnectionState.done:
                               var data = snapshot.data!.docs;
+                              for (var docs in data) {}
+
                               return Column(
                                 children: [
                                   Card(
@@ -529,8 +531,44 @@ class MainView extends GetView<MainController> {
                                       //   controller.selectedDay = selectedDay;
                                       //   controller.focusedDay = focusedDay;
                                       // },
-                                      selectedDayPredicate: (day) => isSameDay(
-                                          day, controller.selectedDay),
+                                      // selectedDayPredicate: (day) => isSameDay(
+                                      //     day, controller.selectedDay),
+                                      // selectedDayPredicate: (day) {
+                                      //   return (isSameDay(
+                                      //       controller
+                                      //           .selectedDateSchedule.value,
+                                      //       day));
+                                      // },
+                                      // onDaySelected: (selectedDay, focusedDay) {
+                                      //   if (!isSameDay(
+                                      //       selectedDay, focusedDay)) {
+                                      //     selectedDay = controller
+                                      //         .selectedDateSchedule.value;
+                                      //     focusedDay = DateTime.now();
+                                      //   }
+                                      // },
+
+                                      calendarStyle: CalendarStyle(
+                                        todayDecoration: BoxDecoration(
+                                            color: AppColors.primary,
+                                            shape: BoxShape.circle),
+                                        todayTextStyle: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'poppins',
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                        ),
+
+                                        // selectedDecoration: BoxDecoration(
+                                        //     color: AppColors.primary,
+                                        //     shape: BoxShape.circle),
+                                        // selectedTextStyle: const TextStyle(
+                                        //   fontWeight: FontWeight.bold,
+                                        //   fontFamily: 'poppins',
+                                        //   color: Colors.white,
+                                        //   fontSize: 18,
+                                        // ),
+                                      ),
                                       focusedDay: DateTime.now(),
                                       firstDay: DateTime(1950),
                                       lastDay: DateTime(2100),

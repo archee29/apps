@@ -35,6 +35,7 @@ dependencies:
   syncfusion_flutter_calendar:
   table_calendar: ^3.0.9
   flutter_switch:
+  firebase_database: ^10.4.0
 
 
 dev_dependencies:

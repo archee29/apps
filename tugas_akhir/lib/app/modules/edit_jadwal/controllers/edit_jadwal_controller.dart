@@ -38,62 +38,26 @@ class EditJadwalController extends GetxController {
   Future<void> updateSchedule(String scheduleDocId) async {
     String uid = auth.currentUser!.uid;
     CollectionReference<Map<String, dynamic>> scheduleCollection =
-        firestore.collection("user").doc(uid).collection("schedule");
-    DocumentSnapshot<Map<String, dynamic>> scheduleDoc =
-        await scheduleCollection.doc(scheduleDocId).get();
+        firestore.collection("user");
+    DocumentReference<Map<String, dynamic>> documentReference =
+        scheduleCollection.doc(uid).collection("schedule").doc(scheduleDocId);
 
-    if (scheduleDoc.exists == true) {
-      Map<String, dynamic>? dataScheduleToday = scheduleDoc.data();
-      if (dataScheduleToday?["schedule"] != null) {
-        CustomNotification.successNotification("Sukses", "Berhasil Edit Data");
-      } else {
-        editSchedule(scheduleDocId);
-      }
-    }
+    documentReference.get();
+
+    // CollectionReference<Map<String, dynamic>> scheduleCollection =
+    //     firestore.collection("user").doc(uid).collection("schedule");
+    // DocumentSnapshot<Map<String, dynamic>> scheduleDoc =
+    //     await scheduleCollection.doc(scheduleDocId).get();
+    // if (scheduleDoc.exists == true) {
+    //   Map<String, dynamic>? dataScheduleToday = scheduleDoc.data();
+    //   if (dataScheduleToday?["schedule"] != null) {
+    //     CustomNotification.successNotification("Sukses", "Berhasil Edit Data");
+    //   } else {
+    //     editSchedule(scheduleDocId);
+    //   }
+    // }
 
     // Jangan dihapus
-    // if (dateController.text.isNotEmpty &&
-    //     timeController.text.isNotEmpty &&
-    //     titleController.text.isNotEmpty &&
-    //     deskripsiController.text.isNotEmpty &&
-    //     makananController.text.isNotEmpty &&
-    //     minumanController.text.isNotEmpty) {
-    //   isLoading.value = true;
-    //   try {
-    //     Map<String, dynamic> data = {
-    //       "date": DateTime.now().toIso8601String(),
-    //       "tanggal": dateController.text,
-    //       "waktu": timeController.text,
-    //       "title": titleController.text,
-    //       "deskripsi": deskripsiController.text,
-    //       "makanan": makananController.text,
-    //       "minuman": minumanController.text,
-    //       "created_at": DateTime.now().toIso8601String(),
-    //     };
-    //     // await firestore
-    //     //     .collection(scheduleCollection)
-    //     //     .doc(scheduleDocId)
-    //     //     .update(data);
-    //     // await scheduleCollection.doc(scheduleDocId).update(data);
-    //     await scheduleDoc.data()?.update(scheduleDocId, (value) => data);
-    //     Get.back();
-    //     CustomNotification.successNotification(
-    //         "Berhasil", "Berhasil Edit Schedule");
-    //     clearEditingControllers();
-    //   } catch (e) {
-    //     CustomNotification.errorNotification(
-    //         "Error", "Tidak Dapat Update Profile. Error : ${e.toString()}");
-    //   } finally {
-    //     isLoading.value = false;
-    //   }
-    // } else {
-    //   isLoading.value = false;
-    //   CustomNotification.errorNotification("Error", "Isi Form Terlebih Dahulu");
-    // }
-  }
-
-  editSchedule(String scheduleDocId) async {
-    String uid = auth.currentUser!.uid;
     if (dateController.text.isNotEmpty &&
         timeController.text.isNotEmpty &&
         titleController.text.isNotEmpty &&
@@ -112,12 +76,15 @@ class EditJadwalController extends GetxController {
           "minuman": minumanController.text,
           "created_at": DateTime.now().toIso8601String(),
         };
-        await firestore
-            .collection("user")
-            .doc(uid)
-            .collection("schedule")
-            .doc(scheduleDocId)
-            .update(data);
+
+        // await firestore
+        //     .collection(scheduleCollection)
+        //     .doc(scheduleDocId)
+        //     .update(data);
+        // await scheduleCollection.doc(scheduleDocId).update(data);
+
+        await documentReference.update(data);
+
         Get.back();
         CustomNotification.successNotification(
             "Berhasil", "Berhasil Edit Schedule");
@@ -133,6 +100,48 @@ class EditJadwalController extends GetxController {
       CustomNotification.errorNotification("Error", "Isi Form Terlebih Dahulu");
     }
   }
+
+  // editSchedule(String scheduleDocId) async {
+  //   String uid = auth.currentUser!.uid;
+  //   if (dateController.text.isNotEmpty &&
+  //       timeController.text.isNotEmpty &&
+  //       titleController.text.isNotEmpty &&
+  //       deskripsiController.text.isNotEmpty &&
+  //       makananController.text.isNotEmpty &&
+  //       minumanController.text.isNotEmpty) {
+  //     isLoading.value = true;
+  //     try {
+  //       Map<String, dynamic> data = {
+  //         "date": DateTime.now().toIso8601String(),
+  //         "tanggal": dateController.text,
+  //         "waktu": timeController.text,
+  //         "title": titleController.text,
+  //         "deskripsi": deskripsiController.text,
+  //         "makanan": makananController.text,
+  //         "minuman": minumanController.text,
+  //         "created_at": DateTime.now().toIso8601String(),
+  //       };
+  //       await firestore
+  //           .collection("user")
+  //           .doc(uid)
+  //           .collection("schedule")
+  //           .doc(scheduleDocId)
+  //           .update(data);
+  //       Get.back();
+  //       CustomNotification.successNotification(
+  //           "Berhasil", "Berhasil Edit Schedule");
+  //       clearEditingControllers();
+  //     } catch (e) {
+  //       CustomNotification.errorNotification(
+  //           "Error", "Tidak Dapat Update Profile. Error : ${e.toString()}");
+  //     } finally {
+  //       isLoading.value = false;
+  //     }
+  //   } else {
+  //     isLoading.value = false;
+  //     CustomNotification.errorNotification("Error", "Isi Form Terlebih Dahulu");
+  //   }
+  // }
 
   @override
   onClose() {
