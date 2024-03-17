@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:get/get.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
@@ -8,11 +9,15 @@ import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_bottom_navbar.dart'
 import 'package:tugas_akhir/app/widgets/card/daily_card.dart';
 import 'package:tugas_akhir/app/widgets/card/feeder_card.dart';
 import 'package:tugas_akhir/app/widgets/card/feeder_tile.dart';
+import 'package:tugas_akhir/app/model/morning_model.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({super.key});
+  HomeView({super.key});
+  DatabaseReference morningFeederRef =
+      FirebaseDatabase.instance.ref().child('jadwalPagi');
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +107,7 @@ class HomeView extends GetView<HomeController> {
                     // Daily Card
                     StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                         stream: controller.streamDailyFeeder(),
-                        builder: (contex, snapshot) {
+                        builder: (context, snapshot) {
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
                               return const Center(
@@ -112,11 +117,21 @@ class HomeView extends GetView<HomeController> {
                               var todayScheduleData = snapshot.data?.data();
                               return DailyCard(
                                 todayScheduleData: todayScheduleData,
+                                // morningFeeder: morningFeeder,
                               );
                             default:
                               return const SizedBox();
                           }
                         }),
+
+                    Expanded(
+                      child: FirebaseAnimatedList(
+                        query: query,
+                        itemBuilder: (context, snapshot, animation, index) {
+                          return const SizedBox();
+                        },
+                      ),
+                    ),
 
                     const SizedBox(height: 15),
 

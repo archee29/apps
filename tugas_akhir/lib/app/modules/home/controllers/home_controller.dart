@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:math';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
@@ -28,6 +31,29 @@ class HomeController extends GetxController {
         });
       }
     });
+  }
+
+  // get all json data rtdb
+  Future<void> getMorningFeeder() async {
+    String uid = auth.currentUser!.uid;
+    final databaseReference = FirebaseDatabase.instance.ref();
+    DatabaseEvent event = await FirebaseDatabase.instance
+        .ref("users")
+        .child(uid)
+        .child("jadwalPagi")
+        .once();
+    Map<String, dynamic> updateMorningFeeder = {};
+    dynamic snapshotValue = event.snapshot.value;
+    if (snapshotValue is Map<String, dynamic>) {
+      Map<String, dynamic> mfData = snapshotValue;
+      for (var entry in mfData.entries) {
+        String jadwalPagi = entry.key;
+        DataSnapshot mfData = await databaseReference.get();
+        updateMorningFeeder[jadwalPagi] = mfData;
+      }
+    } else {
+      CustomNotification.errorNotification("Error", "$e");
+    }
   }
 
   launchHouseOnMap() {
