@@ -79,15 +79,6 @@ class SettingView extends GetView<SettingController> {
                             arguments: userData,
                           ),
                         ),
-                        (userData['role'] == 'admin')
-                            ? MenuTile(
-                                title: 'Add User',
-                                icon: SvgPicture.asset(
-                                  'assets/icons/people.svg',
-                                ),
-                                onTap: () => Get.toNamed(Routes.SIGNUP),
-                              )
-                            : const SizedBox(),
                         MenuTile(
                           title: "Ubah Password",
                           icon: SvgPicture.asset(
@@ -100,7 +91,7 @@ class SettingView extends GetView<SettingController> {
                           icon: SvgPicture.asset(
                             'assets/icons/history.svg',
                           ),
-                          onTap: () => Get.toNamed(Routes.ALL_FEEDER),
+                          onTap: () => Get.toNamed(Routes.DETAIL_JADWAL),
                         ),
                         MenuTile(
                           isDanger: true,

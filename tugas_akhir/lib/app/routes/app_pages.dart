@@ -14,8 +14,6 @@ import '../modules/edit_jadwal/bindings/edit_jadwal_binding.dart';
 import '../modules/edit_jadwal/views/edit_jadwal_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
-import '../modules/iot/bindings/iot_binding.dart';
-import '../modules/iot/views/iot_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/main/bindings/main_binding.dart';
@@ -26,8 +24,6 @@ import '../modules/reset/bindings/reset_binding.dart';
 import '../modules/reset/views/reset_view.dart';
 import '../modules/setting/bindings/setting_binding.dart';
 import '../modules/setting/views/setting_view.dart';
-import '../modules/signup/bindings/signup_binding.dart';
-import '../modules/signup/views/signup_view.dart';
 import '../modules/tambah_jadwal/bindings/tambah_jadwal_binding.dart';
 import '../modules/tambah_jadwal/views/tambah_jadwal_view.dart';
 import '../modules/update_profile/bindings/update_profile_binding.dart';
@@ -53,16 +49,6 @@ class AppPages {
       binding: LoginBinding(),
     ),
     GetPage(
-      name: _Paths.SIGNUP,
-      page: () => const SignupView(),
-      binding: SignupBinding(),
-    ),
-    GetPage(
-      name: _Paths.IOT,
-      page: () => IotView(),
-      binding: IotBinding(),
-    ),
-    GetPage(
       name: _Paths.SETTING,
       page: () => SettingView(),
       binding: SettingBinding(),
@@ -79,7 +65,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.TAMBAH_JADWAL,
-      page: () => TambahJadwalView(),
+      page: () => const TambahJadwalView(),
       binding: TambahJadwalBinding(),
     ),
     GetPage(
@@ -114,7 +100,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.DETAIL_WATER,
-      page: () => DetailWaterView(),
+      page: () => const DetailWaterView(),
       binding: DetailWaterBinding(),
     ),
     GetPage(

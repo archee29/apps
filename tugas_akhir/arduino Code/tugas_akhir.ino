@@ -25,12 +25,13 @@
 // #define WIFI_SSID "Tugasakhir"
 // #define WIFI_PASSWORD "wifisigit"
 #define API_KEY "AIzaSyD9cMliTs9G41vgRLcjS2VacvtMWWR1doQ"
-#define DATABASE_URL "https://tugas-akhir-3c0d9-default-rtdb.asia-southeast1.firebasedatabase.app/"
+#define DATABASE_URL "tugas-akhir-3c0d9-default-rtdb.asia-southeast1.firebasedatabase.app/"
+// #define DATABASE_AUTH "pTwKOZa4sifddtLnt0kFt8NJVHh3VXf1gDWdgUnh"
 #define USER_EMAIL "mhsigit01@gmail.com"
 #define USER_PASSWORD "muhammadsigit292001"
 
 // Firebase config
-FirebaseData firebaseData, fbdo_s1, fbdo_s2;
+FirebaseData firebaseData;
 FirebaseAuth auth;
 FirebaseConfig config;
 FirebaseJson jadwalPagiJson;
@@ -43,22 +44,24 @@ unsigned long timerDelay = 180000;
 // variable user uid
 String uid;
 
-// Database main path and parent path 1
+// Database main path and parent path
 String databasePath;
 
-// child node makan
-bool pump = false;
-bool statusMF = false;
-bool statusAF = false;
+String jadwalPagiNode;
+String jadwalSoreNode;
 
-// Parent Node
-// String parentPath;
+// pump and servo status
+String pumpStatus;
+String servoStatus;
+
+String status;
+
 
 // wifi setup variable
 bool res;
 bool mode;
 
-String status = "on";
+// String status = "on";
 
 // RTC
 RTC_DS3231 rtc;
@@ -88,7 +91,7 @@ float beratWadah;
 #define trigPinTabung 7
 long durasiTabung;
 int jarakTabung, tinggiAirTabung;
-int tinggiSensorTabung = 10;
+int tinggiSensorTabung = 17; // belum ditambah tabung baru (hitungan masih 1 tabung)
 
 // relay
 #define relayPin 8
@@ -102,13 +105,23 @@ Servo myServo;
 #define trigPinWadah 11
 long durasiWadah;
 int jarakWadah, tinggiAirWadah;
-int tinggiSensorWadah = 5;
+float tinggiSensorWadah = 12.2;
 
 // inisialisasi wifi
 void initWiFi(){
+    // WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+    // Serial.print("Membuat Koneksi ke WIFI");
+    // while(WiFi.status() != WL_CONNECTED){
+    //   Serial.print(".");
+    //   delay(300);
+    // }
+    // Serial.println();
+    // Serial.print("Koneksi ke Internet dengan IP : ");
+    // Serial.println(WiFi.localIP());
+    // Serial.println();
     WiFiManager wifiConfig;
     WiFi.mode(WIFI_STA);
-    res = wifiConfig.autoConnect("Tugasakhir", "wifisigit");
+    res = wifiConfig.autoConnect("Auto_CAF", "tugasakhir");
     if(!res) {
       Serial.println("Koneksi Gagal");
       lcd.setCursor(0,0);
@@ -160,7 +173,9 @@ void initFirebase(){
   auth.user.password = USER_PASSWORD;
 
   Firebase.reconnectWiFi(true);
-  firebaseData.setResponseSize(4096);
+
+  firebaseData.setReadTimeout(firebaseData, 1000 * 60);
+  firebaseData.setwriteSizeLimit(firebaseData, "tiny");
 
   // Assign the callback function for the long running token generation task  and see addons/TokenHelper.h
   config.token_status_callback = tokenStatusCallback;
@@ -170,6 +185,8 @@ void initFirebase(){
 
   // Initialize the library with the Firebase authen and config
   Firebase.begin(&config, &auth);
+
+  delay(2000);
 
   // Getting the user UID might take a few seconds
   Serial.println("Mendapatkan User UID");
@@ -426,42 +443,53 @@ void USWadah(){
 
 void initJson(){
   DateTime now = rtc.now();
-  now = rtc.now();
-  jam = now.hour(), DEC;
-  menit = now.minute(), DEC;
-  detik = now.second(), DEC;
-  tanggal = now.day(), DEC;
-  bulan = now.month(), DEC;
-  tahun = now.year(), DEC;
-  hari = dataHari[now.dayOfTheWeek()];
 
   // jadwal pagi
   jadwalPagiJson.add("tabungMakan", beratTabung);
   jadwalPagiJson.add("wadahMakan", beratWadah);
   jadwalPagiJson.add("tabungMinum", tinggiAirTabung);
   jadwalPagiJson.add("wadahMinum", tinggiAirWadah);
-  // jadwalPagiJson.add("pump", bool(pumpStatus));
-  // jadwalPagiJson.add("servo", bool(servoStatus));
-  // jadwalPagiJson.add("timestamp", now);
-
-  // String jsonStr1;
-  // jadwalPagiJson.toString(jsonStr1, true);
-  // Serial.println(jsonStr1);
+  jadwalPagiJson.add("pump", pumpStatus);
+  jadwalPagiJson.add("servo", servoStatus);
+  jadwalPagiJson.add("timestamp", String("DateTime::CREATED_AT : \t") + now.timestamp(DateTime::TIMESTAMP_FULL));
 
   // jadwal sore
   jadwalSoreJson.add("tabungMakan", beratTabung);
   jadwalSoreJson.add("wadahMakan", beratWadah);
   jadwalSoreJson.add("tabungMinum", tinggiAirTabung);
   jadwalSoreJson.add("wadahMinum", tinggiAirWadah);
-  // jadwalSoreJson.add("pump", bool(pumpStatus));
-  // jadwalSoreJson.add("servo", bool(servoStatus));
-  // jadwalSoreJson.add("timestamp", now);
-
-  // String jsonStr2;
-  // jadwalSoreJson.toString(jsonStr2, true);
-  // Serial.println(jsonStr2);
+  jadwalSoreJson.add("pump", pumpStatus);
+  jadwalSoreJson.add("servo", servoStatus);
+  jadwalSoreJson.add("timestamp", String("DateTime::CREATED_AT : \t") + now.timestamp(DateTime::TIMESTAMP_FULL));
 }
 
+void pump(){
+  if(Firebase.getString(&firebaseData, jadwalPagiNode.c_str(), status)){
+    if(firebaseData.dataType() == "string"){
+      String pumpStatus = firebaseData.stringData();
+      if(pumpStatus == "ON"){
+        Serial.println("PUMP NYALA");
+        digitalWrite(relayPin, HIGH);
+      }
+      else if(pumpStatus == "OFF"){
+        Serial.println("PUMP MATI");
+        digitalWrite(relayPin, LOW);
+      }
+      else{
+        Serial.println("Source Code Salah isi dengan Data ON/OFF");
+      }
+    }
+  }
+  else{
+     Serial.println("GAGAL MENGIRIM DATA");
+     Serial.println("Error : " + firebaseData.errorReason());
+     Serial.println("------------------------------------");
+     Serial.println();
+  }
+}
+
+void servo(){
+}
 
 void setup() {
   Serial.begin(115200);
@@ -507,25 +535,23 @@ void setup() {
 
   Serial.println("START PROGRAM");
 
-  // call class init wifi
-  initWiFi();
-
   // call class init LCD
   initLCD();
 
+  // call class init wifi
+  initWiFi();
+
+  // call class init firebase
   initFirebase();
 
+  // call class init json
   initJson();
-
-  // if(!Firebase.RTDB.beginStream(&fbdo_s1, "/jadwalPagi/makan/servo"))
-  //   Serial.printf("Stream 1 Error, &s\n\n", fbdo_s1.errorReason().c_str());
-  // Firebase.RTDB.beginStream(&fbdo_s1, "/jadwalPagi/makan");
 }
 
 void loop() {
 
-  readSensor();
-  displayLCD();
+  // readSensor();
+  // displayLCD();
 
   // elif untuk mode program
     if(mode == false){
@@ -572,20 +598,9 @@ void readSensor(){
 
 }
 
-void updateSensorReadings(){
-
-}
-
 void sendSensorData(){
     DateTime now = rtc.now();
     now = rtc.now();
-    jam = now.hour(), DEC;
-    menit = now.minute(), DEC;
-    detik = now.second(), DEC;
-    tanggal = now.day(), DEC;
-    bulan = now.month(), DEC;
-    tahun = now.year(), DEC;
-    hari = dataHari[now.dayOfTheWeek()];
 
       if(Firebase.isTokenExpired()){
         Firebase.refreshToken(&config);
@@ -596,10 +611,12 @@ void sendSensorData(){
 
         sendDataPrevMillis = millis();
 
-        // readSensor();
+        jadwalPagiNode = databasePath + "/jadwalPagi";
+        jadwalSoreNode = databasePath + "/jadwalSore";
 
-        String jadwalPagiNode = databasePath + "/jadwalPagi";
-        String jadwalSoreNode = databasePath + "/jadwalSore";
+        // store data ke database
+        // Firebase.RTDB.setJSON(&firebaseData, jadwalPagiNode.c_str(), &jadwalPagiJson);
+        // Firebase.RTDB.setJSON(&firebaseData, jadwalSoreNode.c_str(), &jadwalSoreJson);
 
         if(Firebase.RTDB.setJSON(&firebaseData, jadwalPagiNode.c_str(), &jadwalPagiJson)){
           Serial.println("PASSED");
@@ -612,7 +629,7 @@ void sendSensorData(){
           Serial.println();
         }
         else{
-          Serial.println("FAILED");
+          Serial.println("GAGAL MENGIRIM DATA");
           Serial.println("Error : " + firebaseData.errorReason());
           Serial.println("------------------------------------");
           Serial.println();
@@ -629,136 +646,14 @@ void sendSensorData(){
           Serial.println();
         }
         else{
-          Serial.println("FAILED");
+          Serial.println("GAGAL MENGIRIM DATA");
           Serial.println("Error : " + firebaseData.errorReason());
           Serial.println("------------------------------------");
           Serial.println();
         }
       }
 
-      // read data dari firebase RTDB
-
       else{
         Serial.println("Tidak Dapat Mengirimkan Data");
       }
 }
-
-// if(fbdo_s1.streamAvailable()){
-
-// }
-
-// if(Firebase.RTDB.setJSON(&firebaseData, jadwalPagiNode.c_str(), &jadwalPagiJson)){
-//           // makan
-//           if(Firebase.RTDB.setJSON(&firebaseData, "/jadwalPagi/makan", &json)){
-//             // servo
-//             json.set("/jadwalPagi/makan/servo", String(servoStatus));
-//             // tabung makan
-//             json.set("/jadwalPagi/makan/tabungMakan", float(beratTabung, 1));
-//             // wadah makan
-//             json.set("jadwalPagi/makan/wadahMakan", float(beratWadah, 1));
-//           }
-
-//           // minum
-//           else if(Firebase.RTDB.setJSON(&firebaseData, "/jadwalPagi/minum", &json)){
-//             //pump
-//             json.set("/jadwalPagi/minum/pump", String(pumpStatus));
-
-//             // tabung minum
-//             json.set("/jadwalPagi/minum/tabungMinum", int(tinggiAirTabung));
-
-//             // wadah minum
-//             json.set("/jadwalPagi/minum/wadahMinum", int(tinggiAirWadah));
-
-//           }
-
-//           // pagi
-//           else if(Firebase.RTDB.setBool(&firebaseData, "jadwalPagi/pagi", statusMF)){
-//             if(firebaseData.dataType() == "boolean"){
-//               bool morningFeederStatus = firebaseData.boolData();
-//               if(morningFeederStatus == true){
-//                 Serial.println("Kucing sudah diberi makan");
-//               }
-//               else if(morningFeederStatus == false){
-//                 Serial.println("Kucing belum diberi makan");
-//               }
-//               else {
-//                 Serial.println("Data Tidak Terkirim");
-//                 Serial.println("Error : " + firebaseData.errorReason());
-//               }
-//             }
-//           }
-
-//           // timestamp
-//           else if(Firebase.RTDB.setString(&firebaseData, "jadwalPagi/timestamp", now)){
-//             Serial.print("Created_at : ");
-//             Serial.print(now);
-//           }
-
-//           else{
-//             Serial.println("Kodngan JSON Salah");
-//             Serial.print("Error : " + firebaseData.errorReason());
-//           }
-
-//         }
-
-//         else if(Firebase.RTDB.setJSON(&firebaseData, jadwalSoreNode.c_str(), &jadwalSoreJson)){
-
-//         }
-
-//         else{
-//           Serial.println("Tidak Bisa Mengirim data");
-//         }
-
-// random nert reference
-      // parentPath = makanPath + "/" + String(now);
-      // parentPath = minumPath + "/" + String(now);
-      // parentPath = databasePath + "/" + String(now);
-
-        // if(Firfebase.RTDB.setJSON(&firebaseData, parentPath.c_str(), &json)){
-        //   Serial.printf("Set json ... %s\n", Firebase.RTDB.setJSON(&firebaseData, parentPath.c_str(), &json)? "ok": fbdo.errorReason().c_str());
-        // }
-        // else{
-        //   Serial.println("Kodingan Error");
-        //   Serial.printf(firebaseData.errorReason().c_str());
-        // }
-
-// path makan
-          // if(Firebase.RTDB.setFloat(&firebaseData, "/makan/tabungMakan", beratTabung)){
-          //   Serial.print("Berat Tabung : ");
-          //   Serial.println(beratTabung);
-          // }
-          // else{
-          //   Serial.println("Gagal Read Data Loadcell Tabung");
-          //   Serial.println("Error : " + firebaseData.errorReason());
-          // }
-
-          // if(Firebase.RTDB.setFloat(&firebaseData, "/makan/wadahMakan", beratWadah)){
-          //   Serial.print("Berat Wadah : ");
-          //   Serial.println(beratWadah);
-          // }
-          // else{
-          //   Serial.println("Gagal Read Data LoadCell Wadah");
-          //   Serial.pritnln("Error : " + firebaseData.errorReason());
-          // }
-
-// path minum
-          // if (Firebase.getString(firebaseData, "/minum/pump", status)) {
-          //   if  (firebaseData.dataType() == "string"){
-          //     String pumpStatus = firebaseData.stringData();
-          //     if (pumpStatus == "ON") {
-          //       Serial.println("Relay ON");
-          //       digitalWrite(relayPin, HIGH);
-          //     }
-          //     else if (pumpStatus == "OFF") {
-          //       Serial.println("Relay OFF");
-          //       digitalWrite(relayPin, LOW);
-          //     }
-          //     else {
-          //       Serial.println("Salah kode! isi dengan data ON/OFF");
-          //     }
-          //   }
-          // }
-          // else{
-          //   Serial.println("Gagal memuat Koneksi ke Sensor Pump");
-          //   Serial.println("Error : " + firebaseData.errorReason());
-          // }

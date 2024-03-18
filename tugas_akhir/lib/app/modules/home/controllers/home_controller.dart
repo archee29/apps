@@ -14,6 +14,7 @@ import 'package:tugas_akhir/app/widgets/dialog/custom_notification.dart';
 import 'package:tugas_akhir/data_pengguna.dart';
 
 class HomeController extends GetxController {
+  RxMap<String, dynamic> dataMorningFeeder = <String, dynamic>{}.obs;
   RxBool isLoading = false.obs;
   RxString houseDistance = "-".obs;
 
@@ -34,26 +35,28 @@ class HomeController extends GetxController {
   }
 
   // get all json data rtdb
-  Future<void> getMorningFeeder() async {
+  getMorningFeeder() async {
     String uid = auth.currentUser!.uid;
-    final databaseReference = FirebaseDatabase.instance.ref();
-    DatabaseEvent event = await FirebaseDatabase.instance
-        .ref("users")
+    DatabaseReference morningFeederRef =
+        FirebaseDatabase.instance.ref('users').child(uid).child('jadwalPagi');
+    DatabaseEvent reference = await FirebaseDatabase.instance
+        .ref('users')
         .child(uid)
-        .child("jadwalPagi")
+        .child('jadwalPagi')
         .once();
     Map<String, dynamic> updateMorningFeeder = {};
-    dynamic snapshotValue = event.snapshot.value;
+    dynamic snapshotValue = reference.snapshot.value;
     if (snapshotValue is Map<String, dynamic>) {
       Map<String, dynamic> mfData = snapshotValue;
       for (var entry in mfData.entries) {
         String jadwalPagi = entry.key;
-        DataSnapshot mfData = await databaseReference.get();
+        DataSnapshot mfData = await morningFeederRef.get();
         updateMorningFeeder[jadwalPagi] = mfData;
       }
     } else {
       CustomNotification.errorNotification("Error", "$e");
     }
+    dataMorningFeeder = updateMorningFeeder.obs;
   }
 
   launchHouseOnMap() {
