@@ -543,6 +543,17 @@ packages:
       sha256: "78eb209deea09858f5269f5a5b02be4049535f568c07b275096836f01ea323fa"
       url: "https://pub.dev"
     source: hosted
+<<<<<<< HEAD
+=======
+    version: "0.6.7"
+  leak_tracker:
+    dependency: transitive
+    description:
+      name: leak_tracker
+      sha256: "78eb209deea09858f5269f5a5b02be4049535f568c07b275096836f01ea323fa"
+      url: "https://pub.dev"
+    source: hosted
+>>>>>>> ad80956336154be075f1625f063ec4203c62aec4
     version: "10.0.0"
   leak_tracker_flutter_testing:
     dependency: transitive
@@ -616,6 +627,17 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.0"
+<<<<<<< HEAD
+=======
+  path_drawing:
+    dependency: transitive
+    description:
+      name: path_drawing
+      sha256: bbb1934c0cbb03091af082a6389ca2080345291ef07a5fa6d6e078ba8682f977
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
+>>>>>>> ad80956336154be075f1625f063ec4203c62aec4
   path_parsing:
     dependency: transitive
     description:
@@ -717,6 +739,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
+<<<<<<< HEAD
   sprintf:
     dependency: transitive
     description:
@@ -725,6 +748,8 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0"
+=======
+>>>>>>> ad80956336154be075f1625f063ec4203c62aec4
   stack_trace:
     dependency: transitive
     description:
@@ -925,6 +950,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "13.0.0"
+<<<<<<< HEAD
   web:
     dependency: transitive
     description:
@@ -933,6 +959,8 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.5.1"
+=======
+>>>>>>> ad80956336154be075f1625f063ec4203c62aec4
   win32:
     dependency: transitive
     description:
@@ -958,5 +986,10 @@ packages:
     source: hosted
     version: "6.5.0"
 sdks:
+<<<<<<< HEAD
   dart: ">=3.3.0 <4.0.0"
   flutter: ">=3.19.2"
+=======
+  dart: ">=3.2.0-0 <4.0.0"
+  flutter: ">=3.10.0"
+>>>>>>> ad80956336154be075f1625f063ec4203c62aec4
