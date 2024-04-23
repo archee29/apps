@@ -13,38 +13,34 @@ dependencies:
     sdk: flutter
 
 
-  cupertino_icons: ^1.0.2
-  get: ^4.6.5
+  cupertino_icons: ^1.0.6
+  get: ^4.6.6
   get_storage: ^2.1.1
-  firebase_auth: ^4.7.3
-  firebase_core: ^2.15.1
-  cloud_firestore: ^4.8.5
-  firebase_storage:
-  convex_bottom_bar: ^3.0.0
+  firebase_auth: ^4.19.2
+  firebase_core: ^2.30.0
+  cloud_firestore: ^4.17.0
+  firebase_database: ^10.5.2
+  firebase_storage: ^11.7.2
+  convex_bottom_bar: ^3.2.0
   carousel_slider: ^4.2.1
-  image_picker: ^0.8.5
-  intl:  ^0.18.1
-  geolocator: ^10.0.1
-  geocoding: ^2.1.0
-  flutter_dotenv: ^5.1.0
-  http: ^1.1.0
-  mqtt_client: ^10.0.0
-  flutter_svg:
-  maps_launcher: ^2.0.1
-  syncfusion_flutter_datepicker: ^20.1.51
-  syncfusion_flutter_calendar:
-  table_calendar: ^3.0.9
-  flutter_switch:
-  firebase_database: ^10.4.0
-
+  image_picker: ^1.1.0
+  intl:  ^0.19.0
+  geolocator: ^11.0.0
+  geocoding: ^3.0.0
+  flutter_svg: ^2.0.10+1
+  maps_launcher: ^2.2.1
+  syncfusion_flutter_datepicker: ^25.1.40
+  syncfusion_flutter_calendar: ^25.1.40
+  table_calendar: ^3.1.1
+  flutter_switch: ^0.3.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  firebase_analytics: ^10.4.5
-  flutter_lints: ^2.0.0
-  google_fonts: ^5.1.0
+  firebase_analytics: ^10.8.10
+  flutter_lints: ^3.0.2
+  google_fonts: ^6.2.1
 
 flutter:
   uses-material-design: true
@@ -53,7 +49,6 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/fonts/
-    - .env
 
   fonts:
     - family: poppins

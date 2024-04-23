@@ -64,6 +64,7 @@ class LoginView extends GetView<LoginController> {
                   child: const Text(
                     'Masuk',
                     style: TextStyle(
+                      color: Colors.white,
                       fontSize: 18,
                       fontFamily: 'poppins',
                       fontWeight: FontWeight.w600,
@@ -140,6 +141,7 @@ class LoginView extends GetView<LoginController> {
                           border: InputBorder.none,
                           hintText: "*********",
                           suffixIcon: IconButton(
+                            // ignore: unrelated_type_equality_checks
                             icon: (controller.obsecureText != false)
                                 ? SvgPicture.asset('assets/icons/show.svg')
                                 : SvgPicture.asset('assets/icons/hide.svg'),
@@ -184,6 +186,7 @@ class LoginView extends GetView<LoginController> {
                           fontSize: 16,
                           fontFamily: 'poppins',
                           fontWeight: FontWeight.w500,
+                          color: Colors.white,
                         ),
                       ),
                     ),

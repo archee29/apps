@@ -87,7 +87,7 @@ class ResetView extends GetView<ResetController> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        "Kami Akan Mengirimkan Link Untuk Reset Password\nKe Email Anda.",
+                        "Kami Akan Mengirimkan Link Untuk Reset Password Ke Email Anda.",
                         style: TextStyle(
                           color: AppColors.secondarySoft,
                           height: 150 / 100,
@@ -156,6 +156,7 @@ class ResetView extends GetView<ResetController> {
                             ? 'Reset Password'
                             : 'Loading....',
                         style: const TextStyle(
+                          color: Colors.white,
                           fontSize: 16,
                           fontFamily: 'poppins',
                           fontWeight: FontWeight.w500,

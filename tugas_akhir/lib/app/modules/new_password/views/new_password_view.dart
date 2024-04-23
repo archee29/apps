@@ -117,6 +117,7 @@ class NewPasswordView extends GetView<NewPasswordController> {
                   style: const TextStyle(
                     fontSize: 16,
                     fontFamily: 'poppins',
+                    color: Colors.white,
                   ),
                 ),
               ),

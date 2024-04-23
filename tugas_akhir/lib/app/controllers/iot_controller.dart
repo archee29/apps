@@ -1,12 +1,15 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:get/get.dart';
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:intl/intl.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
-import 'package:tugas_akhir/app/widgets/dialog/custom_alert_dialog.dart';
 import 'package:tugas_akhir/app/widgets/dialog/custom_notification.dart';
 
-class EditJadwalController extends GetxController {
+class IOTController extends GetxController {
+  RxMap<String, dynamic> dataMorningFeeder = <String, dynamic>{}.obs;
+  FirebaseAuth auth = FirebaseAuth.instance;
   TextEditingController dateController = TextEditingController();
   TextEditingController timeController = TextEditingController();
   TextEditingController titleController = TextEditingController();
@@ -15,15 +18,44 @@ class EditJadwalController extends GetxController {
   TextEditingController minumanController = TextEditingController();
 
   RxBool isLoading = false.obs;
-  RxBool isLoadingEditSchedule = false.obs;
+  RxBool isLoadingCreateFeeder = false.obs;
+
   var selectedDate = DateTime.now().obs;
   var selectedTime = TimeOfDay.now().obs;
 
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseDatabase morningFeederData = FirebaseDatabase.instance;
 
-  Future<void> updateSchedule() async {
+  // set data IOT
+  Future<void> sendDataIOT(
+    double tabungMakan,
+    double wadahMakan,
+    int tabungMinum,
+    int wadahMinum,
+    bool pump,
+    bool servo,
+    String timestamp,
+  ) async {
     String uid = auth.currentUser!.uid;
+    try {
+      morningFeederData.ref('users').child(uid).child('jadwalPagi').set({
+        'tabungMakan': tabungMakan,
+        'wadahMakan': wadahMakan,
+        'tabungMinum': tabungMinum,
+        'wadahMinum': wadahMinum,
+        'pump': pump,
+        'servo': servo,
+        'timestamp': timestamp
+      });
+    } catch (e) {
+      CustomNotification.errorNotification("Error : ", "$e");
+    }
+  }
+
+  // SET DATA MANUAL
+  Future<void> sendDataManual() async {
+    String uid = auth.currentUser!.uid;
+    DatabaseReference dataManual =
+        FirebaseDatabase.instance.ref('users').child(uid).child('dataManual');
     try {
       if (dateController.text.isNotEmpty &&
           timeController.text.isNotEmpty &&
@@ -31,6 +63,7 @@ class EditJadwalController extends GetxController {
           deskripsiController.text.isNotEmpty &&
           makananController.text.isNotEmpty &&
           minumanController.text.isNotEmpty) {
+        isLoading.value = true;
         Map<String, dynamic> data = {
           "date": DateTime.now().toIso8601String(),
           "tanggal": dateController.text,
@@ -41,61 +74,21 @@ class EditJadwalController extends GetxController {
           "minuman": minumanController.text,
           "created_at": DateTime.now().toIso8601String(),
         };
-        firestore
-            .collection("user")
-            .doc(uid)
-            .collection("schedule")
-            .get()
-            .then((QuerySnapshot querySnapshot) {
-          final docId = querySnapshot.docs.first.id;
-          firestore
-              .collection("user")
-              .doc(uid)
-              .collection("schedule")
-              .doc(docId)
-              .update(data);
-        });
+        await dataManual.push().set(data);
+        Get.back();
         Get.back();
         CustomNotification.successNotification(
-            "Berhasil", "Berhasil Edit Schedule");
+            "Sukses", "Berhasil Menambahkan Data");
         clearEditingControllers();
+        isLoadingCreateFeeder.value = false;
       } else {
         isLoading.value = false;
         CustomNotification.errorNotification(
-            "Error", "Isi Form Terlebih Dahulu");
+            "Error", "Isi Form terlebih dahulu");
       }
     } catch (e) {
-      CustomNotification.errorNotification("Terjadi Kesalahan", "$e");
+      CustomNotification.errorNotification("Error : ", "$e");
     }
-  }
-
-  void deleteData() async {
-    String uid = auth.currentUser!.uid;
-    CustomAlertDialog.showFeederAlert(
-      title: "Hapus Data",
-      message: "Apakah Anda Yakin untuk menghapus data? ",
-      onConfirm: () async {
-        try {
-          firestore
-              .collection("user")
-              .doc(uid)
-              .collection("schedule")
-              .get()
-              .then((QuerySnapshot querySnapshot) {
-            final docId = querySnapshot.docs.first.id;
-            firestore
-                .collection("user")
-                .doc(uid)
-                .collection("schedule")
-                .doc(docId)
-                .delete();
-          });
-        } catch (e) {
-          CustomNotification.errorNotification("Terjadi Kesalahan", "$e");
-        }
-      },
-      onCancel: () => Get.back(),
-    );
   }
 
   @override
@@ -115,6 +108,31 @@ class EditJadwalController extends GetxController {
     deskripsiController.clear();
     makananController.clear();
     minumanController.clear();
+  }
+
+  // get data dari esp8266
+  getMorningFeeder() async {
+    String uid = auth.currentUser!.uid;
+    DatabaseReference morningFeederRef =
+        FirebaseDatabase.instance.ref('users').child(uid).child('jadwalPagi');
+    DatabaseEvent reference = await FirebaseDatabase.instance
+        .ref('users')
+        .child(uid)
+        .child('jadwalPagi')
+        .once();
+    Map<String, dynamic> updateMorningFeeder = {};
+    dynamic snapshotValue = reference.snapshot.value;
+    if (snapshotValue is Map<String, dynamic>) {
+      Map<String, dynamic> mfData = snapshotValue;
+      for (var entry in mfData.entries) {
+        String jadwalPagi = entry.key;
+        DataSnapshot mfData = await morningFeederRef.get();
+        updateMorningFeeder[jadwalPagi] = mfData;
+      }
+    } else {
+      CustomNotification.errorNotification("Error", "$e");
+    }
+    dataMorningFeeder = updateMorningFeeder.obs;
   }
 
   chooseDate() async {
@@ -149,10 +167,7 @@ class EditJadwalController extends GetxController {
     );
     if (pickedDate != null && pickedDate != selectedDate.value) {
       selectedDate.value = pickedDate;
-
-      // dateController.text =
-      //     DateFormat("dd-MM-yyyy").format(selectedDate.value).toString();
-      // dateController.text = selectedDate.value.toString();
+      dateController.text = DateFormat.yMd().format(selectedDate.value);
     }
   }
 
@@ -164,8 +179,9 @@ class EditJadwalController extends GetxController {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
+              background: Colors.white,
               primary: AppColors.primary,
-              onPrimary: Colors.black,
+              onPrimary: Colors.white,
               onSurface: Colors.black,
             ),
             textButtonTheme: TextButtonThemeData(

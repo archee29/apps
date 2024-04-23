@@ -174,7 +174,7 @@ class MenuTile extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(left: 24),
               child: SvgPicture.asset(
-                'assets/icon/arrow-right.svg',
+                'assets/icons/arrow-right.svg',
                 // ignore: deprecated_member_use
                 color:
                     (isDanger == false) ? AppColors.secondary : AppColors.error,

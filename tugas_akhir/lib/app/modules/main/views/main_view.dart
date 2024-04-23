@@ -8,6 +8,7 @@ import 'package:tugas_akhir/app/controllers/page_index_controller.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_bottom_navbar.dart';
+import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_calendar.dart';
 import 'package:tugas_akhir/app/widgets/card/schedule_tile.dart';
 import '../controllers/main_controller.dart';
 
@@ -139,81 +140,6 @@ class MainView extends GetView<MainController> {
                         ),
                         const SizedBox(height: 15),
                         // Button tambah makan dan minum
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            // Button Tambah Makanan
-                            SizedBox(
-                              child: ElevatedButton.icon(
-                                // Function
-                                onPressed: () {
-                                  Get.toNamed(Routes.TAMBAH_JADWAL);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 18),
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    side: const BorderSide(
-                                        width: 1, color: Color(0xFFFF39B0)),
-                                  ),
-                                  shadowColor: const Color(0x3F000000),
-                                ),
-                                icon: const Icon(
-                                  Icons.add_outlined,
-                                  color: Colors.black,
-                                ),
-                                label: const Text(
-                                  "Tambah Makanan",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12,
-                                    fontFamily: 'poppins',
-                                  ),
-                                ),
-                              ),
-                            ),
-                            // Button Tambah Minuman
-                            SizedBox(
-                              child: ElevatedButton.icon(
-                                onPressed: () {
-                                  Get.toNamed(Routes.ALL_FEEDER);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.white,
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 18),
-                                  elevation: 0,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    side: const BorderSide(
-                                        width: 1, color: Color(0xFFFF39B0)),
-                                  ),
-                                  shadowColor: const Color(0x3F000000),
-                                ),
-                                icon: const Icon(
-                                  Icons.add_outlined,
-                                  color: Colors.black,
-                                ),
-                                label: const Text(
-                                  "Tambah Minuman",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 12,
-                                    fontFamily: 'poppins',
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 30),
-                        // button servo dan pump
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -506,148 +432,27 @@ class MainView extends GetView<MainController> {
 
                   const SizedBox(height: 20),
 
-                  GetBuilder<MainController>(
-                    builder: (con) {
-                      return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                        future: controller.getAllSchedule(),
-                        builder: (context, snapshot) {
-                          switch (snapshot.connectionState) {
-                            case ConnectionState.waiting:
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            case ConnectionState.active:
-                            case ConnectionState.done:
-                              var data = snapshot.data!.docs;
-                              for (var docs in data) {}
-
-                              return Column(
-                                children: [
-                                  Card(
-                                    clipBehavior: Clip.antiAlias,
-                                    margin: const EdgeInsets.all(8.0),
-                                    child: TableCalendar(
-                                      // eventLoader: (day) => controller.,
-                                      // onDaySelected: (selectedDay, focusedDay) {
-                                      //   controller.selectedDay = selectedDay;
-                                      //   controller.focusedDay = focusedDay;
-                                      // },
-                                      // selectedDayPredicate: (day) => isSameDay(
-                                      //     day, controller.selectedDay),
-                                      // selectedDayPredicate: (day) {
-                                      //   return (isSameDay(
-                                      //       controller
-                                      //           .selectedDateSchedule.value,
-                                      //       day));
-                                      // },
-                                      // onDaySelected: (selectedDay, focusedDay) {
-                                      //   if (!isSameDay(
-                                      //       selectedDay, focusedDay)) {
-                                      //     selectedDay = controller
-                                      //         .selectedDateSchedule.value;
-                                      //     focusedDay = DateTime.now();
-                                      //   }
-                                      // },
-
-                                      calendarStyle: CalendarStyle(
-                                        todayDecoration: BoxDecoration(
-                                            color: AppColors.primary,
-                                            shape: BoxShape.circle),
-                                        todayTextStyle: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'poppins',
-                                          color: Colors.white,
-                                          fontSize: 14,
-                                        ),
-
-                                        // selectedDecoration: BoxDecoration(
-                                        //     color: AppColors.primary,
-                                        //     shape: BoxShape.circle),
-                                        // selectedTextStyle: const TextStyle(
-                                        //   fontWeight: FontWeight.bold,
-                                        //   fontFamily: 'poppins',
-                                        //   color: Colors.white,
-                                        //   fontSize: 18,
-                                        // ),
-                                      ),
-                                      focusedDay: DateTime.now(),
-                                      firstDay: DateTime(1950),
-                                      lastDay: DateTime(2100),
-                                      headerStyle: HeaderStyle(
-                                        decoration: BoxDecoration(
-                                            color: AppColors.primary),
-                                        headerMargin:
-                                            const EdgeInsets.only(bottom: 8.0),
-                                        titleTextStyle: const TextStyle(
-                                            color: Colors.white),
-                                        formatButtonDecoration: BoxDecoration(
-                                          border:
-                                              Border.all(color: Colors.white),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        formatButtonTextStyle: const TextStyle(
-                                            color: Colors.white),
-                                        leftChevronIcon: const Icon(
-                                          Icons.chevron_left,
-                                          color: Colors.white,
-                                        ),
-                                        rightChevronIcon: const Icon(
-                                          Icons.chevron_right,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  // ListView.builder(
-                                  //   shrinkWrap: true,
-                                  //   physics: const BouncingScrollPhysics(),
-                                  //   itemCount: data.length,
-                                  //   itemBuilder: (context, index) {
-                                  //     var scheduleData = data[index].data();
-                                  //     return ScheduleTile(
-                                  //       scheduleData: scheduleData,
-                                  //     );
-                                  //   },
-                                  // ),
-                                ],
-                              );
-                            default:
-                              return const SizedBox();
-                          }
-                        },
-                      );
-                    },
-                  ),
-
-                  // Card(
-                  //   clipBehavior: Clip.antiAlias,
-                  //   margin: const EdgeInsets.all(8.0),
-                  //   child: TableCalendar(
-                  //     focusedDay: DateTime.now(),
-                  //     firstDay: DateTime(1950),
-                  //     lastDay: DateTime(2100),
-                  //     headerStyle: HeaderStyle(
-                  //       decoration: BoxDecoration(color: AppColors.primary),
-                  //       headerMargin: const EdgeInsets.only(bottom: 8.0),
-                  //       titleTextStyle: const TextStyle(color: Colors.white),
-                  //       formatButtonDecoration: BoxDecoration(
-                  //         border: Border.all(color: Colors.white),
-                  //         borderRadius: BorderRadius.circular(8),
-                  //       ),
-                  //       formatButtonTextStyle:
-                  //           const TextStyle(color: Colors.white),
-                  //       leftChevronIcon: const Icon(
-                  //         Icons.chevron_left,
-                  //         color: Colors.white,
-                  //       ),
-                  //       rightChevronIcon: const Icon(
-                  //         Icons.chevron_right,
-                  //         color: Colors.white,
-                  //       ),
-                  //     ),
-                  //   ),
+                  // StreamBuilder(
+                  //   stream: controller.streamTodaySchedule(),
+                  //   builder: (context, snapshot) {
+                  //     switch (snapshot.connectionState) {
+                  //       case ConnectionState.waiting:
+                  //         return const Center(
+                  //             child: CircularProgressIndicator());
+                  //       case ConnectionState.active:
+                  //       case ConnectionState.done:
+                  //         var todayScheduleData = snapshot.data?.data();
+                  //         return CustomCalendar(
+                  //           userData: user,
+                  //           todayScheduleData: todayScheduleData,
+                  //         );
+                  //       default:
+                  //         return const SizedBox();
+                  //     }
+                  //   },
                   // ),
 
+                  const CustomCalendar(),
                   const SizedBox(height: 20),
 
                   // Jadwal Card

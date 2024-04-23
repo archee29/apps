@@ -7,12 +7,11 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:tugas_akhir/app/widgets/card/detail_tile.dart';
-import 'package:tugas_akhir/app/widgets/card/schedule_tile.dart';
 
 import '../controllers/all_schedule_controller.dart';
 
 class AllScheduleView extends GetView<AllScheduleController> {
-  const AllScheduleView({Key? key}) : super(key: key);
+  const AllScheduleView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +117,7 @@ class AllScheduleView extends GetView<AllScheduleController> {
                           color: Colors.white,
                         ),
                       )),
-                  icon: SvgPicture.asset('assets/icons/dry_food2.svg'),
+                  icon: SvgPicture.asset('assets/icons/icon-data-iot2.svg'),
                   label: const Text(
                     "Data IOT",
                     style: TextStyle(
@@ -150,7 +149,7 @@ class AllScheduleView extends GetView<AllScheduleController> {
                           color: AppColors.primary,
                         ),
                       )),
-                  icon: SvgPicture.asset('assets/icons/water2.svg'),
+                  icon: SvgPicture.asset('assets/icons/icon-data-manual.svg'),
                   label: const Text(
                     "Data Manual",
                     style: TextStyle(

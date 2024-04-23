@@ -9,7 +9,7 @@ import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_schedule_input.dart
 import '../controllers/tambah_jadwal_controller.dart';
 
 class TambahJadwalView extends GetView<TambahJadwalController> {
-  const TambahJadwalView({Key? key}) : super(key: key);
+  const TambahJadwalView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -188,6 +188,7 @@ class TambahJadwalView extends GetView<TambahJadwalController> {
                       style: const TextStyle(
                         fontSize: 14,
                         fontFamily: 'poppins',
+                        color: Colors.white,
                       ),
                     ),
                   ),

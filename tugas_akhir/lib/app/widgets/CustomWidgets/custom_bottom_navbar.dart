@@ -12,14 +12,14 @@ class CustomBottomNavigationBar extends GetView<PageIndexController> {
     return Container(
       height: 97,
       width: MediaQuery.of(context).size.width,
-      color: Colors.transparent,
+      color: Colors.white,
       child: Stack(
         alignment: const FractionalOffset(.5, 1.0),
         children: [
           Positioned(
             bottom: 0,
             child: Container(
-              height: 65,
+              height: 80,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 border: Border(

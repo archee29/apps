@@ -126,8 +126,9 @@ class TambahJadwalController extends GetxController {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
+              background: Colors.white,
               primary: AppColors.primary,
-              onPrimary: Colors.black,
+              onPrimary: Colors.white,
               onSurface: Colors.black,
             ),
             textButtonTheme: TextButtonThemeData(

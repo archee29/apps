@@ -74,7 +74,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                         child: Container(
                           width: 98,
                           height: 98,
-                          color: AppColors.primaryExtraSoft,
+                          color: AppColors.primary,
                           child: Image.file(
                             File(controller.image!.path),
                             fit: BoxFit.cover,
@@ -86,7 +86,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                         child: Container(
                           width: 98,
                           height: 98,
-                          color: AppColors.primaryExtraSoft,
+                          color: AppColors.primary,
                           child: Image.network(
                             (user["avatar"] == null || user['avatar'] == "")
                                 ? "https://ui-avatars.com/api/?name=${user['name']}/"

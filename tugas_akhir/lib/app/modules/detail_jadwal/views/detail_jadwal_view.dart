@@ -6,7 +6,6 @@ import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_bottom_navbar.dart';
-import 'package:tugas_akhir/app/widgets/card/schedule_tile.dart';
 
 import '../controllers/detail_jadwal_controller.dart';
 

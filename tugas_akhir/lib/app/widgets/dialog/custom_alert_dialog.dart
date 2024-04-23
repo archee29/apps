@@ -80,7 +80,12 @@ class CustomAlertDialog {
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       elevation: 0,
                     ),
-                    child: const Text("confirm"),
+                    child: const Text(
+                      "confirm",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 )
               ],

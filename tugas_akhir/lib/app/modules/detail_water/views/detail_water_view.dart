@@ -12,7 +12,7 @@ import 'package:tugas_akhir/app/widgets/card/feeder_tile.dart';
 import '../controllers/detail_water_controller.dart';
 
 class DetailWaterView extends GetView<DetailWaterController> {
-  const DetailWaterView({Key? key}) : super(key: key);
+  const DetailWaterView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -184,7 +184,7 @@ class DetailWaterView extends GetView<DetailWaterController> {
                             color: Color(0xfffff39b0),
                           ),
                         )),
-                    icon: SvgPicture.asset('assets/icons/dry_food.svg'),
+                    icon: SvgPicture.asset('assets/icons/icon-data-iot.svg'),
                     label: const Text(
                       "Data IOT",
                       style: TextStyle(
@@ -216,7 +216,8 @@ class DetailWaterView extends GetView<DetailWaterController> {
                             color: AppColors.primary,
                           ),
                         )),
-                    icon: SvgPicture.asset('assets/icons/water.svg'),
+                    icon:
+                        SvgPicture.asset('assets/icons/icon-data-manual2.svg'),
                     label: const Text(
                       "Data Manual",
                       style: TextStyle(

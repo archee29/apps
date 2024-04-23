@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -9,11 +7,8 @@ import 'package:tugas_akhir/app/widgets/dialog/custom_alert_dialog.dart';
 import 'package:tugas_akhir/app/widgets/dialog/custom_notification.dart';
 
 class MainController extends GetxController {
-  CalendarController calendarController = CalendarController();
   DateTime? start;
   DateTime end = DateTime.now();
-  DateTime focusedDay = DateTime.now();
-  DateTime? selectedDay;
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseDatabase database = FirebaseDatabase.instance;

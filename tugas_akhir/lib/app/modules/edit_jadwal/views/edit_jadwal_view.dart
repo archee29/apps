@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -144,15 +143,15 @@ class EditJadwalView extends GetView<EditJadwalController> {
               ),
 
               // Edit Button
-              Obx(
-                () => SizedBox(
-                  width: 200,
-                  height: 60,
-                  child: ElevatedButton.icon(
-                    onPressed: () {
+              SizedBox(
+                width: 200,
+                height: 60,
+                child: Obx(
+                  () => ElevatedButton.icon(
+                    onPressed: () async {
                       if (controller.isLoading.isFalse) {
                         // controller.editSchedule();
-                        controller.updateSchedule(Get.arguments);
+                        await controller.updateSchedule();
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -176,6 +175,7 @@ class EditJadwalView extends GetView<EditJadwalController> {
                       style: const TextStyle(
                         fontSize: 14,
                         fontFamily: 'poppins',
+                        color: Colors.white,
                       ),
                     ),
                   ),

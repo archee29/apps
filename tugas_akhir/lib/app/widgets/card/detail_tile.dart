@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:tugas_akhir/app/modules/edit_jadwal/controllers/edit_jadwal_controller.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 
+// ignore: must_be_immutable
 class DetailTile extends StatelessWidget {
   final Map<String, dynamic> scheduleData;
 
-  const DetailTile({super.key, required this.scheduleData});
+  DetailTile({super.key, required this.scheduleData});
+
+  EditJadwalController editJadwalController = Get.put(EditJadwalController());
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Get.toNamed(Routes.EDIT_JADWAL, arguments: scheduleData),
+      onTap: () => Get.toNamed(Routes.DETAIL_JADWAL),
       child: Column(
         children: [
           Container(
@@ -139,80 +144,78 @@ class DetailTile extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // BUTTON DATA edit
+              SizedBox(
+                width: 140,
+                height: 50,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    Get.toNamed(Routes.EDIT_JADWAL, arguments: scheduleData);
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.success,
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        side: BorderSide(
+                          width: 3,
+                          color: AppColors.primaryExtraSoft,
+                        ),
+                      )),
+                  icon: SvgPicture.asset('assets/icons/icon-edit.svg'),
+                  label: const Text(
+                    "Edit",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                      fontFamily: 'poppins',
+                    ),
+                  ),
+                ),
+              ),
+
+              // BUTTON DATA delete
+              SizedBox(
+                width: 140,
+                height: 50,
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    editJadwalController.deleteData();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.warning,
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side: BorderSide(
+                        width: 3,
+                        color: AppColors.primaryExtraSoft,
+                      ),
+                    ),
+                  ),
+                  icon: SvgPicture.asset('assets/icons/icon-delete.svg'),
+                  label: const Text(
+                    "Delete",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                      fontFamily: 'poppins',
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
-
-    // return InkWell(
-    //   onTap: () => Get.toNamed(Routes.EDIT_JADWAL, arguments: scheduleData),
-    //   borderRadius: BorderRadius.circular(8),
-    //   child: Container(
-    //     width: MediaQuery.of(context).size.width,
-    //     decoration: BoxDecoration(
-    //       borderRadius: BorderRadius.circular(8),
-    //       border: Border.all(
-    //         width: 3,
-    //         color: AppColors.primaryExtraSoft,
-    //       ),
-    //     ),
-    //     padding:
-    //         const EdgeInsets.only(left: 24, top: 20, right: 29, bottom: 20),
-    //     child: SingleChildScrollView(
-    //       scrollDirection: Axis.horizontal,
-    //       child: Row(
-    //         crossAxisAlignment: CrossAxisAlignment.start,
-    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //         children: [
-    //           Row(
-    //             children: [
-    //               Column(
-    //                 crossAxisAlignment: CrossAxisAlignment.start,
-    //                 children: [
-    //                   const Text(
-    //                     "Makanan",
-    //                     style: TextStyle(fontSize: 12),
-    //                   ),
-    //                   const SizedBox(height: 6),
-    //                   Text(
-    //                     scheduleData["makanan"],
-    //                     style: const TextStyle(
-    //                       fontSize: 14,
-    //                       fontWeight: FontWeight.w600,
-    //                     ),
-    //                   ),
-    //                 ],
-    //               ),
-    //               const SizedBox(width: 24),
-    //               Column(
-    //                 crossAxisAlignment: CrossAxisAlignment.start,
-    //                 children: [
-    //                   const Text(
-    //                     "Minuman",
-    //                     style: TextStyle(fontSize: 12),
-    //                   ),
-    //                   const SizedBox(height: 6),
-    //                   Text(
-    //                     scheduleData["minuman"],
-    //                     style: const TextStyle(
-    //                       fontSize: 14,
-    //                       fontWeight: FontWeight.w600,
-    //                     ),
-    //                   ),
-    //                 ],
-    //               ),
-    //             ],
-    //           ),
-    //           Text(
-    //             scheduleData["tanggal"],
-    //             style: TextStyle(
-    //               fontSize: 10,
-    //               color: AppColors.secondarySoft,
-    //             ),
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }
