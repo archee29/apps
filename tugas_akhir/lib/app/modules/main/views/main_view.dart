@@ -492,7 +492,7 @@ class MainView extends GetView<MainController> {
                                   shrinkWrap: true,
                                   physics: const BouncingScrollPhysics(),
                                   scrollDirection: Axis.vertical,
-                                  itemCount: 3,
+                                  itemCount: snapshot.data!.docs.length,
                                   separatorBuilder: (context, index) =>
                                       const SizedBox(height: 16),
                                   itemBuilder: (context, index) {

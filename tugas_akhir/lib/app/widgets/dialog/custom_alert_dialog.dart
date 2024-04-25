@@ -148,7 +148,7 @@ class CustomAlertDialog {
                       elevation: 0,
                     ),
                     child: Text(
-                      "cancel",
+                      "Cancel",
                       style: TextStyle(color: AppColors.secondarySoft),
                     ),
                   ),
@@ -163,7 +163,12 @@ class CustomAlertDialog {
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       elevation: 0,
                     ),
-                    child: const Text("confirm"),
+                    child: const Text(
+                      "Confirm",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
                 ),
               ],

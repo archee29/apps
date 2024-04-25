@@ -90,6 +90,8 @@ class EditJadwalController extends GetxController {
                 .doc(docId)
                 .delete();
           });
+          Get.back();
+          Get.snackbar("Berhasil", "Berhasil Delete Data Schedule");
         } catch (e) {
           CustomNotification.errorNotification("Terjadi Kesalahan", "$e");
         }

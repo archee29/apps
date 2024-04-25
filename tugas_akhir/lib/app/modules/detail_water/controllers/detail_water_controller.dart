@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:tugas_akhir/app/widgets/dialog/custom_alert_dialog.dart';
+import 'package:tugas_akhir/app/widgets/dialog/custom_notification.dart';
 
 class DetailWaterController extends GetxController {
   DateTime? start;
@@ -41,6 +43,84 @@ class DetailWaterController extends GetxController {
           .get();
       return query;
     }
+  }
+
+  // Future<void> updateSchedule() async {
+  //   String uid = auth.currentUser!.uid;
+  //   try {
+  //     if (dateController.text.isNotEmpty &&
+  //         timeController.text.isNotEmpty &&
+  //         titleController.text.isNotEmpty &&
+  //         deskripsiController.text.isNotEmpty &&
+  //         makananController.text.isNotEmpty &&
+  //         minumanController.text.isNotEmpty) {
+  //       Map<String, dynamic> data = {
+  //         "date": DateTime.now().toIso8601String(),
+  //         "tanggal": dateController.text,
+  //         "waktu": timeController.text,
+  //         "title": titleController.text,
+  //         "deskripsi": deskripsiController.text,
+  //         "makanan": makananController.text,
+  //         "minuman": minumanController.text,
+  //         "created_at": DateTime.now().toIso8601String(),
+  //       };
+  //       firestore
+  //           .collection("user")
+  //           .doc(uid)
+  //           .collection("schedule")
+  //           .get()
+  //           .then((QuerySnapshot querySnapshot) {
+  //         final docId = querySnapshot.docs.first.id;
+  //         firestore
+  //             .collection("user")
+  //             .doc(uid)
+  //             .collection("schedule")
+  //             .doc(docId)
+  //             .update(data);
+  //       });
+  //       Get.back();
+  //       CustomNotification.successNotification(
+  //           "Berhasil", "Berhasil Edit Feeder");
+  //       clearEditingControllers();
+  //     } else {
+  //       isLoading.value = false;
+  //       CustomNotification.errorNotification(
+  //           "Error", "Isi Form Terlebih Dahulu");
+  //     }
+  //   } catch (e) {
+  //     CustomNotification.errorNotification("Terjadi Kesalahan", "$e");
+  //   }
+  // }
+
+  void deleteData() async {
+    String uid = auth.currentUser!.uid;
+    CustomAlertDialog.showFeederAlert(
+      title: "Hapus Data",
+      message: "Apakah Anda Yakin untuk menghapus data? ",
+      onConfirm: () async {
+        try {
+          firestore
+              .collection("user")
+              .doc(uid)
+              .collection("schedule")
+              .get()
+              .then((QuerySnapshot querySnapshot) {
+            final docId = querySnapshot.docs.first.id;
+            firestore
+                .collection("user")
+                .doc(uid)
+                .collection("feeder")
+                .doc(docId)
+                .delete();
+          });
+          Get.back();
+          Get.snackbar("Berhasil", "Berhasil Delete Data IoT");
+        } catch (e) {
+          CustomNotification.errorNotification("Terjadi Kesalahan", "$e");
+        }
+      },
+      onCancel: () => Get.back(),
+    );
   }
 
   void pickDate(DateTime pickStart, DateTime pickEnd) {

@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:tugas_akhir/app/modules/detail_water/controllers/detail_water_controller.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 
 class FeederTile extends StatelessWidget {
   final Map<String, dynamic> feederData;
-  const FeederTile({super.key, required this.feederData});
+  FeederTile({super.key, required this.feederData});
+
+  DetailWaterController detailWaterController =
+      Get.put(DetailWaterController());
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +136,7 @@ class FeederTile extends StatelessWidget {
                 height: 50,
                 child: ElevatedButton.icon(
                   onPressed: () {
-                    Get.toNamed(Routes.DETAIL_WATER);
+                    detailWaterController.deleteData();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.warning,
