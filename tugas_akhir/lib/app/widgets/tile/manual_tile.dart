@@ -6,10 +6,10 @@ import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 
 // ignore: must_be_immutable
-class DetailTile extends StatelessWidget {
+class ManualTile extends StatelessWidget {
   final Map<String, dynamic> scheduleData;
 
-  DetailTile({super.key, required this.scheduleData});
+  ManualTile({super.key, required this.scheduleData});
 
   EditJadwalController editJadwalController = Get.put(EditJadwalController());
 
@@ -186,7 +186,7 @@ class DetailTile extends StatelessWidget {
                 height: 50,
                 child: ElevatedButton.icon(
                   onPressed: () {
-                    editJadwalController.deleteData();
+                    editJadwalController.deleteDataFeeder();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.warning,

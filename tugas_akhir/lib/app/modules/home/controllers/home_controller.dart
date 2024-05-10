@@ -36,10 +36,12 @@ class HomeController extends GetxController {
   // get all json data rtdb
   getMorningFeeder() async {
     String uid = auth.currentUser!.uid;
-    DatabaseReference morningFeederRef =
-        FirebaseDatabase.instance.ref('users').child(uid).child('jadwalPagi');
+    DatabaseReference morningFeederRef = FirebaseDatabase.instance
+        .ref('UsersData')
+        .child(uid)
+        .child('jadwalPagi');
     DatabaseEvent reference = await FirebaseDatabase.instance
-        .ref('users')
+        .ref('UsersData')
         .child(uid)
         .child('jadwalPagi')
         .once();

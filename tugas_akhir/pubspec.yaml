@@ -9,37 +9,36 @@ environment:
   sdk: '>=3.0.6 <4.0.0'
 
 dependencies:
-  flutter:
-    sdk: flutter
-
-
+  carousel_slider: ^4.2.1
+  cloud_firestore: ^4.17.0
+  convex_bottom_bar: ^3.2.0
   cupertino_icons: ^1.0.6
-  get: ^4.6.6
-  get_storage: ^2.1.1
   firebase_auth: ^4.19.2
   firebase_core: ^2.30.0
-  cloud_firestore: ^4.17.0
   firebase_database: ^10.5.2
   firebase_storage: ^11.7.2
-  convex_bottom_bar: ^3.2.0
-  carousel_slider: ^4.2.1
-  image_picker: ^1.1.0
-  intl:  ^0.19.0
-  geolocator: ^11.0.0
-  geocoding: ^3.0.0
+  flutter:
+    sdk: flutter
   flutter_svg: ^2.0.10+1
-  maps_launcher: ^2.2.1
-  syncfusion_flutter_datepicker: ^25.1.40
-  syncfusion_flutter_calendar: ^25.1.40
-  table_calendar: ^3.1.1
   flutter_switch: ^0.3.2
+  geocoding: ^3.0.0
+  geolocator: ^11.0.0
+  get: ^4.6.6
+  get_storage: ^2.1.1
+  image_picker: ^1.1.0
+  intl: ^0.19.0
+  maps_launcher: ^2.2.1
+  syncfusion_flutter_calendar: ^25.1.40
+  syncfusion_flutter_datepicker: ^25.1.40
+  table_calendar: ^3.1.1
+  zoom_tap_animation: ^1.1.0
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
 
   firebase_analytics: ^10.8.10
   flutter_lints: ^3.0.2
+  flutter_test:
+    sdk: flutter
   google_fonts: ^6.2.1
 
 flutter:

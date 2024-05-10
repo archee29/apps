@@ -20,6 +20,11 @@ abstract class Routes {
   static const DETAIL_FOOD = _Paths.DETAIL_FOOD;
   static const DETAIL_WATER = _Paths.DETAIL_WATER;
   static const ALL_SCHEDULE = _Paths.ALL_SCHEDULE;
+  static const IOT = _Paths.IOT;
+  static const MANUAL = _Paths.MANUAL;
+  static const STATISTIK = _Paths.STATISTIK;
+  static const DATA_MANUAL = _Paths.DATA_MANUAL;
+  static const DATA_IOT = _Paths.DATA_IOT;
 }
 
 abstract class _Paths {
@@ -39,4 +44,9 @@ abstract class _Paths {
   static const DETAIL_FOOD = '/detail-food';
   static const DETAIL_WATER = '/detail-water';
   static const ALL_SCHEDULE = '/all-schedule';
+  static const IOT = '/iot';
+  static const MANUAL = '/manual';
+  static const STATISTIK = '/statistik';
+  static const DATA_MANUAL = '/data-manual';
+  static const DATA_IOT = '/data-iot';
 }

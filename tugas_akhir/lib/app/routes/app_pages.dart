@@ -2,6 +2,10 @@ import 'package:get/get.dart';
 
 import '../modules/all_schedule/bindings/all_schedule_binding.dart';
 import '../modules/all_schedule/views/all_schedule_view.dart';
+import '../modules/data_iot/bindings/data_iot_binding.dart';
+import '../modules/data_iot/views/data_iot_view.dart';
+import '../modules/data_manual/bindings/data_manual_binding.dart';
+import '../modules/data_manual/views/data_manual_view.dart';
 import '../modules/detail_feeder/bindings/detail_feeder_binding.dart';
 import '../modules/detail_feeder/views/detail_feeder_view.dart';
 import '../modules/detail_jadwal/bindings/detail_jadwal_binding.dart';
@@ -63,7 +67,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.TAMBAH_JADWAL,
-      page: () => const TambahJadwalView(),
+      page: () => TambahJadwalView(),
       binding: TambahJadwalBinding(),
     ),
     GetPage(
@@ -100,6 +104,16 @@ class AppPages {
       name: _Paths.ALL_SCHEDULE,
       page: () => const AllScheduleView(),
       binding: AllScheduleBinding(),
+    ),
+    GetPage(
+      name: _Paths.DATA_MANUAL,
+      page: () => const DataManualView(),
+      binding: DataManualBinding(),
+    ),
+    GetPage(
+      name: _Paths.DATA_IOT,
+      page: () => const DataIotView(),
+      binding: DataIotBinding(),
     ),
   ];
 }

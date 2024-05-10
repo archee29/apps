@@ -9,6 +9,7 @@ class CustomInput extends StatefulWidget {
   final EdgeInsetsGeometry margin;
   final bool obsecureText;
   final Widget? suffixIcon;
+  final TextInputType? keyboardType;
 
   const CustomInput({
     super.key,
@@ -19,6 +20,7 @@ class CustomInput extends StatefulWidget {
     this.margin = const EdgeInsets.only(bottom: 16),
     this.obsecureText = false,
     this.suffixIcon,
+    this.keyboardType,
   });
 
   @override
@@ -50,12 +52,13 @@ class _CustomInputState extends State<CustomInput> {
           ),
           maxLines: 1,
           controller: widget.controller,
+          keyboardType: widget.keyboardType,
           decoration: InputDecoration(
             suffixIcon: widget.suffixIcon ?? const SizedBox(),
             label: Text(
               widget.label,
               style: TextStyle(
-                color: AppColors.secondaryExtraSoft,
+                color: AppColors.primary,
                 fontSize: 14,
               ),
             ),

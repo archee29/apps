@@ -69,7 +69,7 @@ class EditJadwalController extends GetxController {
     }
   }
 
-  void deleteData() async {
+  void deleteDataFeeder() async {
     String uid = auth.currentUser!.uid;
     CustomAlertDialog.showFeederAlert(
       title: "Hapus Data",
@@ -79,19 +79,21 @@ class EditJadwalController extends GetxController {
           firestore
               .collection("user")
               .doc(uid)
-              .collection("schedule")
+              .collection("feeder")
               .get()
               .then((QuerySnapshot querySnapshot) {
             final docId = querySnapshot.docs.first.id;
             firestore
                 .collection("user")
                 .doc(uid)
-                .collection("schedule")
+                .collection("feeder")
                 .doc(docId)
                 .delete();
           });
+          CustomNotification.successNotification(
+              "Berhasil", "Menghapus Data Feeder");
           Get.back();
-          Get.snackbar("Berhasil", "Berhasil Delete Data Schedule");
+          Get.back();
         } catch (e) {
           CustomNotification.errorNotification("Terjadi Kesalahan", "$e");
         }

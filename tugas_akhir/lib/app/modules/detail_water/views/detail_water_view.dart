@@ -7,7 +7,7 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 
-import 'package:tugas_akhir/app/widgets/card/feeder_tile.dart';
+import 'package:tugas_akhir/app/widgets/tile/feeder_tile.dart';
 
 import '../controllers/detail_water_controller.dart';
 

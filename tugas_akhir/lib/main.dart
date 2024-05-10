@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/controllers/page_index_controller.dart';
 import 'package:tugas_akhir/app/controllers/feeder_controller.dart';
+import 'package:tugas_akhir/app/widgets/splash_screen.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -19,13 +20,14 @@ Future<void> main() async {
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const MaterialApp(
-            home: Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            ),
-          );
+          return const SplashScreen();
+          // return const MaterialApp(
+          //   home: Scaffold(
+          //     body: Center(
+          //       child: CircularProgressIndicator(),
+          //     ),
+          //   ),
+          // );
         }
         return GetMaterialApp(
           title: "Automatic Cat Feeder",

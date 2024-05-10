@@ -92,34 +92,31 @@ class DetailWaterController extends GetxController {
   //   }
   // }
 
-  void deleteData() async {
+  void deleteDataSchedule() async {
     String uid = auth.currentUser!.uid;
     CustomAlertDialog.showFeederAlert(
       title: "Hapus Data",
       message: "Apakah Anda Yakin untuk menghapus data? ",
+      onCancel: () => Get.back(),
       onConfirm: () async {
-        try {
+        await firestore
+            .collection("user")
+            .doc(uid)
+            .collection("feeder")
+            .get()
+            .then((QuerySnapshot querySnapshot) {
+          final docId = querySnapshot.docs.first.id;
           firestore
               .collection("user")
               .doc(uid)
-              .collection("schedule")
-              .get()
-              .then((QuerySnapshot querySnapshot) {
-            final docId = querySnapshot.docs.first.id;
-            firestore
-                .collection("user")
-                .doc(uid)
-                .collection("feeder")
-                .doc(docId)
-                .delete();
-          });
-          Get.back();
-          Get.snackbar("Berhasil", "Berhasil Delete Data IoT");
-        } catch (e) {
-          CustomNotification.errorNotification("Terjadi Kesalahan", "$e");
-        }
+              .collection("feeder")
+              .doc(docId)
+              .delete();
+        });
+        Get.back();
+        CustomNotification.successNotification(
+            "Berhasil", "Menghapus Data Feeder");
       },
-      onCancel: () => Get.back(),
     );
   }
 

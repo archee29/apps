@@ -6,19 +6,18 @@ import 'package:get/get.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
-import 'package:tugas_akhir/app/widgets/tile/detail_tile.dart';
+import 'package:tugas_akhir/app/widgets/tile/manual_tile.dart';
 
-import '../controllers/all_schedule_controller.dart';
+import '../controllers/data_manual_controller.dart';
 
-class AllScheduleView extends GetView<AllScheduleController> {
-  const AllScheduleView({super.key});
-
+class DataManualView extends GetView<DataManualController> {
+  const DataManualView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Data IOT',
+          'Data Manual',
           style: TextStyle(
             color: AppColors.secondary,
             fontSize: 14,
@@ -119,7 +118,7 @@ class AllScheduleView extends GetView<AllScheduleController> {
                       )),
                   icon: SvgPicture.asset('assets/icons/icon-data-iot2.svg'),
                   label: const Text(
-                    "Data IOT",
+                    "Data Manual",
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w600,
@@ -164,10 +163,10 @@ class AllScheduleView extends GetView<AllScheduleController> {
             ],
           ),
 
-          GetBuilder<AllScheduleController>(
+          GetBuilder<DataManualController>(
             builder: (con) {
               return FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                future: controller.getAllSchedule(),
+                future: controller.getAllDataManual(),
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
@@ -185,7 +184,7 @@ class AllScheduleView extends GetView<AllScheduleController> {
                               const SizedBox(height: 16),
                           itemBuilder: (context, index) {
                             var scheduleData = data[index].data();
-                            return DetailTile(
+                            return ManualTile(
                               scheduleData: scheduleData,
                             );
                           });

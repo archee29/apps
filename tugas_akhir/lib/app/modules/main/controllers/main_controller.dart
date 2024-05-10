@@ -13,11 +13,20 @@ class MainController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   FirebaseDatabase database = FirebaseDatabase.instance;
   var selectedDateSchedule = DateTime.now().obs;
+  FirebaseDatabase firebaseDatabase = FirebaseDatabase.instance;
+
+  late DatabaseReference servoRef;
   RxBool servoSwitched = false.obs;
   RxBool pumpSwitched = false.obs;
 
-  void servoToggled() =>
-      servoSwitched.value = servoSwitched.value ? false : true;
+  void servoToggled() {
+    servoSwitched.value = servoSwitched.value ? false : true;
+    // servoSwitched = servoRef.child('UsersData')
+    //     .child(uid)
+    //     .child('jadwalPagi')
+    //     .child("servo")
+    //     .set("on") as RxBool;
+  }
 
   void pumpToggled() => pumpSwitched.value = pumpSwitched.value ? false : true;
 

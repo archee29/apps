@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -6,6 +8,7 @@ import 'package:tugas_akhir/app/routes/app_pages.dart';
 import 'package:tugas_akhir/app/styles/app_colors.dart';
 import 'package:tugas_akhir/app/widgets/CustomWidgets/custom_bottom_navbar.dart';
 import 'package:tugas_akhir/app/widgets/card/feeder_card.dart';
+import 'package:tugas_akhir/app/widgets/card/iot_card.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -99,9 +102,9 @@ class HomeView extends GetView<HomeController> {
 
                     // Daily Card
                     // Expanded(
-                    //   child: FirebaseAnimatedList(
-                    //     query: controller.getMorningFeeder(),
-                    //     itemBuilder: (context, snapshot, animation, index) {
+                    //   child: StreamBuilder(
+                    //     stream: controller.getMorningFeeder(),
+                    //     builder: (context, snapshot) {
                     //       // Map jadwalPagi = snapshot.value as Map;
                     //       // jadwalPagi['jadwalPagi'] = snapshot.key;
                     //       // return DailyCard(jadwalPagi: jadwalPagi);
@@ -138,7 +141,8 @@ class HomeView extends GetView<HomeController> {
                     //                     ),
                     //                     Text(
                     //                       // jadwalPagi['tabungMakan'] + 'Gr',
-                    //                       '${snapshot.child('wadahMakan').value} Gr',
+                    //                       // '${snapshot.child('wadahMakan').value} Gr',
+                    //                       "a",
                     //                       style: TextStyle(
                     //                         color: AppColors.primary,
                     //                         fontSize: 14,
@@ -164,7 +168,8 @@ class HomeView extends GetView<HomeController> {
                     //                     ),
                     //                     Text(
                     //                       // jadwalPagi['tabungMinum'] + 'mL',
-                    //                       '${snapshot.child('wadahMinum').value} mL',
+                    //                       // '${snapshot.child('wadahMinum').value} mL',
+                    //                       "a",
                     //                       style: TextStyle(
                     //                         color: AppColors.primary,
                     //                         fontSize: 14,
@@ -194,7 +199,8 @@ class HomeView extends GetView<HomeController> {
                     //                     ),
                     //                     Text(
                     //                       // jadwalPagi['wadahMakan'] + 'Gr',
-                    //                       '${snapshot.child('tabungMakan').value} Kg',
+                    //                       // '${snapshot.child('tabungMakan').value} Kg',
+                    //                       "a",
                     //                       style: TextStyle(
                     //                         color: AppColors.primary,
                     //                         fontSize: 14,
@@ -220,7 +226,8 @@ class HomeView extends GetView<HomeController> {
                     //                     ),
                     //                     Text(
                     //                       // jadwalPagi['wadahMinum'] + 'L',
-                    //                       '${snapshot.child('tabungMinum').value} L',
+                    //                       // '${snapshot.child('tabungMinum').value} L',
+                    //                       "a",
                     //                       style: TextStyle(
                     //                         color: AppColors.primary,
                     //                         fontSize: 14,
@@ -277,8 +284,342 @@ class HomeView extends GetView<HomeController> {
                     //   ),
                     // ),
 
+                    Container(
+                      width: Get.width,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          width: 3,
+                          color: AppColors.primaryExtraSoft,
+                        ),
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Deskripsi 1 Info  Feeder
+                          Column(
+                            children: [
+                              // Daily Feed (food)
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "Daily Feed (Gr)",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    // jadwalPagi['tabungMakan'] + 'Gr',
+                                    // '${snapshot.child('wadahMakan').value} Gr',
+                                    "120 Gr",
+                                    style: TextStyle(
+                                      color: AppColors.primary,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                              // Daily Water (water)
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "Daily Water (mL)",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    // jadwalPagi['tabungMinum'] + 'mL',
+                                    // '${snapshot.child('wadahMinum').value} mL',
+                                    "300 mL",
+                                    style: TextStyle(
+                                      color: AppColors.primary,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          // Deskripsi 2 Info Feeder
+                          Column(
+                            children: [
+                              // Output Feed (food)
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "Total Feed (Kg)",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    // jadwalPagi['wadahMakan'] + 'Gr',
+                                    // '${snapshot.child('tabungMakan').value} Kg',
+                                    "1 Kg",
+                                    style: TextStyle(
+                                      color: AppColors.primary,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 10),
+                              // Output Water
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "Total Water (L)",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  Text(
+                                    // jadwalPagi['wadahMinum'] + 'L',
+                                    // '${snapshot.child('tabungMinum').value} L',
+                                    "600 L",
+                                    style: TextStyle(
+                                      color: AppColors.primary,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          // Button Detail Feeder
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Button Setting
+                              SizedBox(
+                                child: ElevatedButton.icon(
+                                  onPressed: () {
+                                    Get.toNamed(Routes.DETAIL_JADWAL);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 18),
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                      side:
+                                          const BorderSide(color: Colors.white),
+                                    ),
+                                    shadowColor: const Color(0x3F000000),
+                                  ),
+                                  icon: Icon(Icons.arrow_circle_right_outlined,
+                                      color: AppColors.primary),
+                                  label: const Text(
+                                    "",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12,
+                                      fontFamily: 'poppins',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+
                     const SizedBox(height: 15),
 
+                    // FirebaseAnimatedList(
+                    //   query: controller.getMorningFeeder(),
+                    //   itemBuilder: (context, snapshot, animation, index) {
+                    //     return Container(
+                    //       width: MediaQuery.of(context).size.width,
+                    //       decoration: BoxDecoration(
+                    //         borderRadius: BorderRadius.circular(8),
+                    //         border: Border.all(
+                    //           width: 3,
+                    //           color: AppColors.primaryExtraSoft,
+                    //         ),
+                    //       ),
+                    //       padding: const EdgeInsets.only(
+                    //           left: 24, top: 20, right: 29, bottom: 20),
+                    //       child: Row(
+                    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //         children: [
+                    //           // Deskripsi 1 Info  Feeder
+                    //           Column(
+                    //             children: [
+                    //               // Daily Feed (food)
+                    //               Column(
+                    //                 mainAxisAlignment: MainAxisAlignment.start,
+                    //                 crossAxisAlignment:
+                    //                     CrossAxisAlignment.start,
+                    //                 children: [
+                    //                   const Text(
+                    //                     "Daily Feed (gr)",
+                    //                     style: TextStyle(
+                    //                       fontSize: 10,
+                    //                       color: Colors.black,
+                    //                     ),
+                    //                   ),
+                    //                   Text(
+                    //                     // jadwalPagi['tabungMakan'] + 'Gr',
+                    //                     '${snapshot.child('wadahMakan').value.toString()} Gr',
+                    //                     style: TextStyle(
+                    //                       color: AppColors.primary,
+                    //                       fontSize: 14,
+                    //                       fontWeight: FontWeight.w600,
+                    //                     ),
+                    //                   ),
+                    //                 ],
+                    //               ),
+                    //               const SizedBox(height: 10),
+                    //               // Daily Water (water)
+                    //               Column(
+                    //                 mainAxisAlignment: MainAxisAlignment.center,
+                    //                 crossAxisAlignment:
+                    //                     CrossAxisAlignment.start,
+                    //                 children: [
+                    //                   const Text(
+                    //                     "Daily Water (mL)",
+                    //                     style: TextStyle(
+                    //                       fontSize: 10,
+                    //                       color: Colors.black,
+                    //                     ),
+                    //                   ),
+                    //                   Text(
+                    //                     // jadwalPagi['tabungMinum'] + 'mL',
+                    //                     '${snapshot.child('wadahMinum').value.toString()} mL',
+                    //                     style: TextStyle(
+                    //                       color: AppColors.primary,
+                    //                       fontSize: 14,
+                    //                       fontWeight: FontWeight.w600,
+                    //                     ),
+                    //                   ),
+                    //                 ],
+                    //               ),
+                    //             ],
+                    //           ),
+                    //           // Deskripsi 2 Info Feeder
+                    //           Column(
+                    //             children: [
+                    //               // Output Feed (food)
+                    //               Column(
+                    //                 mainAxisAlignment: MainAxisAlignment.start,
+                    //                 crossAxisAlignment:
+                    //                     CrossAxisAlignment.start,
+                    //                 children: [
+                    //                   const Text(
+                    //                     "Total Feed (Kg)",
+                    //                     style: TextStyle(
+                    //                       fontSize: 10,
+                    //                       color: Colors.black,
+                    //                     ),
+                    //                   ),
+                    //                   Text(
+                    //                     // jadwalPagi['wadahMakan'] + 'Gr',
+                    //                     '${snapshot.child('tabungMakan').value.toString()} Kg',
+                    //                     style: TextStyle(
+                    //                       color: AppColors.primary,
+                    //                       fontSize: 14,
+                    //                       fontWeight: FontWeight.w600,
+                    //                     ),
+                    //                   ),
+                    //                 ],
+                    //               ),
+                    //               const SizedBox(height: 10),
+                    //               // Output Water
+                    //               Column(
+                    //                 mainAxisAlignment: MainAxisAlignment.center,
+                    //                 crossAxisAlignment:
+                    //                     CrossAxisAlignment.start,
+                    //                 children: [
+                    //                   const Text(
+                    //                     "Total Water (L)",
+                    //                     style: TextStyle(
+                    //                       fontSize: 10,
+                    //                       color: Colors.black,
+                    //                     ),
+                    //                   ),
+                    //                   Text(
+                    //                     // jadwalPagi['wadahMinum'] + 'L',
+                    //                     '${snapshot.child('tabungMinum').value.toString()} L',
+                    //                     style: TextStyle(
+                    //                       color: AppColors.primary,
+                    //                       fontSize: 14,
+                    //                       fontWeight: FontWeight.w600,
+                    //                     ),
+                    //                   ),
+                    //                 ],
+                    //               ),
+                    //             ],
+                    //           ),
+                    //           // Button Detail Feeder
+                    //           Column(
+                    //             mainAxisAlignment: MainAxisAlignment.end,
+                    //             children: [
+                    //               // Button Setting
+                    //               SizedBox(
+                    //                 child: ElevatedButton.icon(
+                    //                   onPressed: () {
+                    //                     Get.toNamed(Routes.DETAIL_JADWAL);
+                    //                   },
+                    //                   style: ElevatedButton.styleFrom(
+                    //                     backgroundColor: Colors.white,
+                    //                     padding: const EdgeInsets.symmetric(
+                    //                         vertical: 18),
+                    //                     elevation: 0,
+                    //                     shape: RoundedRectangleBorder(
+                    //                       borderRadius:
+                    //                           BorderRadius.circular(8),
+                    //                       side: const BorderSide(
+                    //                           color: Colors.white),
+                    //                     ),
+                    //                     shadowColor: const Color(0x3F000000),
+                    //                   ),
+                    //                   icon: Icon(
+                    //                       Icons.arrow_circle_right_outlined,
+                    //                       color: AppColors.primary),
+                    //                   label: const Text(
+                    //                     "",
+                    //                     style: TextStyle(
+                    //                       color: Colors.black,
+                    //                       fontWeight: FontWeight.w600,
+                    //                       fontSize: 12,
+                    //                       fontFamily: 'poppins',
+                    //                     ),
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             ],
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
+
+                    const SizedBox(height: 10),
                     // Card Menu
                     Container(
                       width: MediaQuery.of(context).size.width,
@@ -409,7 +750,7 @@ class HomeView extends GetView<HomeController> {
                                   ),
                                   Obx(
                                     () => Text(
-                                      controller.houseDistance.value,
+                                      '${controller.houseDistance.value}',
                                       style: const TextStyle(
                                         fontSize: 24,
                                         fontFamily: 'poppins',

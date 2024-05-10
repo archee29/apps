@@ -63,7 +63,7 @@ class _CustomScheduleInputState extends State<CustomScheduleInput> {
             label: Text(
               widget.label,
               style: TextStyle(
-                color: AppColors.secondaryExtraSoft,
+                color: AppColors.primary,
                 fontSize: 14,
               ),
             ),

@@ -136,7 +136,7 @@ class FeederTile extends StatelessWidget {
                 height: 50,
                 child: ElevatedButton.icon(
                   onPressed: () {
-                    detailWaterController.deleteData();
+                    detailWaterController.deleteDataSchedule();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.warning,

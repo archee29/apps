@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -20,6 +21,7 @@ class TambahJadwalController extends GetxController {
   var selectedTime = TimeOfDay.now().obs;
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FirebaseDatabase firebaseDatabase = FirebaseDatabase.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
 
   Future<void> addSchedule() async {
@@ -63,14 +65,105 @@ class TambahJadwalController extends GetxController {
     }
   }
 
+  Future<void> addManualDataMF() async {
+    String uid = auth.currentUser!.uid;
+    DatabaseReference databaseReference = firebaseDatabase
+        .ref()
+        .child("UsersData")
+        .child(uid)
+        .child("manual")
+        .child("jadwalPagi");
+    try {
+      if (dateController.text.isNotEmpty &&
+          timeController.text.isNotEmpty &&
+          titleController.text.isNotEmpty &&
+          deskripsiController.text.isNotEmpty &&
+          makananController.text.isNotEmpty &&
+          minumanController.text.isNotEmpty) {
+        isLoading.value = true;
+        Map<String, dynamic> data = {
+          "date": DateTime.now().toIso8601String(),
+          "tanggal": dateController.text,
+          "waktu": timeController.text,
+          "title": titleController.text,
+          "deskripsi": deskripsiController.text,
+          "makanan": makananController.text,
+          "minuman": minumanController.text,
+          "created_at": DateTime.now().toIso8601String(),
+        };
+        await databaseReference.push().set(data);
+        Get.back();
+        Get.back();
+        CustomNotification.successNotification(
+            "Berhasil", "Berhasil Menambahkan Jadwal Pagi");
+        clearEditingControllers();
+        isLoadingCreateSchedule.value = false;
+      } else {
+        isLoading.value = false;
+        CustomNotification.errorNotification(
+            "Error", "Isi Form Terlebih Dahulu");
+      }
+    } catch (e) {
+      CustomNotification.errorNotification("Terjadi Kesalahan", "$e");
+    } finally {
+      update();
+    }
+  }
+
+  Future<void> addManualDataAF() async {
+    String uid = auth.currentUser!.uid;
+    DatabaseReference databaseReference = firebaseDatabase
+        .ref()
+        .child("UsersData")
+        .child(uid)
+        .child("manual")
+        .child("jadwalSore");
+    try {
+      if (dateController.text.isNotEmpty &&
+          timeController.text.isNotEmpty &&
+          titleController.text.isNotEmpty &&
+          deskripsiController.text.isNotEmpty &&
+          makananController.text.isNotEmpty &&
+          minumanController.text.isNotEmpty) {
+        isLoading.value = true;
+        Map<String, dynamic> data = {
+          "date": DateTime.now().toIso8601String(),
+          "tanggal": dateController.text,
+          "waktu": timeController.text,
+          "title": titleController.text,
+          "deskripsi": deskripsiController.text,
+          "makanan": makananController.text,
+          "minuman": minumanController.text,
+          "created_at": DateTime.now().toIso8601String(),
+        };
+        await databaseReference.push().set(data);
+        Get.back();
+        Get.back();
+        CustomNotification.successNotification(
+            "Berhasil", "Berhasil Menambahkan Jadwal Sore");
+        clearEditingControllers();
+        isLoadingCreateSchedule.value = false;
+      } else {
+        isLoading.value = false;
+        CustomNotification.errorNotification(
+            "Error", "Isi Form Terlebih Dahulu");
+      }
+    } catch (e) {
+      CustomNotification.errorNotification("Terjadi Kesalahan", "$e");
+    } finally {
+      update();
+    }
+  }
+
   @override
-  onClose() {
+  void onClose() {
     dateController.dispose();
     timeController.dispose();
     titleController.dispose();
     deskripsiController.dispose();
     makananController.dispose();
     minumanController.dispose();
+    super.onClose();
   }
 
   void clearEditingControllers() {
@@ -89,19 +182,20 @@ class TambahJadwalController extends GetxController {
       firstDate: DateTime.now().subtract(const Duration(days: 0)),
       lastDate: DateTime(2100),
       initialEntryMode: DatePickerEntryMode.input,
-      helpText: 'Silahkan Masukkan Tanggal Makan dan Minum',
+      helpText: 'Masukkan Tanggal Makan & Minum',
       cancelText: 'Cancel',
       confirmText: 'Ok',
       errorFormatText: 'Format Tangal Salah',
       errorInvalidText: 'Masukkan Format Tanggal (Bulan/Tanggal/Tahun)',
-      fieldLabelText: 'Input Tanggal',
+      fieldLabelText: 'Masukkan Tanggal',
       fieldHintText: 'Bulan/Tanggal/Tahun',
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
-              primary: AppColors.primary,
-              onPrimary: Colors.white,
+              primary: Colors.blueAccent,
+              onPrimary: AppColors.primary,
+              onBackground: AppColors.primary,
               onSurface: Colors.black,
             ),
             textButtonTheme: TextButtonThemeData(

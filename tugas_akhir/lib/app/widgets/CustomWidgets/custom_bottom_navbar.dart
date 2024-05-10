@@ -9,10 +9,9 @@ class CustomBottomNavigationBar extends GetView<PageIndexController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 97,
-      width: MediaQuery.of(context).size.width,
-      color: Colors.white,
+      width: Get.width,
       child: Stack(
         alignment: const FractionalOffset(.5, 1.0),
         children: [
@@ -20,14 +19,15 @@ class CustomBottomNavigationBar extends GetView<PageIndexController> {
             bottom: 0,
             child: Container(
               height: 80,
-              width: MediaQuery.of(context).size.width,
+              width: Get.width,
               decoration: BoxDecoration(
                 border: Border(
                   top:
-                      BorderSide(color: AppColors.secondaryExtraSoft, width: 1),
+                      BorderSide(color: AppColors.secondaryExtraSoft, width: 3),
                 ),
               ),
               child: BottomAppBar(
+                color: Colors.white,
                 shape: const CircularNotchedRectangle(),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,

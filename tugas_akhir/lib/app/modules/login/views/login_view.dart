@@ -12,209 +12,134 @@ class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primary,
-      body: ListView(
-        shrinkWrap: true,
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 35 / 100,
-            width: MediaQuery.of(context).size.width,
-            padding: const EdgeInsets.only(left: 32),
-            decoration: BoxDecoration(
-              gradient: AppColors.primaryGradient,
-              image: const DecorationImage(
-                image: AssetImage('assets/images/pattern-1-1.png'),
-                fit: BoxFit.cover,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: ListView(
+          children: [
+            const SizedBox(height: 30),
+            TextButton.icon(
+              onPressed: () {},
+              icon: Image.asset('assets/icons/icon-kucing-black.png'),
+              label: Text(
+                "Automatic Cat Feeder",
+                style: TextStyle(
+                  decorationColor: AppColors.primary,
+                  decorationThickness: 3,
+                  decoration: TextDecoration.underline,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
               ),
             ),
-            child: const Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Automatic Cat Feeder\nMobile Application",
-                  style: TextStyle(
-                    fontSize: 28,
-                    color: Colors.white,
-                    fontFamily: 'poppins',
-                    height: 150 / 100,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  "by Muhammad Aswin Sigit",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ],
+            const SizedBox(height: 30),
+            Container(
+              alignment: Alignment.center,
+              height: 150,
+              child: Image.asset(
+                'assets/images/icon-kucing.png',
+                fit: BoxFit.contain,
+              ),
             ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height * 65 / 100,
-            width: MediaQuery.of(context).size.width,
-            color: Colors.white,
-            padding:
-                const EdgeInsets.only(left: 20, right: 20, top: 36, bottom: 84),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 24),
-                  child: const Text(
-                    'Masuk',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontFamily: 'poppins',
-                      fontWeight: FontWeight.w600,
-                    ),
+            const SizedBox(height: 30),
+            TextField(
+              controller: controller.emailController,
+              keyboardType: TextInputType.emailAddress,
+              autocorrect: false,
+              decoration: InputDecoration(
+                border:
+                    OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                hintText: "Masukkan Email",
+                icon: Icon(
+                  Icons.email_outlined,
+                  color: AppColors.primary,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Obx(
+              () => TextField(
+                controller: controller.passwordController,
+                obscureText: controller.obsecureText.value,
+                keyboardType: TextInputType.visiblePassword,
+                autocorrect: false,
+                decoration: InputDecoration(
+                  // ignore: unrelated_type_equality_checks
+                  suffixIcon: IconButton(
+                    color: AppColors.primarySoft,
+                    // ignore: unrelated_type_equality_checks
+                    icon: (controller.obsecureText != false)
+                        ? SvgPicture.asset('assets/icons/show.svg')
+                        : SvgPicture.asset('assets/icons/hide.svg'),
+                    onPressed: () {
+                      controller.obsecureText.value =
+                          !(controller.obsecureText.value);
+                    },
+                  ),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  hintText: "Masukkan Password",
+                  icon: Icon(
+                    Icons.lock_outline_rounded,
+                    color: AppColors.primary,
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  padding: const EdgeInsets.only(left: 14, right: 14, top: 4),
-                  margin: const EdgeInsets.only(bottom: 16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      width: 1,
-                      color: AppColors.secondaryExtraSoft,
+              ),
+            ),
+            const SizedBox(height: 25),
+            Obx(
+              () => SizedBox(
+                width: Get.width,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    if (controller.isLoading.isFalse) {
+                      await controller.login();
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 18),
+                    backgroundColor: AppColors.primary,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  child: TextField(
+                  child: Text(
+                    (controller.isLoading.isFalse) ? 'Masuk' : 'Loading ....',
                     style: const TextStyle(
-                      fontSize: 14,
+                      fontSize: 16,
                       fontFamily: 'poppins',
-                    ),
-                    maxLines: 1,
-                    controller: controller.emailController,
-                    decoration: InputDecoration(
-                      label: Text(
-                        "Email",
-                        style: TextStyle(
-                          color: AppColors.secondarySoft,
-                          fontSize: 14,
-                        ),
-                      ),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: InputBorder.none,
-                      hintText: "email@gmail.com",
-                      hintStyle: TextStyle(
-                        fontSize: 14,
-                        fontFamily: 'poppins',
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.secondarySoft,
-                      ),
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
                     ),
                   ),
                 ),
-                Material(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding: const EdgeInsets.only(left: 14, right: 14, top: 4),
-                    margin: const EdgeInsets.only(bottom: 24),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        width: 1,
-                        color: AppColors.secondaryExtraSoft,
-                      ),
-                    ),
-                    child: Obx(
-                      () => TextField(
-                        style: const TextStyle(
-                            fontSize: 14, fontFamily: 'poppins'),
-                        maxLines: 1,
-                        controller: controller.passwordController,
-                        obscureText: controller.obsecureText.value,
-                        decoration: InputDecoration(
-                          label: Text(
-                            "Password",
-                            style: TextStyle(
-                              color: AppColors.secondarySoft,
-                              fontSize: 14,
-                            ),
-                          ),
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          border: InputBorder.none,
-                          hintText: "*********",
-                          suffixIcon: IconButton(
-                            // ignore: unrelated_type_equality_checks
-                            icon: (controller.obsecureText != false)
-                                ? SvgPicture.asset('assets/icons/show.svg')
-                                : SvgPicture.asset('assets/icons/hide.svg'),
-                            onPressed: () {
-                              controller.obsecureText.value =
-                                  !(controller.obsecureText.value);
-                            },
-                          ),
-                          hintStyle: TextStyle(
-                            fontSize: 14,
-                            fontFamily: 'poppins',
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.secondarySoft,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Obx(
-                  () => SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        if (controller.isLoading.isFalse) {
-                          await controller.login();
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 18),
-                        backgroundColor: AppColors.primary,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: Text(
-                        (controller.isLoading.isFalse)
-                            ? 'Masuk'
-                            : 'Loading ....',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'poppins',
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin: const EdgeInsets.only(top: 4),
-                  alignment: Alignment.centerLeft,
-                  child: TextButton(
-                    onPressed: () => Get.toNamed(Routes.RESET),
-                    style: TextButton.styleFrom(
-                      foregroundColor: AppColors.secondarySoft,
-                    ),
-                    child: const Text(
-                      "Lupa Password?",
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                        decorationColor: Color(0xFFF92C85),
-                        decorationStyle: TextDecorationStyle.solid,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+            Container(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () => Get.toNamed(Routes.RESET),
+                child: const Text(
+                  "Lupa Password ?",
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                    decorationColor: Color(0xFFF92C85),
+                    decorationStyle: TextDecorationStyle.solid,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 50),
+            const Text(
+              textAlign: TextAlign.center,
+              "Dengan melanjutkan, kamu menerima dan Syarat Penggunaan Kebijakan Privasi Kami",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14),
+            ),
+          ],
+        ),
       ),
     );
   }
